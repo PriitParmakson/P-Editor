@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8"/>
+  <title>Samas</title>
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+
+  <!-- Material Design icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script -->
+  <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  <!-- Stiilid -->
+  <style>
+
+    body, textarea, button, input {  
+    font-family: 'Times New Roman', serif !important;
+    font-size: 14pt !important; }
+
+    body { padding: 2rem 2rem 8rem 2rem; }
+
+    .kesk { color: Red; }
+    .nupp { margin: 1rem; cursor: pointer;}
+    .ikoon { font-family: 'Material Icons';
+      font-size: 48px; color: rgb(117, 117, 117); }
+    #Infopaan { display: none; }
+    .kood { font-family: 'Courier New', monospace; }
+    .lugemik { text-transform: uppercase;
+      font-style: italic; margin-top: 2rem; }
+    .pk { cursor: pointer;
+      text-decoration: underline; }
+    .tekst { display: none; }
+  </style>
+
+  <!-- Skript -->
+  <script src='Samas.js'></script>
+
+  </head>
+
+  <body onload="alusta();">
+
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <p id='Tekst'></p>
+
+          <p style='margin-top: 2rem; '>
+            <span id='Loginupp' class="nupp"><i class="ikoon material-icons">file_download</i></span>
+
+            <span id='Poolednupp' class='nupp'><i class="ikoon material-icons">swap_horiz</i></nupp>
+
+            <span id='Uusnupp' class='nupp'><i class="ikoon material-icons">clear</i></span>
+
+            <span id='Infonupp' class='nupp'><i class="ikoon material-icons">info</i></span>
+
+          </p>
+
+          <p id='Infopaan'>
+          Palindroomiredaktor. (c) Priit Parmakson 2017<br>
+          &larr; &rarr; - liikumine;
+          <span class='kood'>&uarr;</span> <span class='kood'>&darr;</span> - suur-/väiketäheks;
+           <span class='kood'>PgUp</span> <span class='kood'>PgDn</span> - kesktäht ühe-/kahekordselt;
+           <span class='kood'>Backspace</span>, <span class='kood'>Delete</span> - kustutamine 
+          </p>
+
+          <p id='Logi'></p>
+
+          <p class='lugemik'>Lugemik</p>
+
+          <p id='0' class='pk'>Eakas teema</p>
+          <p id='t0' class='tekst'>
+            Tere, tere, vana kere! Tere, Kanavere! Teretame, etsa kae!<br>
+          </p>
+          <p id='1' class='pk'>Niisama</p>
+          <p id='t1' class='tekst'>
+            Nii, padusadist!<br>
+            Oo, lootsid asuda<br>
+            piinama siin?<br>
+          </p>
+          <p id='2' class='pk'>Seesamuses</p>
+          <p id='t2' class='tekst'>
+            ISKE, etskae!<br>
+            Pagan - aga peaks-teeks?<br>
+            (Ise sumas ees).
+          </p>
+          <p id='3' class='pk'>IT</p>
+          <p id='t3' class='tekst'>
+            Kasutu jama majutusakti!
+          </p>
+
+
+        </div>  
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
