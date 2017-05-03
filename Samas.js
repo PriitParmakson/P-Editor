@@ -58,6 +58,7 @@ function tahti(str) {
 
 function markeeriTekst() {
   // Tagastab markeeritud keskkohaga teksti
+  // Markeerib punase värviga
   var acc = ""; // Tagastatav tekst, lisatud markeering
 
   if ((tahti(t) < 4)) {
@@ -339,35 +340,6 @@ function lisaTahtVoiPunktuatsioon(chrCode) {
   kuvaTekst();
 } 
 
-function lisaTekstLogisse() {
-  // Eemalda kursorijoon ja kesktähe peegeltäht
-  var peegeltaheNr = tahti(t) / 2 + 1;
-  var taheloendur = 0;
-  var c = '';
-  for (var i = 0; i < t.length; i++) {
-    if (kirjavm(t[i])) {
-      c = c + t[i];
-    }
-    else if (t[i] == "|") {
-      // Jäta vahele
-    }
-    else {
-      taheloendur++;
-      // Jäta peegeltäht vahele?
-      if (kuvaKeskelementYhekordselt) {
-        if (taheloendur != peegeltaheNr) {
-          c = c + t[i];
-        }
-      }
-      else {
-        c = c + t[i];
-      }
-    }
-  }
-  logiTekst = c + '<br>' + logiTekst;
-  $('#Logi').html(logiTekst);
-}
-
 function vahetaPooled() {
   var p = tahti(t) / 2;
   if (p < 2) {
@@ -393,6 +365,76 @@ function vahetaPooled() {
   kuvaTekst();
 }
 
+function laeAlla() {
+  // Laeb Google töölehelt "Samatekstid" tekstid
+  // ja kuvab
+  console.log('laeAlla');
+  var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+  $.get(url,
+    function(data, status, xhr) {
+      $('#Lugemik').empty();
+      data.forEach(function(e, i) {
+        var kirje = $('<p></p>')
+          .addClass('kirje')
+          .appendTo('#Lugemik');
+        var pk = $('<span></span>')
+          .attr('id', 'p' + i.toString())
+          .addClass('pealkiri')
+          // Puudub või tühi pealkiri
+          .text(e.Pealkiri == '' ? '***' : e.Pealkiri)
+          .appendTo(kirje);  
+        var tekst = $('<span></span>')
+        .attr('id', 't' + i.toString())
+          .addClass('tekst')
+          .text(e.Tekst)
+          .appendTo(kirje);
+        // Sea sündmusekäsitleja
+        $('#p' + i.toString()).click(function() {
+          $('#t' + i.toString()).toggle();
+        });
+      });
+    });
+}
+
+function salvesta() {
+  // Koosta puhas tekst
+  // Eemalda kursorijoon ja kesktähe peegeltäht
+  var peegeltaheNr = tahti(t) / 2 + 1;
+  var taheloendur = 0;
+  var c = ''; // Puhas tekst
+  for (var i = 0; i < t.length; i++) {
+    if (kirjavm(t[i])) {
+      c = c + t[i];
+    }
+    else if (t[i] == "|") {
+      // Jäta vahele
+    }
+    else {
+      taheloendur++;
+      // Jäta peegeltäht vahele?
+      if (kuvaKeskelementYhekordselt) {
+        if (taheloendur != peegeltaheNr) {
+          c = c + t[i];
+        }
+      }
+      else {
+        c = c + t[i];
+      }
+    }
+  }
+
+  // Salvesta Google töölehele
+  var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+  $.post(url,
+    { Pealkiri: '***',
+      Tekst: c },
+    function() {
+      console.log('Saadetud');
+      // Uuenda lugemikku
+      laeAlla();
+    });
+}
+
 function keypressHandler(e) {
   var evt = e ? e : event;
   var charCode = evt.charCode;
@@ -407,15 +449,10 @@ function keypressHandler(e) {
     // Vajutatud eriklahv
     tootleEriklahv(keyCode);
   }
-  
 }
 
 function alusta() {
   // Valmis teksti logimine - käsitleja
-  $('#Loginupp').click(function() {
-    $(this).blur();
-    lisaTekstLogisse();
-  });
 
   $('#Poolednupp').click(function() {
     $(this).blur();
@@ -435,20 +472,12 @@ function alusta() {
     $('#Infopaan').toggle();
   });
 
-  $('#0').click(function() {
-    $('#t0').toggle();
+  $('#LaeAlla').click(function() {
+    laeAlla();
   });
 
-  $('#1').click(function() {
-    $('#t1').toggle();
-  });
-
-  $('#2').click(function() {
-    $('#t2').toggle();
-  });
-
-  $('#3').click(function() {
-    $('#t3').toggle();
+  $('#Salvesta').click(function() {
+    salvesta();
   });
 
   // Tekstisisestuse käsitleja

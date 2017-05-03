@@ -32,10 +32,10 @@
       font-size: 48px; color: rgb(117, 117, 117); }
     #Infopaan { display: none; }
     .kood { font-family: 'Courier New', monospace; }
-    .lugemik { text-transform: uppercase;
-      font-style: italic; margin-top: 2rem; }
-    .pk { cursor: pointer;
-      text-decoration: underline; }
+    #Lugemik { margin-top: 2rem; }
+    .kirje { margin-top: 0; }
+    .pealkiri { cursor: pointer;
+      text-decoration: underline; margin-right: 2rem; }
     .tekst { display: none; }
   </style>
 
@@ -53,13 +53,15 @@
           <p id='Tekst'></p>
 
           <p style='margin-top: 2rem; '>
-            <span id='Loginupp' class="nupp"><i class="ikoon material-icons">file_download</i></span>
-
             <span id='Poolednupp' class='nupp'><i class="ikoon material-icons">swap_horiz</i></nupp>
 
             <span id='Uusnupp' class='nupp'><i class="ikoon material-icons">clear</i></span>
 
             <span id='Infonupp' class='nupp'><i class="ikoon material-icons">info</i></span>
+
+            <span id='LaeAlla' class='nupp'><i class="ikoon material-icons">cloud_download</i></span>
+            
+            <span id='Salvesta' class='nupp'><i class="ikoon material-icons">cloud_upload</i></span>
 
           </p>
 
@@ -73,28 +75,7 @@
 
           <p id='Logi'></p>
 
-          <p class='lugemik'>Lugemik</p>
-
-          <p id='0' class='pk'>Eakas teema</p>
-          <p id='t0' class='tekst'>
-            Tere, tere, vana kere! Tere, Kanavere! Teretame, etsa kae!<br>
-          </p>
-          <p id='1' class='pk'>Niisama</p>
-          <p id='t1' class='tekst'>
-            Nii, padusadist!<br>
-            Oo, lootsid asuda<br>
-            piinama siin?<br>
-          </p>
-          <p id='2' class='pk'>Seesamuses</p>
-          <p id='t2' class='tekst'>
-            ISKE, etskae!<br>
-            Pagan - aga peaks-teeks?<br>
-            (Ise sumas ees).
-          </p>
-          <p id='3' class='pk'>IT</p>
-          <p id='t3' class='tekst'>
-            Kasutu jama majutusakti!
-          </p>
+          <div id='Lugemik'></div>
 
 
         </div>  
