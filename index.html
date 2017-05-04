@@ -26,14 +26,18 @@
 
     body { padding: 2rem 2rem 8rem 2rem; }
 
-    .kesk { color: Red; }
+    #Tekst { border-radius: 4px;
+      border: 1px solid DeepSkyBlue;
+      padding: 4px; }
+    .kesk { color: DarkBlue;
+      font-weight: 600; }
     .nupp { margin: 1rem; cursor: pointer;}
     .ikoon { font-family: 'Material Icons';
       font-size: 48px; color: rgb(117, 117, 117); }
     #Infopaan { display: none; }
     .kood { font-family: 'Courier New', monospace; }
     #Lugemik { margin-top: 2rem; }
-    .kirje { margin-top: 0; }
+    .kirje { margin: 0; }
     .pealkiri { cursor: pointer;
       text-decoration: underline; margin-right: 2rem; }
     .tekst { display: none; }
@@ -50,7 +54,8 @@
       <div class='row'>
         <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
 
-          <p id='Tekst'></p>
+          <p id="Tekst">
+          </p>
 
           <p style='margin-top: 2rem; '>
             <span id='Poolednupp' class='nupp'><i class="ikoon material-icons">swap_horiz</i></nupp>

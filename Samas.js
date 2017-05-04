@@ -435,32 +435,16 @@ function salvesta() {
     });
 }
 
-function keypressHandler(e) {
-  var evt = e ? e : event;
-  var charCode = evt.charCode;
-  var keyCode = evt.keyCode;
-
-  if (charCode != null && charCode != 0) {
-    // Sisestatud täht
-    console.log(charCode);
-    lisaTahtVoiPunktuatsioon(charCode);
-  }
-  else if (evt.keyCode != null) {
-    // Vajutatud eriklahv
-    tootleEriklahv(keyCode);
-  }
-}
-
 function alusta() {
   // Valmis teksti logimine - käsitleja
 
   $('#Poolednupp').click(function() {
-    $(this).blur();
+    $('#Tekst').focus();
     vahetaPooled();
   });
 
   $('#Uusnupp').click(function() {
-    $(this).blur();
+    $('#Tekst').focus();
     t = "|";
     kuvaKeskelementYhekordselt = false;
     logiTekst = "";
@@ -470,17 +454,38 @@ function alusta() {
 
   $('#Infonupp').click(function() {
     $('#Infopaan').toggle();
+    $('#Tekst').focus();
   });
 
   $('#LaeAlla').click(function() {
     laeAlla();
+    $('#Tekst').focus();
   });
 
   $('#Salvesta').click(function() {
     salvesta();
+    $('#Tekst').focus();
+  });
+  
+  // Tekstisisestuse käsitleja
+  $(document).keypress(function(e) {
+    var evt = e ? e : event;
+    e.stopPropagation();
+    e.preventDefault();
+    var charCode = evt.charCode;
+    var keyCode = evt.keyCode;
+
+    if (charCode != null && charCode != 0) {
+      // Sisestatud täht
+      lisaTahtVoiPunktuatsioon(charCode);
+    }
+    else if (evt.keyCode != null) {
+      // Vajutatud eriklahv
+      tootleEriklahv(keyCode);
+    }
   });
 
-  // Tekstisisestuse käsitleja
-  document.onkeypress=keypressHandler;
+  // Algustekst (kursor)
   $('#Tekst').text(t);
+  $('#Tekst').focus();
 }
