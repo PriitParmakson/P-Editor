@@ -1,14 +1,14 @@
 //
 // Süntaksikontrollija: http://esprima.org/demo/validate.html
 
-var t = "|"; // Tekst
+var t = "|"; // Tekst, kursoriga
 var kuvaKeskelementYhekordselt = false;
-var logiTekst = "";
 
-function logi(str) {
-  // Testimisel kasutatav logirida kuval
-  $('#Logi').text(str);
-} 
+var jLk = 1; // Jooksva lehekülje nr
+var tLk = 8; // Tekste leheküljel
+var tekstid; // Hoiab kõiki alla laetud tekste
+
+var dialoogiseisund = 'N'; // 'S' - salvestamise dialoogis
 
 function ladinaTaht(charCode) {
   // 97..122 (a..z) 65..90 (A..Z)
@@ -365,38 +365,71 @@ function vahetaPooled() {
   kuvaTekst();
 }
 
-function laeAlla() {
-  // Laeb Google töölehelt "Samatekstid" tekstid
-  // ja kuvab
-  console.log('laeAlla');
+function kuvaLehekylg(p) {
+  // Kuvab massiivist tekstid lehekülje p, DOM elementi 'Lugemik'
+  // Ühtlasi uuendab sirvimispaneeli 'Sirvimine'
+  // Kui lehekülje p tekste ei ole, siis ei tee midagi
+  if (p < 1 || tekstid.length < tLk * (p - 1) + 1) {
+    return
+  }
+  // Kuva tekstid
+  // Puhasta eelmine
+  $('#Lugemik').empty();
+  // Massiiv tekstid on indekseeritud 0-alusel
+  for (var i = tLk * (p - 1);
+           i < tLk * p && i < tekstid.length; i++) {
+    var kirje = $('<p></p>')
+      .addClass('kirje')
+      .appendTo('#Lugemik'); 
+    // Märgendi Draft lisamine
+    var kuvatavTekst = tekstid[i].Tekst;
+    if (tekstid[i].Draft) {
+      kuvatavTekst = kuvatavTekst + '<span class="margend">Kavand</span>';
+    }  
+    var tekst = $('<span></span>')
+      .attr('id', 't' + i.toString())
+      .addClass('tekst')
+      .html(kuvatavTekst)
+      .appendTo(kirje);
+  }
+  jLk = p;
+  // Uuenda sirvimispaneeli
+  if (p > 1) {
+    $('#FirstPage').removeClass('disabled')
+    $('#PrevPage').removeClass('disabled')
+  }
+  else {
+    $('#FirstPage').addClass('disabled')
+    $('#PrevPage').addClass('disabled')
+  }
+  $('#PageNo').text(jLk.toString());
+  if (p * tLk < tekstid.length) {
+    $('#LastPage').removeClass('disabled')
+    $('#NextPage').removeClass('disabled')
+  }
+  else {
+    $('#LastPage').addClass('disabled')
+    $('#NextPage').addClass('disabled')
+  }
+}  
+
+function laeTekstid() {
+  // Laeb Google töölehelt "Samatekstid" lehekülje p
+  // tekste 
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
   $.get(url,
     function(data, status, xhr) {
       $('#Lugemik').empty();
-      data.forEach(function(e, i) {
-        var kirje = $('<p></p>')
-          .addClass('kirje')
-          .appendTo('#Lugemik');
-        var pk = $('<span></span>')
-          .attr('id', 'p' + i.toString())
-          .addClass('pealkiri')
-          // Puudub või tühi pealkiri
-          .text(e.Pealkiri == '' ? '***' : e.Pealkiri)
-          .appendTo(kirje);  
-        var tekst = $('<span></span>')
-        .attr('id', 't' + i.toString())
-          .addClass('tekst')
-          .text(e.Tekst)
-          .appendTo(kirje);
-        // Sea sündmusekäsitleja
-        $('#p' + i.toString()).click(function() {
-          $('#t' + i.toString()).toggle();
-        });
-      });
-    });
+      tekstid = data.Tekstid;
+      // Kuva saadud tekstid
+      kuvaLehekylg(1);
+    }); 
 }
 
-function salvesta() {
+function salvestusdialoog() {
+}
+
+function salvestaTekst() {
   // Koosta puhas tekst
   // Eemalda kursorijoon ja kesktähe peegeltäht
   var peegeltaheNr = tahti(t) / 2 + 1;
@@ -423,33 +456,60 @@ function salvesta() {
     }
   }
 
+  // Kas on Draft?
+  var draft = $('#draftNupp').prop('checked') ? true : false;
+
   // Salvesta Google töölehele
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
   $.post(url,
-    { Pealkiri: '***',
-      Tekst: c },
+    { Tekst: c, Draft: draft },
     function() {
-      console.log('Saadetud');
+      console.log('Saadetud tekst:' + c);
+      // Allolevate vahemuutujatega töötab, kuid miks, on ebaselge
+      var a = c;
+      var b = draft;
       // Uuenda lugemikku
-      laeAlla();
+      // Sünkroonimise probleem - ei ilmu kohe. Seetõttu pilvest mitte
+      // lugeda.
+      // Lisada tekst
+      var u = { Tekst: a, Draft: b };
+      console.log("Lisada tekst: " + u.toString());
+      tekstid.unshift(u);
+      tekstid[0].Tekst = c;
+      kuvaLehekylg(1);
     });
 }
 
 function alusta() {
-  // Valmis teksti logimine - käsitleja
+  // Initsialiseeri tooltip-id
+  $('[data-toggle="tooltip"]').tooltip();
+
+  // Sisestatava teksti käsitlejad
 
   $('#Poolednupp').click(function() {
-    $('#Tekst').focus();
-    vahetaPooled();
+    if (dialoogiseisund == 'N') {
+      $('#Tekst').focus();
+      vahetaPooled();
+    }
   });
 
   $('#Uusnupp').click(function() {
-    $('#Tekst').focus();
-    t = "|";
-    kuvaKeskelementYhekordselt = false;
-    logiTekst = "";
-    kuvaTekst();
+    if (dialoogiseisund == 'N') {
+      $('#Tekst').focus();
+      t = "|";
+      kuvaKeskelementYhekordselt = false;
+      logiTekst = "";
+      kuvaTekst();
+    }
+  });
 
+  $('#Salvesta1').click(function() {
+    if (dialoogiseisund == 'N') {
+      // Ava salvestusdialoog
+      $('#Salvestusdialoog').toggle();
+      dialoogiseisund = 'S';
+      $('#draftNupp').focus();
+    }
   });
 
   $('#Infonupp').click(function() {
@@ -457,14 +517,41 @@ function alusta() {
     $('#Tekst').focus();
   });
 
-  $('#LaeAlla').click(function() {
-    laeAlla();
+  // Salvestusdialoogi nuppude käsitlejad
+  $('#Salvesta2').click(function() {
+    salvestaTekst();
+  });
+
+  $('#Tyhista').click(function() {
+    // Sule salvestusdialoog
+    $('#Salvestusdialoog').toggle();
+    dialoogiseisund = 'N';
     $('#Tekst').focus();
   });
 
-  $('#Salvesta').click(function() {
-    salvesta();
-    $('#Tekst').focus();
+  // Lugemiku sirvimisnuppude käsitlejad
+  $('#FirstPage').click(function() {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(1); 
+    }  
+  });
+  
+  $('#NextPage').click(function() {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(jLk + 1);
+    }
+  });
+  
+  $('#PrevPage').click(function() {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(jLk - 1);
+    }
+  });
+  
+  $('#LastPage').click(function() {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(Math.ceil(tekstid.length / tLk));
+    }
   });
   
   // Tekstisisestuse käsitleja
@@ -487,5 +574,6 @@ function alusta() {
 
   // Algustekst (kursor)
   $('#Tekst').text(t);
+  laeTekstid(); // Lae tekstid alla
   $('#Tekst').focus();
 }

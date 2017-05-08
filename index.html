@@ -14,15 +14,17 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script -->
-  <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script -->
+  <!-- Tether on vaja tooltip-de jaoks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
   <!-- Stiilid -->
   <style>
 
-    body, textarea, button, input {  
-    font-family: 'Times New Roman', serif !important;
-    font-size: 14pt !important; }
+    body, textarea, button, input, legend {  
+      font-family: 'Times New Roman', serif !important;
+      font-size: 14pt !important;
+    }
 
     body { padding: 2rem 2rem 8rem 2rem; }
 
@@ -31,16 +33,60 @@
       padding: 4px; }
     .kesk { color: DarkBlue;
       font-weight: 600; }
-    .nupp { margin: 1rem; cursor: pointer;}
+    .nupp { margin: 1rem;
+      cursor: pointer;
+      color: rgb(117, 117, 117);
+    }
     .ikoon { font-family: 'Material Icons';
-      font-size: 48px; color: rgb(117, 117, 117); }
+      font-size: 48px;
+    }
+    /* Tekstitöötluse nupud */
+    #Tekstitootlus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .tooltip-inner { background-color: White;
+      color: rgb(117, 117, 117); }
+
+    /* Infopaan */  
     #Infopaan { display: none; }
-    .kood { font-family: 'Courier New', monospace; }
+    .kood {
+      font-family: 'Courier New', monospace;
+    }
+    /* Lugemik */
     #Lugemik { margin-top: 2rem; }
     .kirje { margin: 0; }
-    .pealkiri { cursor: pointer;
-      text-decoration: underline; margin-right: 2rem; }
-    .tekst { display: none; }
+    .margend { color: #F48FB1; margin-left: 1rem;}
+
+    /* Sirvimisnupud */
+    #Sirvimine {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    #PageNo { 
+      margin-left: 1rem; margin-right: 1rem;
+    }
+    #PageNo:after {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+    .disabled { color: Gainsboro !important; cursor: auto; }
+
+    /* Täpsustava küsimuse vorm */
+    #Salvestusdialoog {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid Yellow;
+    }
+
   </style>
 
   <!-- Skript -->
@@ -57,31 +103,76 @@
           <p id="Tekst">
           </p>
 
-          <p style='margin-top: 2rem; '>
-            <span id='Poolednupp' class='nupp'><i class="ikoon material-icons">swap_horiz</i></nupp>
+          <p id='Tekstitootlus'>
+            <span id='Poolednupp' class='nupp'
+              data-toggle='tooltip' title='Vaheta pooled'>
+              <i class="ikoon material-icons">swap_horiz</i>
+            </span>
 
-            <span id='Uusnupp' class='nupp'><i class="ikoon material-icons">clear</i></span>
+            <span id='Uusnupp' class='nupp'
+              data-toggle='tooltip' title='Alusta uut'>
+              <i class="ikoon material-icons">clear</i>
+            </span>
 
-            <span id='Infonupp' class='nupp'><i class="ikoon material-icons">info</i></span>
+            <span id='Infonupp' class='nupp'
+              data-toggle='tooltip' title='Teave'>
+              <i class="ikoon material-icons">info</i>
+            </span>
 
-            <span id='LaeAlla' class='nupp'><i class="ikoon material-icons">cloud_download</i></span>
-            
-            <span id='Salvesta' class='nupp'><i class="ikoon material-icons">cloud_upload</i></span>
-
+            <span id='Salvesta1' class='nupp'
+              data-toggle='tooltip' title='Salvesta pilve'>
+              <i class="ikoon material-icons">cloud_upload</i>
+            </span>
           </p>
 
+          <!-- Täpsustav küsimus salvestamisel -->
+          <!-- Vt https://v4-alpha.getbootstrap.com/components/forms/ -->
+          <div id='Salvestusdialoog' style='display: none;'>
+            <span class='form-check form-check-inline'>
+              <label class='form-check-label active'>
+                <input type='checkbox' class='form-check-input'
+                  autocomplete="off" checked 
+                  id='draftNupp'>
+                Kavand
+              </label>
+            </span>
+            <span id='Salvesta2' class='nupp'
+              data-toggle='tooltip' title='Salvesta pilve'>
+              <i class="ikoon material-icons"
+                style='color: #C5E1A5;'>cloud_upload</i>
+            </span>
+            <span id='Tyhista' class='nupp'
+              data-toggle='tooltip' title='Tühista'>
+              <i class="ikoon material-icons"
+                style='color: #F48FB1;'>cancel</i>
+            </span>
+          </div>
+
           <p id='Infopaan'>
-          Palindroomiredaktor. (c) Priit Parmakson 2017<br>
-          &larr; &rarr; - liikumine;
-          <span class='kood'>&uarr;</span> <span class='kood'>&darr;</span> - suur-/väiketäheks;
+            Palindroomiredaktor. (c) Priit Parmakson 2017<br>
+            &larr; &rarr; - liikumine;
+            <span class='kood'>&uarr;</span> <span class='kood'>&darr;</span> - suur-/väiketäheks;
            <span class='kood'>PgUp</span> <span class='kood'>PgDn</span> - kesktäht ühe-/kahekordselt;
            <span class='kood'>Backspace</span>, <span class='kood'>Delete</span> - kustutamine 
           </p>
 
-          <p id='Logi'></p>
-
           <div id='Lugemik'></div>
 
+          <p id='Sirvimine'>
+            <span id='FirstPage' class='nupp disabled'>
+              <i class="ikoon material-icons">first_page</i>
+            </span>
+            <span id='PrevPage' class='nupp disabled'>
+              <i class="ikoon material-icons">chevron_left</i>
+            </span>
+            <span id='PageNo'></span>  
+            <span id='NextPage' class='nupp disabled'>
+              <i class="ikoon material-icons">chevron_right</i>
+            </span>
+            <span id='LastPage' class='nupp disabled'>
+              <i class="ikoon material-icons">last_page</i>
+            </span>
+          </p>
 
         </div>  
       </div>
