@@ -56,9 +56,59 @@ function tahti(str) {
     .length;
 }
 
+function markeeriLugemikuTekst(t) {
+  // Tagastab markeeritud keskkohaga teksti
+  // Eeldatakse salvestamiseks puhastatud teksti (ei sisalda kursorit)
+  var acc = ''; // Tagastatav tekst, lisatud markeering
+  var m1 = null; // Esimese markeeritava tähe indeks (1-baas)
+  var keskelementYhekordselt = null;
+
+  var tTekstis = tahti(t);
+
+  if ((tTekstis < 4)) {
+    return t
+  }
+
+  // Mitmes täht (või tähed) markeerida?
+  if (tTekstis % 2 == 0) {
+    m1 = tTekstis / 2;
+    keskelementYhekordselt = false;
+  }
+  else {
+    m1 = Math.floor(tTekstis / 2) + 1;
+    keskelementYhekordselt = true;
+  }
+
+  var taheloendur = 0;
+  for (var i = 0; i < t.length; i++) {
+    // Punktuatsioon
+    if (kirjavm(t[i])) {
+      acc = acc + t[i];
+    }
+    // Täht
+    else {
+      taheloendur++;
+      // Esimene keskelement markeerida
+      if (taheloendur == m1) {
+        acc = acc + "<span class='keskL'>" + 
+          t[i] + "</span>";
+      }
+      // Teine keskelement...
+      else if (taheloendur == m1 + 1 && !keskelementYhekordselt) {
+        acc = acc + "<span class='keskL'>" + 
+          t[i] + "</span>";
+      }
+      // Kuvada tavaliselt
+      else {
+        acc = acc + t[i];
+      }
+    }
+  }
+  return acc
+}
+
 function markeeriTekst() {
   // Tagastab markeeritud keskkohaga teksti
-  // Markeerib punase värviga
   var acc = ""; // Tagastatav tekst, lisatud markeering
 
   if ((tahti(t) < 4)) {
@@ -382,7 +432,7 @@ function kuvaLehekylg(p) {
       .addClass('kirje')
       .appendTo('#Lugemik'); 
     // Märgendi Draft lisamine
-    var kuvatavTekst = tekstid[i].Tekst;
+    var kuvatavTekst = markeeriLugemikuTekst(tekstid[i].Tekst);
     if (tekstid[i].Draft) {
       kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
     }  
@@ -476,6 +526,8 @@ function salvestaTekst() {
       kuvaLehekylg(1);
       // Sule salvestusdialoog
       $('#Salvestusdialoog').toggle();
+      dialoogiseisund = 'N';
+      $('#Tekst').focus();
     });
 }
 
