@@ -512,12 +512,6 @@ function alusta() {
     }
   });
 
-  $('#Infonupp').click(function() {
-    $('#Infopaan').toggle();
-    $('#Tekst').focus();
-  });
-
-  // Salvestusdialoogi nuppude käsitlejad
   $('#Salvesta2').click(function() {
     salvestaTekst();
   });
