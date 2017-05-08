@@ -384,7 +384,7 @@ function kuvaLehekylg(p) {
     // Märgendi Draft lisamine
     var kuvatavTekst = tekstid[i].Tekst;
     if (tekstid[i].Draft) {
-      kuvatavTekst = kuvatavTekst + '<span class="margend">Kavand</span>';
+      kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
     }  
     var tekst = $('<span></span>')
       .attr('id', 't' + i.toString())
@@ -424,9 +424,6 @@ function laeTekstid() {
       // Kuva saadud tekstid
       kuvaLehekylg(1);
     }); 
-}
-
-function salvestusdialoog() {
 }
 
 function salvestaTekst() {
@@ -477,6 +474,8 @@ function salvestaTekst() {
       tekstid.unshift(u);
       tekstid[0].Tekst = c;
       kuvaLehekylg(1);
+      // Sule salvestusdialoog
+      $('#Salvestusdialoog').toggle();
     });
 }
 

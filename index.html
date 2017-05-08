@@ -29,7 +29,7 @@
     body { padding: 2rem 2rem 8rem 2rem; }
 
     #Tekst { border-radius: 4px;
-      border: 1px solid DeepSkyBlue;
+      border: 1px solid #C5E1A5;
       padding: 4px; }
     .kesk { color: DarkBlue;
       font-weight: 600; }
@@ -54,13 +54,21 @@
     /* Infopaan */
     #Infopaan { border-top: 1px solid LightGray;
       padding-top: 1rem; }  
-    .kood {
+    .klahv {
+      border-radius: 3px;
+      padding-left: 1px; padding-right: 1px;
+      border: 1px solid rgb(117, 117, 117);
       font-family: 'Courier New', monospace;
     }
     /* Lugemik */
     #Lugemik { margin-top: 2rem; }
     .kirje { margin: 0; }
-    .margend { color: #F48FB1; margin-left: 1rem;}
+    .margend { color: #C5E1A5;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 1px;
+      font-size: 10pt;
+      font-variant: small-caps;
+      margin-left: 1rem;}
 
     /* Sirvimisnupud */
     #Sirvimine {
@@ -85,7 +93,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid Yellow;
+      border: 1px solid #C5E1A5;
+    }
+
+    /* Määra üle Bootstrapi lingivärv */
+    a, a:hover, a:active, a:visited {
+      color: #C5E1A5 !important;
     }
 
   </style>
@@ -182,14 +195,15 @@
             </svg>
           </a>
           <br>
-          &larr; &rarr; - liikumine;
-          <span class='kood'>&uarr;</span> 
-          <span class='kood'>&darr;</span> - suur-/väiketäheks;
-          <span class='kood'>PgUp</span> 
-          <span class='kood'>PgDn</span> - kesktäht ühe-/kahekordselt;
+          <span class='klahv'>&larr;</span>
+          <span class='klahv'>&rarr;</span> - liikumine;
+          <span class='klahv'>&uarr;</span> 
+          <span class='klahv'>&darr;</span> - suur-/väiketäheks;
+          <span class='klahv'>PgUp</span> 
+          <span class='klahv'>PgDn</span> - kesktäht ühe-/kahekordselt;
           <br>
-          <span class='kood'>Backspace</span>, 
-          <span class='kood'>Delete</span> - kustutamine 
+          <span class='klahv'>Backspace</span>, 
+          <span class='klahv'>Delete</span> - kustutamine 
         </p>
 
       </div>
