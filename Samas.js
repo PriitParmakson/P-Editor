@@ -205,6 +205,7 @@ function tootleEriklahv(keyCode) {
       t = tekstEnne.substring(0, tekstEnne.length - 1) + "|" +
         tekstEnne.substring(tekstEnne.length - 1, tekstEnne.length) +
         tekstParast;
+      aktiveeriTekstinupud();  
       kuvaTekst();
       return
     }
@@ -218,6 +219,7 @@ function tootleEriklahv(keyCode) {
       }
       t = tekstEnne + tekstParast.substring(0, 1) + "|" + 
         tekstParast.substring(1, tekstParast.length);
+      aktiveeriTekstinupud();  
       kuvaTekst();
       return
     }
@@ -255,6 +257,7 @@ function tootleEriklahv(keyCode) {
       }
       t = acc;
     }
+    aktiveeriTekstinupud();
     kuvaTekst();
   }
 
@@ -290,6 +293,7 @@ function tootleEriklahv(keyCode) {
       }
       t = acc;
     }
+    aktiveeriTekstinupud();
     kuvaTekst();
   }
 
@@ -387,6 +391,7 @@ function lisaTahtVoiPunktuatsioon(chrCode) {
     t = acc + chrTyped + "|" + tekstParast;
   }
 
+  aktiveeriTekstinupud();
   // console.log('Tekst: ', t);
   kuvaTekst();
 } 
@@ -571,6 +576,31 @@ function seaFilter() {
   $('#Sirvimine').toggle();
 }
 
+function aktiveeriTekstinupud() {
+  // Aktiveeri tekstitöötlusnupud, kuid mitte neid, mis
+  // tühiteksti puhul ei oma mõtet
+  $('#Otsi').removeClass('disabled');
+  if (t.length == 1) {
+    $('#Poolednupp').addClass('disabled');
+    $('#Uusnupp').addClass('disabled');
+    $('#Salvesta1').addClass('disabled');
+  } 
+  else {
+    $('#Poolednupp').removeClass('disabled');
+    $('#Uusnupp').removeClass('disabled');
+    $('#Salvesta1').removeClass('disabled');
+  }
+  // Ei puutu Infonuppu
+}
+
+function deaktiveeriTekstinupud() {
+  $('#Otsi').addClass('disabled');
+  $('#Poolednupp').addClass('disabled');
+  $('#Uusnupp').addClass('disabled');
+  $('#Salvesta1').addClass('disabled');
+  // Ei puutu Infonuppu
+}
+
 function seaTekstisisestuseKasitleja() {
   // Tekstisisestuse käsitleja
   $(document).on('keypress', function(e) {
@@ -590,11 +620,7 @@ function seaTekstisisestuseKasitleja() {
     }
   });
   // Aktiveeri tekstiga seotud nupud
-  $('#Otsi').removeClass('disabled');
-  $('#Poolednupp').removeClass('disabled');
-  $('#Uusnupp').removeClass('disabled');
-  $('#Salvesta1').removeClass('disabled');
-  $('#Info').removeClass('disabled');
+  aktiveeriTekstinupud();
 }
 
 function eemaldaTekstisisestuseKasitleja() {
@@ -603,11 +629,7 @@ function eemaldaTekstisisestuseKasitleja() {
   $(document).off('keypress');
   // Vt https://www.w3schools.com/jquery/event_off.asp
   // ja näide: https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_event_off_func
-  $('#Otsi').addClass('disabled');
-  $('#Poolednupp').addClass('disabled');
-  $('#Uusnupp').addClass('disabled');
-  $('#Salvesta1').addClass('disabled');
-  $('#Info').addClass('disabled');
+  deaktiveeriTekstinupud();
 }
 
 function seaFiltriKasitlejad() {
@@ -652,15 +674,26 @@ function seaFiltriKasitlejad() {
   $('#FilterKeskel').on('click', function(e){
     seaFilter();
   });
+}
 
+function seaInfopaaniKasitlejad() {
+  // Infopaani käsitlejad
+  $('#Info').click(function() {
+    $('#Infopaan').removeClass('peidetud');
+    $('#Info').addClass('disabled');
+  });
+
+  $('#InfopaanSulge').click(function() {
+    $('#Infopaan').addClass('peidetud');
+    $('#Info').removeClass('disabled');
+  });
 }
 
 function alusta() {
   // Initsialiseeri tooltip-id
   $('[data-toggle="tooltip"]').tooltip();
 
-  // Sisestatava teksti käsitlejad
-
+  // Sea sisestatava teksti käsitlejad
   $('#Poolednupp').click(function() {
     if (dialoogiseisund == 'N') {
       $('#Tekst').focus();
@@ -673,7 +706,6 @@ function alusta() {
       $('#Tekst').focus();
       t = "|";
       kuvaKeskelementYhekordselt = false;
-      logiTekst = "";
       kuvaTekst();
     }
   });
@@ -683,6 +715,7 @@ function alusta() {
     if (dialoogiseisund == 'N') {
       // Ava salvestusdialoog
       $('#Salvestusdialoog').toggle();
+      deaktiveeriTekstinupud();
       dialoogiseisund = 'S';
       $('#draftNupp').focus();
     }
@@ -695,13 +728,12 @@ function alusta() {
   $('#Tyhista').click(function() {
     // Sule salvestusdialoog
     $('#Salvestusdialoog').toggle();
+    aktiveeriTekstinupud();
     dialoogiseisund = 'N';
     $('#Tekst').focus();
   });
 
-  $('#Info').click(function() {
-    $('#Infopaan').toggle();
-  });
+  seaInfopaaniKasitlejad();
 
   // Lugemiku sirvimisnuppude käsitlejad
   $('#FirstPage').click(function() {

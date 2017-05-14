@@ -32,16 +32,25 @@
       <div class='row'>
         <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
 
-          <p id='Infopaan' style='display: none;'>
-            <span class='klahv'>&larr;</span>
-            <span class='klahv'>&rarr;</span> liikumine;
-            <span class='klahv'>&uarr;</span> 
-            <span class='klahv'>&darr;</span> suur-/väiketäheks;
-            <span class='klahv'>PgUp</span> 
-            <span class='klahv'>PgDn</span> kesktäht ühe-/kahekordselt; 
-            <span class='klahv'>Backspace</span> 
-            <span class='klahv'>Delete</span> kustutamine 
-          </p>
+          <!-- Infopaan -->
+          <!-- Vt https://v4-alpha.getbootstrap.com/utilities/flexbox/#align-content -->
+          <div id='Infopaan' class='d-flex align-items-start'>
+            <!-- Info -->
+            <p id='Infotekst'>
+              <span class='klahv'>&larr;</span>
+              <span class='klahv'>&rarr;</span> liikumine;
+              <span class='klahv'>&uarr;</span> 
+              <span class='klahv'>&darr;</span> suur-/väiketäheks;
+              <span class='klahv'>PgUp</span> 
+              <span class='klahv'>PgDn</span> kesktäht ühe-/kahekordselt; 
+              <span class='klahv'>Backspace</span> 
+              <span class='klahv'>Delete</span> kustutamine
+            </p>
+            <!-- Sulgemisnupp -->
+            <div id='InfopaanSulge' class='justify-content-end'>
+              <span>&times;</span>
+            </div>
+          </div>
 
           <p id="Tekst">
           </p>
@@ -51,22 +60,22 @@
               <i class="ikoon material-icons">search</i>
             </span>
 
-            <span id='Poolednupp' class='nupp'
+            <span id='Poolednupp' class='nupp disabled'
               data-toggle='tooltip' title='Vaheta pooled'>
               <i class="ikoon material-icons">swap_horiz</i>
             </span>
 
-            <span id='Uusnupp' class='nupp'
+            <span id='Uusnupp' class='nupp disabled'
               data-toggle='tooltip' title='Alusta uut'>
               <i class="ikoon material-icons">clear</i>
             </span>
 
-            <span id='Salvesta1' class='nupp'
+            <span id='Salvesta1' class='nupp disabled'
               data-toggle='tooltip' title='Salvesta pilve'>
               <i class="ikoon material-icons">cloud_upload</i>
             </span>
 
-            <span id='Info' class='nupp'
+            <span id='Info' class='nupp disabled'
               data-toggle='tooltip' title='Kuidas kasutada'>
               <i class="ikoon material-icons">info</i>
             </span>
