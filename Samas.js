@@ -5,10 +5,11 @@ var t = "|"; // Tekst, kursoriga
 var kuvaKeskelementYhekordselt = false;
 
 var jLk = 1; // Jooksva lehekülje nr
-var tLk = 8; // Tekste leheküljel
+var tLk = 20; // Tekste leheküljel
 var tekstid; // Hoiab kõiki alla laetud tekste
 
 var dialoogiseisund = 'N'; // 'S' - salvestamise dialoogis
+// 'F' - filtridialoogis
 
 function ladinaTaht(charCode) {
   // 97..122 (a..z) 65..90 (A..Z)
@@ -531,6 +532,129 @@ function salvestaTekst() {
     });
 }
 
+function seaFilter() {
+  // Arvesta, et kui klõpsati valikukasti, siis see
+  // ei ole veel ümber seatud
+  var fL = $('#Filtritekst').val().toLowerCase();
+
+  // Kontrolli valikukaste
+  var vasakul = $('#FilterVasakul').prop('checked');
+  var paremal = $('#FilterParemal').prop('checked');
+  var keskel = $('#FilterKeskel').prop('checked');
+
+  // Puhasta eelmine
+  $('#Lugemik').empty();
+  for (var i = 0; i < tekstid.length; i++) {
+    var tekstL = tekstid[i].Tekst.toLowerCase();
+    // Lisada ka keskel kontroll
+    if (
+          (vasakul && tekstL.startsWith(fL + ' ')) ||
+          (paremal && tekstL.endsWith(' ' + fL)) ||
+          (!vasakul && !paremal && tekstL.includes(fL))
+        ) {
+      var kirje = $('<p></p>')
+        .addClass('kirje')
+        .appendTo('#Lugemik'); 
+      // Märgendi Draft lisamine
+      var kuvatavTekst = markeeriLugemikuTekst(tekstid[i].Tekst);
+      if (tekstid[i].Draft) {
+        kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
+      }  
+      var tekst = $('<span></span>')
+        .attr('id', 't' + i.toString())
+        .addClass('tekst')
+        .html(kuvatavTekst)
+        .appendTo(kirje);
+    }
+  }
+  // Filtri puhul sirvimispaneeli ei kuva
+  $('#Sirvimine').toggle();
+}
+
+function seaTekstisisestuseKasitleja() {
+  // Tekstisisestuse käsitleja
+  $(document).on('keypress', function(e) {
+    var evt = e ? e : event;
+    e.stopPropagation();
+    e.preventDefault();
+    var charCode = evt.charCode;
+    var keyCode = evt.keyCode;
+
+    if (charCode != null && charCode != 0) {
+      // Sisestatud täht
+      lisaTahtVoiPunktuatsioon(charCode);
+    }
+    else if (evt.keyCode != null) {
+      // Vajutatud eriklahv
+      tootleEriklahv(keyCode);
+    }
+  });
+  // Aktiveeri tekstiga seotud nupud
+  $('#Otsi').removeClass('disabled');
+  $('#Poolednupp').removeClass('disabled');
+  $('#Uusnupp').removeClass('disabled');
+  $('#Salvesta1').removeClass('disabled');
+  $('#Info').removeClass('disabled');
+}
+
+function eemaldaTekstisisestuseKasitleja() {
+  // Kutsutakse välja filtrirežiimi sisenemisel
+  // Teeb ka tekstiga seotud nupud mitteaktiivseks
+  $(document).off('keypress');
+  // Vt https://www.w3schools.com/jquery/event_off.asp
+  // ja näide: https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_event_off_func
+  $('#Otsi').addClass('disabled');
+  $('#Poolednupp').addClass('disabled');
+  $('#Uusnupp').addClass('disabled');
+  $('#Salvesta1').addClass('disabled');
+  $('#Info').addClass('disabled');
+}
+
+function seaFiltriKasitlejad() {
+  // Filtridialoogi käsitlejad
+  $('#Otsi').click(function() {
+    // Filtridialoogi avamine
+    if (dialoogiseisund == 'N') {
+      $('#Filtridialoog').toggle();
+      dialoogiseisund = 'F';
+      eemaldaTekstisisestuseKasitleja();
+      // Eemalda eelmine filtritekst (või autocomplete)
+      $('#Filtritekst').val('').focus();
+    }
+  });
+
+  $('#FilterTyhista').click(function() {
+    // Eemalda filter
+    kuvaLehekylg(jLk);
+    // Sule filtridialoog
+    $('#Filtridialoog').toggle();
+    dialoogiseisund = 'N';
+    seaTekstisisestuseKasitleja();
+    // Eemalda filtritekst
+    $('#Filtritekst').val('');
+    $('#Tekst').focus();
+  });
+  
+  // Vt HTML5 input event 
+  // http://www.geedew.com/the-html5-input-event/ 
+  $('#Filtritekst').on('input', function(e){
+    seaFilter();
+  });
+
+  $('#FilterVasakul').on('click', function(e){
+    seaFilter();
+  });
+
+  $('#FilterParemal').on('click', function(e){
+    seaFilter();
+  });
+
+  $('#FilterKeskel').on('click', function(e){
+    seaFilter();
+  });
+
+}
+
 function alusta() {
   // Initsialiseeri tooltip-id
   $('[data-toggle="tooltip"]').tooltip();
@@ -554,6 +678,7 @@ function alusta() {
     }
   });
 
+  // Salvestusdialoogi käsitlejad
   $('#Salvesta1').click(function() {
     if (dialoogiseisund == 'N') {
       // Ava salvestusdialoog
@@ -572,6 +697,10 @@ function alusta() {
     $('#Salvestusdialoog').toggle();
     dialoogiseisund = 'N';
     $('#Tekst').focus();
+  });
+
+  $('#Info').click(function() {
+    $('#Infopaan').toggle();
   });
 
   // Lugemiku sirvimisnuppude käsitlejad
@@ -598,24 +727,10 @@ function alusta() {
       kuvaLehekylg(Math.ceil(tekstid.length / tLk));
     }
   });
-  
-  // Tekstisisestuse käsitleja
-  $(document).keypress(function(e) {
-    var evt = e ? e : event;
-    e.stopPropagation();
-    e.preventDefault();
-    var charCode = evt.charCode;
-    var keyCode = evt.keyCode;
 
-    if (charCode != null && charCode != 0) {
-      // Sisestatud täht
-      lisaTahtVoiPunktuatsioon(charCode);
-    }
-    else if (evt.keyCode != null) {
-      // Vajutatud eriklahv
-      tootleEriklahv(keyCode);
-    }
-  });
+  seaFiltriKasitlejad();
+
+  seaTekstisisestuseKasitleja();
 
   // Algustekst (kursor)
   $('#Tekst').text(t);

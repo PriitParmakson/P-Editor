@@ -1,0 +1,89 @@
+    body, textarea, button, input, legend {  
+      font-family: 'Times New Roman', serif !important;
+      font-size: 14pt !important;
+    }
+
+    body { padding: 2rem 2rem 8rem 2rem; }
+
+    #Tekst, #Filtritekst { border-radius: 4px;
+      border: 1px solid #C5E1A5 !important;
+      padding: 4px !important;
+      color: rgb(117, 117, 117) !important; }
+
+    .kesk { color: DarkBlue;
+      font-weight: 600; }
+    .nupp { margin: 1rem;
+      cursor: pointer;
+      color: rgb(117, 117, 117);
+    }
+    .ikoon { font-family: 'Material Icons';
+      font-size: 48px;
+    }
+    /* Tekstitöötluse nupud */
+    #Tekstitootlus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .tooltip-inner { background-color: White;
+      color: rgb(117, 117, 117); }
+
+    /* Infopaan */
+    #Infopaan { border: 1px solid Aqua;
+      border-radius: 4px; 
+      background-color: Azure;
+      padding: 1rem; }  
+    .klahv {
+      border-radius: 3px;
+      padding-left: 1px; padding-right: 1px;
+      border: 1px solid rgb(117, 117, 117);
+      font-family: 'Courier New', monospace;
+    }
+    /* Lugemik */
+    #Lugemik { margin-top: 2rem; }
+    .kirje { margin: 0; }
+    .keskL { color: Red; }
+    .margend { color: #C5E1A5;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 1px;
+      font-size: 10pt;
+      font-variant: small-caps;
+      margin-left: 1rem;}
+
+    /* Sirvimisnupud */
+    #Sirvimine {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    #PageNo { 
+      margin-left: 1rem; margin-right: 1rem;
+    }
+    #PageNo:after {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+    .disabled { color: Gainsboro !important; cursor: auto; }
+
+    /* Filtridialoog */
+    #Filtritekst { margin-left: 2rem;
+      margin-right: 1rem; width: 8rem; }
+
+    /* Täpsustava küsimuse vorm */
+    #Salvestusdialoog, #Filtridialoog {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #C5E1A5;
+    }
+
+    /* Määra üle Bootstrapi lingivärv */
+    a, a:hover, a:active, a:visited {
+      color: #C5E1A5 !important;
+    }
+
