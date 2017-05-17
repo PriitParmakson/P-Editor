@@ -1,16 +1,70 @@
-//
-// Süntaksikontrollija: http://esprima.org/demo/validate.html
+/*
+  Rakenduse põhiomadused
+  ------------
+  * Teksti esitusvormingud. Kuval esitatakse keskelement (või -elemendid) rõhutatult. Sisemiselt hoitakse keskelementi alati kahekordselt. Samuti hoitakse siseesituses kursori positsiooni (sümbol '|'). Pilve salvestatakse puhta tekstina (rõhutusteta, keskelement ühekordselt, kui nii on määratud).
+  * Salvestatakse Google Sheet-le. Serveri poolel
+  * Injection-ründe kaitse. Google Sheet-iga seotud Google Apps Script-is kontrollitakse üle, et tekst ei sisalda HTML-i.
+  * Salvestamine toimub väikeses dialoogis, kus kontrollitakse, kas ikka tahetakse salvestada ja soovi korral määratakse, kas tekst on kavand. Salvestusdialoog on modaalse olemusega.
+  * Filtridialoog. Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusala.
+    - Filtreerimisel ei jagata väljundit lehekülgedeks.
 
-var t = "|"; // Tekst, kursoriga
+  Töövahendid
+  -----------
+  * Javascripti süntaksikontrollija: http://esprima.org/demo/validate.html
+
+  Teave
+  -----
+  * Kõigi HTML veebi-API-de nimekiri: https://developer.mozilla.org/en-US/docs/Web/
+  * HTML sündmuste kohta vt https://www.w3schools.com/tags/ref_eventattributes.asp
+  * JQuery sündmusekäsitlejate seadmine vt https://www.w3schools.com/jquery/jquery_events.asp
+  * DOM Node objekt vt: https://www.w3schools.com/xml/dom_node.asp
+  * jQuery-ga tippudele ligipääsemine vt: https://api.jquery.com/get/
+
+  Sündmused
+  ---------------
+  * Tähesisestuse töötlemiseks on keypress parem kui keydown, sest
+  keypress näitab, milline tärk sisestati (eristab suur- ja väiketähti). Keydown näitab millist klahvi vajutati.
+  * Väga hea seletus vt http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net
+
+  Miks ei kasuta input elementi
+  -----------------------------
+  * Input elemendis vt: setSelectionRange() HTML veebi-APIs HTMLInputElement - https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
+  * JQuery-s ei ole oninput võimalust, vt
+   http://stackoverflow.com/questions/11189136/fire-oninput-event-with-jquery 
+  * Vt ka http://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event 
+
+  Mitmesugust
+  -----------
+  * Arvesta ka Mac-i metakey-ga: http://stackoverflow.com/questions/2903991/how-to-detect-ctrlv-ctrlc-using-javascript
+  * break lause ei tööta Javascript forEach-ga.
+  * Tärgi asetamine stringi - vt http://stackoverflow.com/questions/4313841/javascript-how-can-i-insert-a-string-at-a-specific-index
+
+  Ctrl+V (Paste) käsitlemine
+  --------------------------
+  * Vt https://www.w3.org/TR/clipboard-apis/
+  * Vt onpaste event https://www.w3schools.com/jsref/event_onpaste.asp
+  * Allpool on kasutatud: http://stackoverflow.com/questions/6902455/how-do-i-capture-the-input-value-on-a-paste-event
+
+  Caret (kursori) paigutamine contenteditable div elemendis
+  ----------------------------------------------------------
+  * Range - The Range interface represents a fragment of a document that can contain nodes and parts of text nodes. Vt https://developer.mozilla.org/en-US/docs/Web/API/Range
+  * Vt: http://stackoverflow.com/questions/6249095/how-to-set-caretcursor-position-in-contenteditable-element-div
+  * document.createRange() vt: https://developer.mozilla.org/en-US/docs/Web/API/Document/createRange
+  * Range objekt vt: https://developer.mozilla.org/en-US/docs/Web/API/Range
+  * Selection objekt vt: https://developer.mozilla.org/en-US/docs/Web/API/Selection
+  * Caret paigutamine tühja teksti - kasuta 0-pikkusega tühikut, vt: http://stackoverflow.com/questions/4063144/setting-the-caret-position-to-an-empty-node-inside-a-contenteditable-element
+
+*/
+
+// Globaalsed muutujad
+var t = '|'; // Tekst
 var kuvaKeskelementYhekordselt = false;
-
+var tekstid; // Hoiab kõiki alla laetud tekste
 var jLk = 1; // Jooksva lehekülje nr
 var tLk = 20; // Tekste leheküljel
-var tekstid; // Hoiab kõiki alla laetud tekste
+var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
 
-var dialoogiseisund = 'N'; // 'S' - salvestamise dialoogis
-// 'F' - filtridialoogis
-
+// Tärgi või klahvi kindlakstegemise abifunktsioonid
 function ladinaTaht(charCode) {
   // 97..122 (a..z) 65..90 (A..Z)
   return (
@@ -18,7 +72,6 @@ function ladinaTaht(charCode) {
     (charCode >= 65 && charCode <= 90)
   )
 }
-
 function tapiTaht(charCode) {
   // õ ö ä ü 245 246 228 252
   // Õ Ö Ä Ü 213 214 196 220
@@ -28,12 +81,10 @@ function tapiTaht(charCode) {
     220, 353, 352, 382, 381].indexOf(charCode)
     != -1)
 }
-
 function veneTaht(charCode) {
   // 1024-1279
   return (charCode >= 1024 && charCode <= 1279)
 }
-
 function kirjavmKood(charCode) {
   // Kontrollib, kas charCode esitab lubatud 
   // kirjavahemärki
@@ -43,12 +94,12 @@ function kirjavmKood(charCode) {
   var r = p.indexOf(charCode);
   return (r >= 0)
 }
-
 function kirjavm(char) {
   // Kontrollib, kas tärk on kirjavahemärk
   return (kirjavmKood(char.charCodeAt(0)))
 }
 
+// Teksti töötlemise abifunktsioonid
 function tahti(str) {
   // Tagastab tähtede arvu stringis. Ei arvesta punktuatsioone ja kursorijoont
   return str
@@ -56,8 +107,7 @@ function tahti(str) {
     .filter(s => (! kirjavm(s)) && (s != "|"))
     .length;
 }
-
-function markeeriLugemikuTekst(t) {
+function markeeriTekstikoguTekst(t) {
   // Tagastab markeeritud keskkohaga teksti
   // Eeldatakse salvestamiseks puhastatud teksti (ei sisalda kursorit)
   var acc = ''; // Tagastatav tekst, lisatud markeering
@@ -91,57 +141,13 @@ function markeeriLugemikuTekst(t) {
       taheloendur++;
       // Esimene keskelement markeerida
       if (taheloendur == m1) {
-        acc = acc + "<span class='keskL'>" + 
-          t[i] + "</span>";
-      }
-      // Teine keskelement...
-      else if (taheloendur == m1 + 1 && !keskelementYhekordselt) {
-        acc = acc + "<span class='keskL'>" + 
-          t[i] + "</span>";
-      }
-      // Kuvada tavaliselt
-      else {
-        acc = acc + t[i];
-      }
-    }
-  }
-  return acc
-}
-
-function markeeriTekst() {
-  // Tagastab markeeritud keskkohaga teksti
-  var acc = ""; // Tagastatav tekst, lisatud markeering
-
-  if ((tahti(t) < 4)) {
-    return t
-  }
-
-  var p = tahti(t) / 2; 
-  var taheloendur = 0;
-
-  for (var i = 0; i < t.length; i++) {
-    // Punktuatsioon või kursorijoon
-    if (kirjavm(t[i]) || t[i] == "|") {
-      acc = acc + t[i];
-    }
-    // Täht
-    else {
-      taheloendur++;
-      // Esimene keskelement markeerida
-      if (taheloendur == p) {
         acc = acc + "<span class='kesk'>" + 
           t[i] + "</span>";
       }
       // Teine keskelement...
-      else if (taheloendur == p + 1) {
-        if (kuvaKeskelementYhekordselt) {
-          // ...mitte kuvada
-        }
-        else {
-          // ...kuvada ja markeerida
-          acc = acc + "<span class='kesk'>" + 
-            t[i] + "</span>";
-        }
+      else if (taheloendur == m1 + 1 && !keskelementYhekordselt) {
+        acc = acc + "<span class='kesk'>" + 
+          t[i] + "</span>";
       }
       // Kuvada tavaliselt
       else {
@@ -151,13 +157,126 @@ function markeeriTekst() {
   }
   return acc
 }
+function markeeriTekst() {
+  /* Tagastab markeeritud keskkohaga teksti.
 
-function kuvaTekst() {
-  var mTekst = markeeriTekst();
-  // console.log('Markeeritud tekst: ', mTekst);
-  $('#Tekst').html(mTekst);
+  Teksti struktuur: 
+    span id='A'
+    span id='K1' (esimene keskelement)
+    span id='Kt'
+    span id='K2' (teine keskelement)
+    span id='B'
+  
+  Kursorit sisse ei lülitata. Tekstiosad võivad olla tühjad.
+
+  */
+
+  var koguja = ['', '', '', '', ''];
+  // Koguja tekstiosadele A, K1, Kt, K2, B
+  var mode = '0'; // Kogutava tekstiosa indeks (0-põhine)
+
+  var p = tahti(t) / 2; // Alati täisarv, sest tekstis on mõlemad kesktähed, ka siis, kui kuvatakse ainult ühte.
+  var taheloendur = 0;
+
+  if (t.length == 1) {
+    // Tühja teksti puhul lisa esimesse span elementi 0-pikkusega tühik. See on vajalik caret positsioneerimiseks.
+    koguja[0] = '&#8203;'; 
+  }
+  else {
+    // Kogu tekstiosad
+    for (var i = 0; i < t.length; i++) {
+      // Kursorijoon, ei esita markeeritud tekstis
+      if (t[i] == '|') {
+      }
+      // Punktuatsioon
+      else if (kirjavm(t[i])) {
+        koguja[mode] = koguja[mode] + t[i];
+      }
+      // Täht
+      else {
+        taheloendur++;
+        // Esimene keskelement markeerida
+        if (taheloendur == p) {
+          koguja[1] = t[i];
+          mode = 2;  
+        }
+        // Teine keskelement...
+        else if (taheloendur == p + 1) {
+          if (kuvaKeskelementYhekordselt) {
+            // ...mitte kuvada
+          }
+          else {
+            // ...kuvada ja markeerida
+            koguja[3] = t[i];
+          }
+          mode = 4;
+        }
+        // Kuvada tavaliselt
+        else {
+          koguja[mode] = koguja[mode] + t[i];
+        }
+      }
+    }    
+  }
+  // Lisa markeering
+  var m = "<span id='A'>" + koguja[0] + "</span>" +
+    "<span id='K1' class='kesk'>" + koguja[1] + "</span>" +
+    "<span id='Kt'>" + koguja[2] + "</span>" +
+    "<span id='K2' class='kesk'>" + koguja[3] + "</span>" +
+    "<span id='B'>" + koguja[4] + "</span>";
+  return m
+}
+function moodustaTekstiStruktuurKonsoolile() {
+  // Silumise abivahend
+  return '|' + $('#A').text() +
+    '|' + $('#K1').text() +
+    '|' + $('#Kt').text() +
+    '|' + $('#K2').text() +
+    '|' + $('#B').text() + '|';
 }
 
+// Teksti kuvamise funktsioonid
+function kuvaTekst() {
+  // Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
+  var mTekst = markeeriTekst();
+  $('#Tekst').html(mTekst);
+  var caretSeadmiseTeade = seaCaret(t.indexOf('|'));
+  console.log(moodustaTekstiStruktuurKonsoolile() + caretSeadmiseTeade);
+}
+function seaCaret(pos) {
+  /* Seab kursori (caret) kuvatud tekstis. Tagastab vastava silumisotstarbelise teate.
+  Positsioonid on nummerdatud 0-st. 0-positsioon on enne esimest tähte.
+  */
+
+  // Leia span element ja positsioon selle tekstis, kuhu caret panna
+  var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B']; 
+  var kumPikkus = 0;
+  var otsitavTipp;
+  var posTipus;
+  for (var i = 0; i < tipuIDd.length; i++) {
+    var tipuPikkus = $('#' + tipuIDd[i]).text().length;
+    // console.log('tipu pikkus: ' + tipuPikkus);
+    if (pos <= kumPikkus + tipuPikkus) {
+      otsitavTipp = tipuIDd[i];
+      posTipus = pos - kumPikkus;
+      break 
+    }
+    kumPikkus = kumPikkus + tipuPikkus;
+  }
+
+  // Sea caret
+  var range = document.createRange();
+  var el = document.getElementById(otsitavTipp);
+  range.setStart(el.childNodes[0], posTipus);
+  range.collapse(true); // Lõpp ühtib algusega
+  var valik = document.getSelection();
+  valik.removeAllRanges();
+  valik.addRange(range);
+
+  return ' caret seatud: ' + otsitavTipp + ', ' + posTipus;
+}
+
+// Spetsiifilised operatsioonid tekstiga
 function suurtaheks() {
   // Kursori järel olev täht muudatakse suurtäheks
   var osad = t.split("|");
@@ -172,9 +291,8 @@ function suurtaheks() {
     tekstParast.substring(1, tekstParast.length);
   kuvaTekst();
 }
-
 function vaiketaheks() {
-  // Kursori järel olev täht muudatakse vaiketäheks
+  // Kursori järel olev täht muudetakse väiketäheks
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
   var tekstParast = osad[1]; // Tekst pärast joont
@@ -187,8 +305,354 @@ function vaiketaheks() {
     tekstParast.substring(1, tekstParast.length);
   kuvaTekst();
 }
+function vahetaPooled() {
+  var p = tahti(t) / 2;
+  if (p < 2) {
+    return
+  }
+  var taheloendur = 0;
+  var esimesePooleLopp;
+  // Leia keskkoht
+  for (var i = 0; i < t.length; i++) {
+    // Punktuatsioon kanna üle
+    if (! (kirjavm(t[i]) || t[i] == "|") ) {
+      taheloendur++;
+      if (taheloendur == p) {
+        esimesePooleLopp = i;
+        break;
+      }
+    }
+  }
+  var a = t.substring(0, i + 1);
+  var b = t.substring(i + 1, t.length);
+  t = b + a;
+  kuvaKeskelementYhekordselt = false;
+  kuvaTekst();
+}
 
+// Tekstikogu funktsioonid: laadimine, kuvamine, navigeerimine
+function laeTekstid() {
+  // Laeb Google töölehelt "Samatekstid" lehekülje p
+  // tekste 
+  var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+  $.get(url,
+    function(data, status, xhr) {
+      $('#Tekstikogu').empty();
+      tekstid = data.Tekstid;
+      // Kuva saadud tekstid
+      kuvaLehekylg(1);
+    }); 
+}
+function kuvaLehekylg(p) {
+  // Kuvab massiivist tekstid lehekülje p, DOM elementi 'Tekstikogu'
+  // Ühtlasi uuendab sirvimispaneeli 'Sirvimine'
+  // Kui lehekülje p tekste ei ole, siis ei tee midagi
+  if (p < 1 || tekstid.length < tLk * (p - 1) + 1) {
+    return
+  }
+  // Kuva tekstid
+  // Puhasta eelmine
+  $('#Tekstikogu').empty();
+  // Massiiv tekstid on indekseeritud 0-alusel
+  for (var i = tLk * (p - 1);
+           i < tLk * p && i < tekstid.length; i++) {
+    var kirje = $('<p></p>')
+      .addClass('kirje')
+      .appendTo('#Tekstikogu'); 
+    // Märgendi Draft lisamine
+    var kuvatavTekst = markeeriTekstikoguTekst(tekstid[i].Tekst);
+    if (tekstid[i].Draft) {
+      kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
+    }  
+    var tekst = $('<span></span>')
+      .attr('id', 't' + i.toString())
+      .addClass('tekst')
+      .html(kuvatavTekst)
+      .appendTo(kirje);
+  }
+  jLk = p;
+  // Uuenda sirvimispaneeli
+  if (p > 1) {
+    $('#FirstPage').removeClass('disabled')
+    $('#PrevPage').removeClass('disabled')
+  }
+  else {
+    $('#FirstPage').addClass('disabled')
+    $('#PrevPage').addClass('disabled')
+  }
+  $('#PageNo').text(jLk.toString());
+  if (p * tLk < tekstid.length) {
+    $('#LastPage').removeClass('disabled')
+    $('#NextPage').removeClass('disabled')
+  }
+  else {
+    $('#LastPage').addClass('disabled')
+    $('#NextPage').addClass('disabled')
+  }
+}  
+function seaTekstikoguKasitlejad() {
+  $('#AvaTekstikogu').click(function () {
+    $('#Tekstikogu').toggle();
+    if ($('#Tekstikogu').is(':visible')) {
+      $('#Otsi').removeClass('disabled');
+      $('#Sirvimine').show();
+    }
+    else {
+      $('#Otsi').addClass('disabled');
+      $('#Sirvimine').hide();
+    }
+  });
+
+  // Sirvimisnuppude käsitlejad
+  $('#FirstPage').click(function () {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(1); 
+    }  
+  });
+  
+  $('#NextPage').click(function () {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(jLk + 1);
+    }
+  });
+  
+  $('#PrevPage').click(function () {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(jLk - 1);
+    }
+  });
+  
+  $('#LastPage').click(function () {
+    if (dialoogiseisund == 'N') {
+      kuvaLehekylg(Math.ceil(tekstid.length / tLk));
+    }
+  });
+}
+
+// Tekstikogu filtreerimise (tekstide otsimise) funktsioonid
+function seaFilter() {
+  // Arvesta, et kui klõpsati valikukasti, siis see
+  // ei ole veel ümber seatud
+  var fL = $('#Filtritekst').val().toLowerCase();
+
+  // Kontrolli valikukaste
+  var vasakul = $('#FilterVasakul').prop('checked');
+  var paremal = $('#FilterParemal').prop('checked');
+  var keskel = $('#FilterKeskel').prop('checked');
+
+  // Puhasta eelmine
+  $('#Tekstikogu').empty();
+  for (var i = 0; i < tekstid.length; i++) {
+    var tekstL = tekstid[i].Tekst.toLowerCase();
+    // Lisada ka keskel kontroll
+    if (
+          (vasakul && tekstL.startsWith(fL + ' ')) ||
+          (paremal && tekstL.endsWith(' ' + fL)) ||
+          (!vasakul && !paremal && tekstL.includes(fL))
+        ) {
+      var kirje = $('<p></p>')
+        .addClass('kirje')
+        .appendTo('#Tekstikogu'); 
+      // Märgendi Draft lisamine
+      var kuvatavTekst = markeeriTekstikoguTekst(tekstid[i].Tekst);
+      if (tekstid[i].Draft) {
+        kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
+      }  
+      var tekst = $('<span></span>')
+        .attr('id', 't' + i.toString())
+        .addClass('tekst')
+        .html(kuvatavTekst)
+        .appendTo(kirje);
+    }
+  }
+  // Filtri puhul sirvimispaneeli ei kuva
+  $('#Sirvimine').toggle();
+}
+function seaFiltriKasitlejad() {
+  // Filtridialoogi käsitlejad
+  $('#Otsi').click(function() {
+    $('#Filtridialoog').toggle();
+    // Eemalda lehekülgede navigatsioon
+    $('#Sirvimine').toggle();
+    // Eemalda eelmine filtritekst (või autocomplete)
+    $('#Filtritekst').val('').focus();
+    $('#Otsi').addClass('disabled');
+  });
+
+  $('#FilterTyhista').click(function() {
+    // Eemalda filter, sule filtridialoog, eemalda filtritekst ja fokusseeri tekstile
+    // Taasta sirvimine
+    $('#Sirvimine').toggle();
+    kuvaLehekylg(jLk);
+    $('#Filtridialoog').toggle();
+    $('#Filtritekst').val('');
+    $('#Tekst').focus();
+    $('#Otsi').removeClass('disabled');
+  });
+  
+  // Vt HTML5 input event 
+  // http://www.geedew.com/the-html5-input-event/ 
+  $('#Filtritekst').on('input', function(e){
+    seaFilter();
+  });
+
+  $('#FilterVasakul').on('click', function(e){
+    seaFilter();
+  });
+
+  $('#FilterParemal').on('click', function(e){
+    seaFilter();
+  });
+
+  $('#FilterKeskel').on('click', function(e){
+    seaFilter();
+  });
+}
+
+// Uue teksti salvestamise funktsioonid
+function salvestaTekst() {
+  // Koosta puhas tekst
+  // Eemalda kursorijoon ja kesktähe peegeltäht
+  var peegeltaheNr = tahti(t) / 2 + 1;
+  var taheloendur = 0;
+  var c = ''; // Puhas tekst
+  for (var i = 0; i < t.length; i++) {
+    if (kirjavm(t[i])) {
+      c = c + t[i];
+    }
+    else if (t[i] == "|") {
+      // Jäta vahele
+    }
+    else {
+      taheloendur++;
+      // Jäta peegeltäht vahele?
+      if (kuvaKeskelementYhekordselt) {
+        if (taheloendur != peegeltaheNr) {
+          c = c + t[i];
+        }
+      }
+      else {
+        c = c + t[i];
+      }
+    }
+  }
+
+  // Kas on Draft?
+  var draft = $('#draftNupp').prop('checked') ? true : false;
+
+  // Salvesta Google töölehele
+  var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+  $.post(url,
+    { Tekst: c, Draft: draft },
+    function() {
+      console.log('Saadetud tekst:' + c);
+      // Allolevate vahemuutujatega töötab, kuid miks, on ebaselge
+      var a = c;
+      var b = draft;
+      // Uuenda tekstikogu
+      // Sünkroonimise probleem - ei ilmu kohe. Seetõttu pilvest mitte
+      // lugeda.
+      // Lisada tekst
+      var u = { Tekst: a, Draft: b };
+      console.log("Lisada tekst: " + u.toString());
+      tekstid.unshift(u);
+      tekstid[0].Tekst = c;
+      kuvaLehekylg(1);
+    });
+}
+function suleSalvestusdialoog() {
+  // Sule salvestusdialoog
+  $('#Salvestusdialoog').toggle();
+  aktiveeriTekstinupud();
+  dialoogiseisund = 'N';
+  $('#Tekst').focus();  
+}
+function seaSalvestuseKasitlejad() {
+  // Salvestusdialoogi käsitlejad
+  $('#Salvesta1').click(function() {
+    if (dialoogiseisund == 'N') {
+      // Ava salvestusdialoog
+      $('#Salvestusdialoog').toggle();
+      deaktiveeriTekstinupud();
+      dialoogiseisund = 'S';
+      $('#draftNupp').focus();
+    }
+  });
+
+  $('#Salvesta2').click(function() {
+    salvestaTekst();
+    suleSalvestusdialoog();
+  });
+
+  $('#Tyhista').click(function() {
+    suleSalvestusdialoog();
+  });
+}
+
+// Teksti eritoimingute modaalsuse funktsioonid
+function aktiveeriTekstinupud() {
+  // Aktiveeri tekstitöötlusnupud, kuid mitte neid, mis
+  // tühiteksti puhul ei oma mõtet
+  if (t.length == 1) {
+    $('#Poolednupp').addClass('disabled');
+    $('#Uusnupp').addClass('disabled');
+    $('#Salvesta1').addClass('disabled');
+  } 
+  else {
+    $('#Poolednupp').removeClass('disabled');
+    $('#Uusnupp').removeClass('disabled');
+    $('#Salvesta1').removeClass('disabled');
+  }
+  // Ei puutu Infonuppu
+}
+function deaktiveeriTekstinupud() {
+  $('#Poolednupp').addClass('disabled');
+  $('#Uusnupp').addClass('disabled');
+  $('#Salvesta1').addClass('disabled');
+  // Ei puutu Infonuppu
+}
+
+// Teksti redigeerimisega seotud funktsioonid
+function tuvastaCaretJaSeaSisekursor() {
+    // Selgitab välja caret positsioon, sest kasutaja võib olnud seda muutnud.
+    // Seab vastavalt sisemise kursori.
+
+    // Tühja teksti puhul ei oma mõtet.
+    if (t.length == 1) {
+      return
+    }
+
+    // Leia span element, kus valik algab ja valiku alguspositsioon selles elemendis
+    var r = document.getSelection().getRangeAt(0);
+    var algusSpan = r.startContainer.parentNode.id;
+    var algusPos = r.startOffset;
+
+    // Leia positsioon, kuhu sisemine kursor (|) liigutada.
+    var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B']; 
+    var kum = 0; // Kumulatiivne positsioon
+    for (var i = 0; i < tipuIDd.length; i++) {
+      if (tipuIDd[i] == algusSpan) {
+        kum += algusPos;
+        break 
+      } 
+      else {
+        kum += $('#' + tipuIDd[i]).text().length;
+      }
+    }
+    // Aseta sisemine kursor positsioonile kum
+    t = t.replace('|', '');
+    if (kum == 0) {
+      t = '|' + t;
+    }
+    else {
+      t = t.replace(new RegExp('.{' + kum + '}'), '$&' + '|');
+    }
+    console.log('caret ' + algusSpan + ':' + algusPos + ' -> sisekursor: ' + t);
+}
 function tootleEriklahv(keyCode) {
+
+  tuvastaCaretJaSeaSisekursor();
+
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
   var tekstParast = osad[1]; // Tekst pärast joont
@@ -196,34 +660,6 @@ function tootleEriklahv(keyCode) {
   var tP = tahti(tekstParast); // Tähti pärast osas
   var acc = ""; // Akumulaator
   var taheloendur = 0;
-
-  function tootleLeft() {
-    if (keyCode == 37) { // Left
-      if (tekstEnne.length == 0) {
-        return
-      }
-      t = tekstEnne.substring(0, tekstEnne.length - 1) + "|" +
-        tekstEnne.substring(tekstEnne.length - 1, tekstEnne.length) +
-        tekstParast;
-      aktiveeriTekstinupud();  
-      kuvaTekst();
-      return
-    }
-  }
-
-  function tootleRight() {
-    if (keyCode == 39) { // Right
-      // Lõpus mõju ei ole
-      if (tekstParast.length == 0) {
-        return
-      }
-      t = tekstEnne + tekstParast.substring(0, 1) + "|" + 
-        tekstParast.substring(1, tekstParast.length);
-      aktiveeriTekstinupud();  
-      kuvaTekst();
-      return
-    }
-  }
 
   function tootleBackspace() {
 
@@ -297,42 +733,35 @@ function tootleEriklahv(keyCode) {
     kuvaTekst();
   }
 
-  // Selektor
-  if (keyCode == 37) { // Left
-    tootleLeft();
-    return
+  switch (keyCode) {
+    case 8: // Backspace
+      tootleBackspace();
+      return
+    case 46: // Delete
+      tootleDelete();
+      return
+    case 33: // PgUp
+      kuvaKeskelementYhekordselt = true;
+      kuvaTekst();
+      return
+    case 34: // PgDn
+      kuvaKeskelementYhekordselt = false;
+      kuvaTekst();
+      return
+    case 38: // Up
+      suurtaheks();
+      return
+    case 40: // Down
+      vaiketaheks();
+      return
   }
-  if (keyCode == 39) { // Right
-    tootleRight();
-    return
-  }
-  if (keyCode == 8) { // Backspace
-    tootleBackspace();
-    return
-  }
-  if (keyCode == 46) { // Delete
-    tootleDelete();
-    return
-  }
-  if (keyCode == 33) { // PgUp
-    kuvaKeskelementYhekordselt = true;
-    kuvaTekst();
-  }
-  if (keyCode == 34) { // PgDn
-    kuvaKeskelementYhekordselt = false;
-    kuvaTekst();
-  }
-  if (keyCode == 38) { // Up
-    suurtaheks();
-  }
-  if (keyCode == 40) { // Down
-    vaiketaheks();
-  } 
 }
-
-function lisaTahtVoiPunktuatsioon(chrCode) {
-  var chrTyped = String.fromCharCode(chrCode);
+function lisaTahtVoiPunktuatsioon(charCode) {
+  var charTyped = String.fromCharCode(charCode);
   // console.log("chrTyped: ", chrTyped);
+
+  tuvastaCaretJaSeaSisekursor();
+
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
   var tekstParast = osad[1]; // Tekst pärast joont
@@ -343,20 +772,20 @@ function lisaTahtVoiPunktuatsioon(chrCode) {
 
   // Kontrollib, kas märgikood on lubatute hulgas
   if  (!
-        (ladinaTaht(chrCode) || tapiTaht(chrCode) ||
-         veneTaht || kirjavmKood(chrCode)
+        (ladinaTaht(charCode) || tapiTaht(charCode) ||
+         veneTaht(charCode) || kirjavmKood(charCode)
         )
       ) {
     return
   }
 
-  if (kirjavmKood(chrCode)) {
-    t = tekstEnne + chrTyped + "|" + tekstParast;
+  if (kirjavmKood(charCode)) {
+    t = tekstEnne + charTyped + "|" + tekstParast;
   }
   // Tähe puhul lisada ka peegeltäht
   else if (tE == tP) {
     // Lisa peegelsümbol kohe joone taha
-    t = tekstEnne + chrTyped + "|" + chrTyped + tekstParast;
+    t = tekstEnne + charTyped + "|" + charTyped + tekstParast;
   }
   else if (tE < tP) {
     // Lisa peegeltäht tekstParast-sse
@@ -369,11 +798,11 @@ function lisaTahtVoiPunktuatsioon(chrCode) {
         taheloendur++;
         // Lisada peegeltäht?
         if (taheloendur == tP - tE) {
-          acc = acc + chrTyped;
+          acc = acc + charTyped;
         }
       }
     }
-    t = tekstEnne + chrTyped + "|" + acc;
+    t = tekstEnne + charTyped + "|" + acc;
   }
   else if (tE > tP) {
     // Lisa peegeltäht tekstEnne-sse tähe tP + 1 ette
@@ -383,316 +812,60 @@ function lisaTahtVoiPunktuatsioon(chrCode) {
         taheloendur++;
         // Lisada peegeltäht?
         if (taheloendur == tP + 1) {
-          acc = acc + chrTyped;
+          acc = acc + charTyped;
         }
       }
       acc = acc + tekstEnne[i];
     }
-    t = acc + chrTyped + "|" + tekstParast;
+    t = acc + charTyped + "|" + tekstParast;
   }
 
   aktiveeriTekstinupud();
   // console.log('Tekst: ', t);
   kuvaTekst();
 } 
+function seaTekstisisestuseKasitlejad() {
+  /*
+      Teksti muutvaid ja tekstis navigeerivaid (caret-d muutvaid) klahvivajutusi käsitletakse sündmuste 'keydown',  'keypress' ja 'paste' kaudu.
+      Sündmus 'keydown' tekib klahvi vajutamisel esimesena.
+      Seejärel tekib 'keypress'.
 
-function vahetaPooled() {
-  var p = tahti(t) / 2;
-  if (p < 2) {
-    return
-  }
-  var taheloendur = 0;
-  var esimesePooleLopp;
-  // Leia keskkoht
-  for (var i = 0; i < t.length; i++) {
-    // Punktuatsioon kanna üle
-    if (! (kirjavm(t[i]) || t[i] == "|") ) {
-      taheloendur++;
-      if (taheloendur == p) {
-        esimesePooleLopp = i;
-        break;
-      }
-    }
-  }
-  var a = t.substring(0, i + 1);
-  var b = t.substring(i + 1, t.length);
-  t = b + a;
-  kuvaKeskelementYhekordselt = false;
-  kuvaTekst();
-}
+  */
 
-function kuvaLehekylg(p) {
-  // Kuvab massiivist tekstid lehekülje p, DOM elementi 'Lugemik'
-  // Ühtlasi uuendab sirvimispaneeli 'Sirvimine'
-  // Kui lehekülje p tekste ei ole, siis ei tee midagi
-  if (p < 1 || tekstid.length < tLk * (p - 1) + 1) {
-    return
-  }
-  // Kuva tekstid
-  // Puhasta eelmine
-  $('#Lugemik').empty();
-  // Massiiv tekstid on indekseeritud 0-alusel
-  for (var i = tLk * (p - 1);
-           i < tLk * p && i < tekstid.length; i++) {
-    var kirje = $('<p></p>')
-      .addClass('kirje')
-      .appendTo('#Lugemik'); 
-    // Märgendi Draft lisamine
-    var kuvatavTekst = markeeriLugemikuTekst(tekstid[i].Tekst);
-    if (tekstid[i].Draft) {
-      kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
-    }  
-    var tekst = $('<span></span>')
-      .attr('id', 't' + i.toString())
-      .addClass('tekst')
-      .html(kuvatavTekst)
-      .appendTo(kirje);
-  }
-  jLk = p;
-  // Uuenda sirvimispaneeli
-  if (p > 1) {
-    $('#FirstPage').removeClass('disabled')
-    $('#PrevPage').removeClass('disabled')
-  }
-  else {
-    $('#FirstPage').addClass('disabled')
-    $('#PrevPage').addClass('disabled')
-  }
-  $('#PageNo').text(jLk.toString());
-  if (p * tLk < tekstid.length) {
-    $('#LastPage').removeClass('disabled')
-    $('#NextPage').removeClass('disabled')
-  }
-  else {
-    $('#LastPage').addClass('disabled')
-    $('#NextPage').addClass('disabled')
-  }
-}  
-
-function laeTekstid() {
-  // Laeb Google töölehelt "Samatekstid" lehekülje p
-  // tekste 
-  var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
-  $.get(url,
-    function(data, status, xhr) {
-      $('#Lugemik').empty();
-      tekstid = data.Tekstid;
-      // Kuva saadud tekstid
-      kuvaLehekylg(1);
-    }); 
-}
-
-function salvestaTekst() {
-  // Koosta puhas tekst
-  // Eemalda kursorijoon ja kesktähe peegeltäht
-  var peegeltaheNr = tahti(t) / 2 + 1;
-  var taheloendur = 0;
-  var c = ''; // Puhas tekst
-  for (var i = 0; i < t.length; i++) {
-    if (kirjavm(t[i])) {
-      c = c + t[i];
-    }
-    else if (t[i] == "|") {
-      // Jäta vahele
-    }
-    else {
-      taheloendur++;
-      // Jäta peegeltäht vahele?
-      if (kuvaKeskelementYhekordselt) {
-        if (taheloendur != peegeltaheNr) {
-          c = c + t[i];
-        }
-      }
-      else {
-        c = c + t[i];
-      }
-    }
-  }
-
-  // Kas on Draft?
-  var draft = $('#draftNupp').prop('checked') ? true : false;
-
-  // Salvesta Google töölehele
-  var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
-  $.post(url,
-    { Tekst: c, Draft: draft },
-    function() {
-      console.log('Saadetud tekst:' + c);
-      // Allolevate vahemuutujatega töötab, kuid miks, on ebaselge
-      var a = c;
-      var b = draft;
-      // Uuenda lugemikku
-      // Sünkroonimise probleem - ei ilmu kohe. Seetõttu pilvest mitte
-      // lugeda.
-      // Lisada tekst
-      var u = { Tekst: a, Draft: b };
-      console.log("Lisada tekst: " + u.toString());
-      tekstid.unshift(u);
-      tekstid[0].Tekst = c;
-      kuvaLehekylg(1);
-      // Sule salvestusdialoog
-      $('#Salvestusdialoog').toggle();
-      dialoogiseisund = 'N';
-      $('#Tekst').focus();
-    });
-}
-
-function seaFilter() {
-  // Arvesta, et kui klõpsati valikukasti, siis see
-  // ei ole veel ümber seatud
-  var fL = $('#Filtritekst').val().toLowerCase();
-
-  // Kontrolli valikukaste
-  var vasakul = $('#FilterVasakul').prop('checked');
-  var paremal = $('#FilterParemal').prop('checked');
-  var keskel = $('#FilterKeskel').prop('checked');
-
-  // Puhasta eelmine
-  $('#Lugemik').empty();
-  for (var i = 0; i < tekstid.length; i++) {
-    var tekstL = tekstid[i].Tekst.toLowerCase();
-    // Lisada ka keskel kontroll
-    if (
-          (vasakul && tekstL.startsWith(fL + ' ')) ||
-          (paremal && tekstL.endsWith(' ' + fL)) ||
-          (!vasakul && !paremal && tekstL.includes(fL))
-        ) {
-      var kirje = $('<p></p>')
-        .addClass('kirje')
-        .appendTo('#Lugemik'); 
-      // Märgendi Draft lisamine
-      var kuvatavTekst = markeeriLugemikuTekst(tekstid[i].Tekst);
-      if (tekstid[i].Draft) {
-        kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
-      }  
-      var tekst = $('<span></span>')
-        .attr('id', 't' + i.toString())
-        .addClass('tekst')
-        .html(kuvatavTekst)
-        .appendTo(kirje);
-    }
-  }
-  // Filtri puhul sirvimispaneeli ei kuva
-  $('#Sirvimine').toggle();
-}
-
-function aktiveeriTekstinupud() {
-  // Aktiveeri tekstitöötlusnupud, kuid mitte neid, mis
-  // tühiteksti puhul ei oma mõtet
-  $('#Otsi').removeClass('disabled');
-  if (t.length == 1) {
-    $('#Poolednupp').addClass('disabled');
-    $('#Uusnupp').addClass('disabled');
-    $('#Salvesta1').addClass('disabled');
-  } 
-  else {
-    $('#Poolednupp').removeClass('disabled');
-    $('#Uusnupp').removeClass('disabled');
-    $('#Salvesta1').removeClass('disabled');
-  }
-  // Ei puutu Infonuppu
-}
-
-function deaktiveeriTekstinupud() {
-  $('#Otsi').addClass('disabled');
-  $('#Poolednupp').addClass('disabled');
-  $('#Uusnupp').addClass('disabled');
-  $('#Salvesta1').addClass('disabled');
-  // Ei puutu Infonuppu
-}
-
-function seaTekstisisestuseKasitleja() {
-  // Tekstisisestuse käsitleja
-  $(document).on('keypress', function(e) {
-    var evt = e ? e : event;
-    e.stopPropagation();
-    e.preventDefault();
-    var charCode = evt.charCode;
-    var keyCode = evt.keyCode;
-
-    if (charCode != null && charCode != 0) {
-      // Sisestatud täht
-      lisaTahtVoiPunktuatsioon(charCode);
-    }
-    else if (evt.keyCode != null) {
-      // Vajutatud eriklahv
+  /* Sündmuse 'keydown' käsitleja. Püüame kinni eriklahvide vajutused, mida tahame töödelda: 8 (Backspace), 46 (Delete), 33 (PgUp), 34 (PgDn), 38 (Up), 40 (Down). Nende vaikimisi toiming tühistatakse.
+  */
+  $('#Tekst').on('keydown', function(e) {
+    var keyCode = e.keyCode;
+    if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
+      e.preventDefault();
       tootleEriklahv(keyCode);
     }
+    // var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+    // Kui Ctrl+v, siis lase seda käsitleda paste sündmuse käsitlejal
+    // if (ctrlDown && keyCode == 86) { return }
   });
-  // Aktiveeri tekstiga seotud nupud
-  aktiveeriTekstinupud();
-}
 
-function eemaldaTekstisisestuseKasitleja() {
-  // Kutsutakse välja filtrirežiimi sisenemisel
-  // Teeb ka tekstiga seotud nupud mitteaktiivseks
-  $(document).off('keypress');
-  // Vt https://www.w3schools.com/jquery/event_off.asp
-  // ja näide: https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_event_off_func
-  deaktiveeriTekstinupud();
-}
-
-function seaFiltriKasitlejad() {
-  // Filtridialoogi käsitlejad
-  $('#Otsi').click(function() {
-    // Filtridialoogi avamine
-    if (dialoogiseisund == 'N') {
-      $('#Filtridialoog').toggle();
-      dialoogiseisund = 'F';
-      eemaldaTekstisisestuseKasitleja();
-      // Eemalda eelmine filtritekst (või autocomplete)
-      $('#Filtritekst').val('').focus();
+  /* Sündmuse 'keypress' käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse. */
+  $('#Tekst').on('keypress', function(e) {
+    var charCode = e.charCode;
+    if (charCode != null && charCode != 0) {
+      e.preventDefault();
+      lisaTahtVoiPunktuatsioon(charCode);
     }
   });
 
-  $('#FilterTyhista').click(function() {
-    // Eemalda filter
-    kuvaLehekylg(jLk);
-    // Sule filtridialoog
-    $('#Filtridialoog').toggle();
-    dialoogiseisund = 'N';
-    seaTekstisisestuseKasitleja();
-    // Eemalda filtritekst
-    $('#Filtritekst').val('');
-    $('#Tekst').focus();
-  });
-  
-  // Vt HTML5 input event 
-  // http://www.geedew.com/the-html5-input-event/ 
-  $('#Filtritekst').on('input', function(e){
-    seaFilter();
-  });
-
-  $('#FilterVasakul').on('click', function(e){
-    seaFilter();
-  });
-
-  $('#FilterParemal').on('click', function(e){
-    seaFilter();
-  });
-
-  $('#FilterKeskel').on('click', function(e){
-    seaFilter();
+  // Ctrl-V (Paste) töötleja
+  $('#Tekst').on('paste', function(e) {
+    console.log('paste');
+    // common browser -> e.originalEvent.clipboardData
+    // uncommon browser -> window.clipboardData
+    var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
+    var pastedData = clipboardData.getData('text');
+    console.log('pasted data: ' + pastedData);
+    e.preventDefault(); // We are already handling the data from the clipboard, we do not want it inserted into the document
   });
 }
-
-function seaInfopaaniKasitlejad() {
-  // Infopaani käsitlejad
-  $('#Info').click(function() {
-    $('#Infopaan').removeClass('peidetud');
-    $('#Info').addClass('disabled');
-  });
-
-  $('#InfopaanSulge').click(function() {
-    $('#Infopaan').addClass('peidetud');
-    $('#Info').removeClass('disabled');
-  });
-}
-
-function alusta() {
-  // Initsialiseeri tooltip-id
-  $('[data-toggle="tooltip"]').tooltip();
-
+function seaTekstinupukasitlejad() {
   // Sea sisestatava teksti käsitlejad
   $('#Poolednupp').click(function() {
     if (dialoogiseisund == 'N') {
@@ -710,62 +883,39 @@ function alusta() {
     }
   });
 
-  // Salvestusdialoogi käsitlejad
-  $('#Salvesta1').click(function() {
-    if (dialoogiseisund == 'N') {
-      // Ava salvestusdialoog
-      $('#Salvestusdialoog').toggle();
-      deaktiveeriTekstinupud();
-      dialoogiseisund = 'S';
-      $('#draftNupp').focus();
-    }
+  // Aktiveeri tekstiga seotud nupud
+  aktiveeriTekstinupud();
+}
+
+// Abiteabe funktsioon
+function seaInfopaaniKasitlejad() {
+  // Infopaani käsitlejad
+  $('#Info').click(function() {
+    $('#Infopaan').removeClass('peidetud');
+    $('#Info').addClass('disabled');
   });
 
-  $('#Salvesta2').click(function() {
-    salvestaTekst();
+  $('#InfopaanSulge').click(function() {
+    $('#Infopaan').addClass('peidetud');
+    $('#Info').removeClass('disabled');
   });
+}
 
-  $('#Tyhista').click(function() {
-    // Sule salvestusdialoog
-    $('#Salvestusdialoog').toggle();
-    aktiveeriTekstinupud();
-    dialoogiseisund = 'N';
-    $('#Tekst').focus();
-  });
+// Peaprogramm
+function alusta() {
+  // Initsialiseeri tooltip-id
+  $('[data-toggle="tooltip"]').tooltip();
 
+  seaTekstisisestuseKasitlejad();
+  seaTekstinupukasitlejad();
+  seaSalvestuseKasitlejad();
   seaInfopaaniKasitlejad();
-
-  // Lugemiku sirvimisnuppude käsitlejad
-  $('#FirstPage').click(function() {
-    if (dialoogiseisund == 'N') {
-      kuvaLehekylg(1); 
-    }  
-  });
-  
-  $('#NextPage').click(function() {
-    if (dialoogiseisund == 'N') {
-      kuvaLehekylg(jLk + 1);
-    }
-  });
-  
-  $('#PrevPage').click(function() {
-    if (dialoogiseisund == 'N') {
-      kuvaLehekylg(jLk - 1);
-    }
-  });
-  
-  $('#LastPage').click(function() {
-    if (dialoogiseisund == 'N') {
-      kuvaLehekylg(Math.ceil(tekstid.length / tLk));
-    }
-  });
-
+  seaTekstikoguKasitlejad();
   seaFiltriKasitlejad();
 
-  seaTekstisisestuseKasitleja();
-
   // Algustekst (kursor)
-  $('#Tekst').text(t);
-  laeTekstid(); // Lae tekstid alla
+  kuvaTekst();
   $('#Tekst').focus();
+
+  laeTekstid(); // Lae tekstid alla
 }
