@@ -1,16 +1,25 @@
 /*
-  Rakenduse põhiomadused
+  Rakenduse tähtsamad omadused
   ------------
-  * Teksti esitusvormingud. Kuval esitatakse keskelement (või -elemendid) rõhutatult. Sisemiselt hoitakse keskelementi alati kahekordselt. Samuti hoitakse siseesituses kursori positsiooni (sümbol '|'). Pilve salvestatakse puhta tekstina (rõhutusteta, keskelement ühekordselt, kui nii on määratud).
-  * Salvestatakse Google Sheet-le. Serveri poolel
-  * Injection-ründe kaitse. Google Sheet-iga seotud Google Apps Script-is kontrollitakse üle, et tekst ei sisalda HTML-i.
-  * Salvestamine toimub väikeses dialoogis, kus kontrollitakse, kas ikka tahetakse salvestada ja soovi korral määratakse, kas tekst on kavand. Salvestusdialoog on modaalse olemusega.
-  * Filtridialoog. Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusala.
-    - Filtreerimisel ei jagata väljundit lehekülgedeks.
-
+  * Teksti esitusvormingud
+    * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
+    * Sisemiselt hoitakse keskelementi alati kahekordselt. Samuti hoitakse siseesituses kursori positsiooni (sümbol '|').
+  * Salvestamine
+    * Toimub väikeses dialoogis, kus kontrollitakse, kas ikka tahetakse salvestada ja soovi korral määratakse, kas tekst on kavand. Salvestusdialoog on modaalse olemusega.
+    * Salvestatakse Google Sheet-le.
+    * Pilve salvestatakse puhta tekstina (rõhutusteta, keskelement ühekordselt, kui nii on määratud).
+  * Filtridialoog
+    * Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusala.
+    * Filtreerimisel ei jagata väljundit lehekülgedeks.
+  * Tekstikogu
+    - Tekstid kuvatakse nummerdatult.
+  * Turvalisus
+    * Injection-ründe kaitse. Google Sheet-iga seotud Google Apps Script-is kontrollitakse üle, et tekst ei sisalda HTML-i.
+    
   Töövahendid
   -----------
   * Javascripti süntaksikontrollija: http://esprima.org/demo/validate.html
+  * HTML validaator: https://validator.w3.org/nu/#file (Firefox-i kontekstimenüüst )
 
   Teave
   -----
@@ -344,7 +353,7 @@ function laeTekstid() {
     }); 
 }
 function kuvaLehekylg(p) {
-  // Kuvab massiivist tekstid lehekülje p, DOM elementi 'Tekstikogu'
+  // Kuvab massiivist 'tekstid' lehekülje p, DOM elementi 'Tekstikogu'
   // Ühtlasi uuendab sirvimispaneeli 'Sirvimine'
   // Kui lehekülje p tekste ei ole, siis ei tee midagi
   if (p < 1 || tekstid.length < tLk * (p - 1) + 1) {
@@ -360,7 +369,8 @@ function kuvaLehekylg(p) {
       .addClass('kirje')
       .appendTo('#Tekstikogu'); 
     // Märgendi Draft lisamine
-    var kuvatavTekst = markeeriTekstikoguTekst(tekstid[i].Tekst);
+    var kuvatavTekst = (tekstid.length - i).toString() + 
+      '.&nbsp;&nbsp;&nbsp;&nbsp;' + markeeriTekstikoguTekst(tekstid[i].Tekst);
     if (tekstid[i].Draft) {
       kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
     }  
@@ -638,6 +648,9 @@ function tuvastaCaretJaSeaSisekursor() {
       else {
         kum += $('#' + tipuIDd[i]).text().length;
       }
+    }
+    if (algusSpan == 'B' && kuvaKeskelementYhekordselt) {
+      kum += 1; // Sest siseesituses on keskelement alati kahekordselt
     }
     // Aseta sisemine kursor positsioonile kum
     t = t.replace('|', '');
