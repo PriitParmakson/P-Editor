@@ -15,7 +15,17 @@
     - Tekstid kuvatakse nummerdatult.
   * Turvalisus
     * Injection-ründe kaitse. Google Sheet-iga seotud Google Apps Script-is kontrollitakse üle, et tekst ei sisalda HTML-i.
-    
+  
+  Logimine
+  --------
+  * Logitakse tekstisisestust (elemendis 'Tekst'):
+    * kasutaja sisestatud täht, punktuatsioonimärk või eriklahv, tuvastatud caret positsioon ja selle järgi seatud sisekursor
+    * väljastatud tekst ja seatud caret positsioon.
+
+  Tähtsamad funktsioonid
+  ----------------------
+  * Kasutaja tegevused elemendis 'Tekst' püütakse kinni sündmustega 'keydown' ja 'keypress', kust suunatakse tähtede ja punktuatsioonisümbolite töötlemisele (lisaTahtVoiPunktuatsioon) või eriklahvivajutuste töötlemisele (tootleEriklahv).
+
   Töövahendid
   -----------
   * Javascripti süntaksikontrollija: http://esprima.org/demo/validate.html
@@ -106,6 +116,53 @@ function kirjavmKood(charCode) {
 function kirjavm(char) {
   // Kontrollib, kas tärk on kirjavahemärk
   return (kirjavmKood(char.charCodeAt(0)))
+}
+function keyCodeToHumanReadable(keyCode) {
+  var keycodes = {
+    8: 'backspace',
+    9: 'tab',
+    13: 'enter',
+    16: 'shift',
+    17: 'ctrl',
+    18: 'alt',
+    19: 'pause',
+    20: 'caps_lock',
+    27: 'esc',
+    32: 'space',
+    33: 'page_up',
+    34: 'page_down',
+    35: 'end',
+    36: 'home',
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down',
+    45: 'insert',
+    46: 'delete',
+    91: 'command',
+    93: 'right_click',
+    106: 'numpad_*',
+    107: 'numpad_+',
+    109: 'numpad_-',
+    110: 'numpad_.',
+    111: 'numpad_/',
+    144: 'num_lock',
+    145: 'scroll_lock',
+    182: 'my_computer',
+    183: 'my_calculator',
+    186: ';',
+    187: '=',
+    188: ',',
+    189: '-',
+    190: '.',
+    191: '/',
+    192: '`',
+    219: '[',
+    220: '\\',
+    221: ']',
+    222: "'"
+  }
+  return (keycodes[keyCode] || 'tundmatu klahv')
 }
 
 // Teksti töötlemise abifunktsioonid
@@ -546,6 +603,8 @@ function salvestaTekst() {
       }
     }
   }
+  // Eemalda algus- ja lõputühikud
+  c = c.trim();
 
   // Kas on Draft?
   var draft = $('#draftNupp').prop('checked') ? true : false;
@@ -624,12 +683,12 @@ function deaktiveeriTekstinupud() {
 
 // Teksti redigeerimisega seotud funktsioonid
 function tuvastaCaretJaSeaSisekursor() {
-    // Selgitab välja caret positsioon, sest kasutaja võib olnud seda muutnud.
-    // Seab vastavalt sisemise kursori.
+    // Selgita välja caret positsioon, sest kasutaja võib olnud seda muutnud, sea vastavalt sisemine kursor ja tagasta vastav teade.
 
     // Tühja teksti puhul ei oma mõtet.
+    // Arvesta ka, et tühja teksti puhul on esimeses span-elemendis 0-pikkusega tühik (et hoida div-elemendi mõõtmeid).
     if (t.length == 1) {
-      return
+      return '(tühitekst)'
     }
 
     // Leia span element, kus valik algab ja valiku alguspositsioon selles elemendis
@@ -660,11 +719,13 @@ function tuvastaCaretJaSeaSisekursor() {
     else {
       t = t.replace(new RegExp('.{' + kum + '}'), '$&' + '|');
     }
-    console.log('caret ' + algusSpan + ':' + algusPos + ' -> sisekursor: ' + t);
+    var teade = 'Tuvastatud caret (' + algusSpan + ',' + algusPos + '), seatud sisekursor: ' + t;
+    return teade
 }
 function tootleEriklahv(keyCode) {
 
-  tuvastaCaretJaSeaSisekursor();
+  var teade = tuvastaCaretJaSeaSisekursor();
+  console.log('Kasutaja vajutas: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
 
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
@@ -706,7 +767,7 @@ function tootleEriklahv(keyCode) {
       }
       t = acc;
     }
-    aktiveeriTekstinupud();
+    aktiveeriTekstinupud(); // Kas see on vajalik? Ja kui tekkis tühitekst?
     kuvaTekst();
   }
 
@@ -770,19 +831,7 @@ function tootleEriklahv(keyCode) {
   }
 }
 function lisaTahtVoiPunktuatsioon(charCode) {
-  var charTyped = String.fromCharCode(charCode);
-  // console.log("chrTyped: ", chrTyped);
-
-  tuvastaCaretJaSeaSisekursor();
-
-  var osad = t.split("|");
-  var tekstEnne = osad[0]; // Tekst enne joont
-  var tekstParast = osad[1]; // Tekst pärast joont
-  var tE = tahti(tekstEnne); // Tähti enne osas
-  var tP = tahti(tekstParast); // Tähti pärast osas
-  var acc = ""; // Akumulaator
-  var taheloendur = 0;
-
+  // Lisa kasutaja sisestatud täht või punktuatsioonimärk
   // Kontrollib, kas märgikood on lubatute hulgas
   if  (!
         (ladinaTaht(charCode) || tapiTaht(charCode) ||
@@ -791,6 +840,18 @@ function lisaTahtVoiPunktuatsioon(charCode) {
       ) {
     return
   }
+
+  var teade = tuvastaCaretJaSeaSisekursor();
+  var charTyped = String.fromCharCode(charCode);
+  console.log('Kasutaja sisestas märgi: ' + charTyped + ' - ' + teade);
+
+  var osad = t.split("|");
+  var tekstEnne = osad[0]; // Tekst enne joont
+  var tekstParast = osad[1]; // Tekst pärast joont
+  var tE = tahti(tekstEnne); // Tähti enne osas
+  var tP = tahti(tekstParast); // Tähti pärast osas
+  var acc = ""; // Akumulaator
+  var taheloendur = 0;
 
   if (kirjavmKood(charCode)) {
     t = tekstEnne + charTyped + "|" + tekstParast;
