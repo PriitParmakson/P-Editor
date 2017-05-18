@@ -1,6 +1,10 @@
 /*
   Samatekstiredaktor (Editor for Palindromic Texts), Priit Parmakson, 2017. MIT Licence
  
+  Kasutatud
+  ---------
+  * Map of keycodes to human readable key names - https://github.com/micro-js/keycodes
+
   Teksti esitusvormingud
   ----------------------
   * Siseesitus  
