@@ -4,9 +4,14 @@
 Eakas teema
 
 Tere, tere, vana kere!
-Tere, kuule luukere!
+Tere! Kuule, ma teretan!
+Ätt, tere pole EV-s veel operett.
+Täna teretame, luukere.
 Tere, Kanavere!
-Teretame, etsa kae!
+Teretame, etsakae!
+
+***
+Ajate luulu, luuletaja!
 ```
 
 **[Samatekstiredaktor](https://priitparmakson.github.io/Samatekstiredaktor)** on veebipõhine spetsialiseeritud redaktor samatekstide koostamiseks.

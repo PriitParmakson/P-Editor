@@ -511,11 +511,10 @@ function seaFiltriKasitlejad() {
   // Filtridialoogi käsitlejad
   $('#Otsi').click(function() {
     $('#Filtridialoog').toggle();
-    // Eemalda lehekülgede navigatsioon
     $('#Sirvimine').toggle();
-    // Eemalda eelmine filtritekst (või autocomplete)
     $('#Filtritekst').val('').focus();
     $('#Otsi').addClass('disabled');
+    seaFilter();
   });
 
   $('#FilterTyhista').click(function() {
