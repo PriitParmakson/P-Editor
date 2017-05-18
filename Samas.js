@@ -1,18 +1,27 @@
 /*
-  Rakenduse tähtsamad omadused
-  ------------
-  * Teksti esitusvormingud
+  Samatekstiredaktor (Editor for Palindromic Texts), Priit Parmakson, 2017. MIT Licence
+ 
+  Teksti esitusvormingud
+  ----------------------
+  * Siseesitus  
+    * Sisemiselt hoitakse keskelementi alati kahekordselt. Teavet keskelemendi kordsuse kohta hoiab glob-ne muutuja 'kuvaKeskelementYhekordselt'.
+    * Samuti hoitakse siseesituses kursori positsiooni (sümbol '|').
+  * Esitus kuval
     * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
-    * Sisemiselt hoitakse keskelementi alati kahekordselt. Samuti hoitakse siseesituses kursori positsiooni (sümbol '|').
+  * HTML-esitus
+    * Kuval esitatav tekst on jagatud viie span-elemendi vahel (võivad olla tühjad): A, K1, Kt, K2, B.
+    * Tühiteksti puhul pannakse esimesse span-elementi (A) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.   
+ 
+ Tekstikogu
+ ----------
+  * Tekstid kuvatakse nummerdatult.
   * Salvestamine
     * Toimub väikeses dialoogis, kus kontrollitakse, kas ikka tahetakse salvestada ja soovi korral määratakse, kas tekst on kavand. Salvestusdialoog on modaalse olemusega.
-    * Salvestatakse Google Sheet-le.
+    * Salvestatakse Google Sheet-le, kasutades Google Sheets REST API-t.
     * Pilve salvestatakse puhta tekstina (rõhutusteta, keskelement ühekordselt, kui nii on määratud).
   * Filtridialoog
     * Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusala.
     * Filtreerimisel ei jagata väljundit lehekülgedeks.
-  * Tekstikogu
-    - Tekstid kuvatakse nummerdatult.
   * Turvalisus
     * Injection-ründe kaitse. Google Sheet-iga seotud Google Apps Script-is kontrollitakse üle, et tekst ei sisalda HTML-i.
   
