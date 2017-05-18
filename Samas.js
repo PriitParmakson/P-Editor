@@ -301,47 +301,6 @@ function moodustaTekstiStruktuurKonsoolile() {
     '|' + $('#B').text() + '|';
 }
 
-// Teksti kuvamise funktsioonid
-function kuvaTekst() {
-  // Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
-  var mTekst = markeeriTekst();
-  $('#Tekst').html(mTekst);
-  var caretSeadmiseTeade = seaCaret(t.indexOf('|'));
-  console.log(moodustaTekstiStruktuurKonsoolile() + caretSeadmiseTeade);
-}
-function seaCaret(pos) {
-  /* Seab kursori (caret) kuvatud tekstis. Tagastab vastava silumisotstarbelise teate.
-  Positsioonid on nummerdatud 0-st. 0-positsioon on enne esimest tähte.
-  */
-
-  // Leia span element ja positsioon selle tekstis, kuhu caret panna
-  var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B']; 
-  var kumPikkus = 0;
-  var otsitavTipp;
-  var posTipus;
-  for (var i = 0; i < tipuIDd.length; i++) {
-    var tipuPikkus = $('#' + tipuIDd[i]).text().length;
-    // console.log('tipu pikkus: ' + tipuPikkus);
-    if (pos <= kumPikkus + tipuPikkus) {
-      otsitavTipp = tipuIDd[i];
-      posTipus = pos - kumPikkus;
-      break 
-    }
-    kumPikkus = kumPikkus + tipuPikkus;
-  }
-
-  // Sea caret
-  var range = document.createRange();
-  var el = document.getElementById(otsitavTipp);
-  range.setStart(el.childNodes[0], posTipus);
-  range.collapse(true); // Lõpp ühtib algusega
-  var valik = document.getSelection();
-  valik.removeAllRanges();
-  valik.addRange(range);
-
-  return ' caret seatud: ' + otsitavTipp + ', ' + posTipus;
-}
-
 // Spetsiifilised operatsioonid tekstiga
 function suurtaheks() {
   // Kursori järel olev täht muudatakse suurtäheks
@@ -578,14 +537,15 @@ function seaFiltriKasitlejad() {
 
 // Uue teksti salvestamise funktsioonid
 function salvestaTekst() {
-  // Koosta puhas tekst
+  // Koosta puhas tekst ja samuti tekst duplikaadi kontrolliks
   // Eemalda kursorijoon ja kesktähe peegeltäht
   var peegeltaheNr = tahti(t) / 2 + 1;
   var taheloendur = 0;
   var c = ''; // Puhas tekst
+  var d = ''; // Tekst duplikaadi kontrolliks
   for (var i = 0; i < t.length; i++) {
     if (kirjavm(t[i])) {
-      c = c + t[i];
+      c += t[i];
     }
     else if (t[i] == "|") {
       // Jäta vahele
@@ -595,16 +555,21 @@ function salvestaTekst() {
       // Jäta peegeltäht vahele?
       if (kuvaKeskelementYhekordselt) {
         if (taheloendur != peegeltaheNr) {
-          c = c + t[i];
+          c += t[i];
+          d += t[i];
         }
       }
       else {
-        c = c + t[i];
+        c += t[i];
+        d += t[i];
       }
     }
   }
   // Eemalda algus- ja lõputühikud
   c = c.trim();
+
+  // Kontrolli duplikaati
+  // Vaja mõelda, kuidas see efektiivselt teostada.
 
   // Kas on Draft?
   var draft = $('#draftNupp').prop('checked') ? true : false;
@@ -679,6 +644,50 @@ function deaktiveeriTekstinupud() {
   $('#Uusnupp').addClass('disabled');
   $('#Salvesta1').addClass('disabled');
   // Ei puutu Infonuppu
+}
+
+// Teksti kuvamise funktsioonid
+function kuvaTekst() {
+  // Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
+  var mTekst = markeeriTekst();
+  $('#Tekst').html(mTekst);
+  var caretSeadmiseTeade = seaCaret(t.indexOf('|'));
+  console.log(moodustaTekstiStruktuurKonsoolile() + caretSeadmiseTeade);
+}
+function seaCaret(pos) {
+  /* Seab kursori (caret) kuvatud tekstis. Tagastab vastava silumisotstarbelise teate.
+  - Positsioonid on nummerdatud 0-st. 0-positsioon on enne esimest tähte.
+  - Arvestada, et pos ei arvesta, et kesktäht võib olla ühekordselt.
+  */
+
+  // Leia span element ja positsioon selle tekstis, kuhu caret panna
+  var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B']; 
+  var kumPikkus = 0;
+  var otsitavTipp;
+  var posTipus;
+  for (var i = 0; i < tipuIDd.length; i++) {
+    var tipuPikkus = $('#' + tipuIDd[i]).text().length;
+    if (pos <= kumPikkus + tipuPikkus) {
+      otsitavTipp = tipuIDd[i];
+      posTipus = pos - kumPikkus;
+      break 
+    }
+    kumPikkus = kumPikkus + tipuPikkus;
+    if (tipuIDd[i] == 'K2' && tipuPikkus == 0) {
+      kumPikkus += 1;
+    }
+  }
+
+  // Sea caret
+  var range = document.createRange();
+  var el = document.getElementById(otsitavTipp);
+  range.setStart(el.childNodes[0], posTipus);
+  range.collapse(true); // Lõpp ühtib algusega
+  var valik = document.getSelection();
+  valik.removeAllRanges();
+  valik.addRange(range);
+
+  return ' caret seatud: ' + otsitavTipp + ', ' + posTipus;
 }
 
 // Teksti redigeerimisega seotud funktsioonid
