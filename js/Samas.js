@@ -126,10 +126,6 @@ function kirjavmKood(charCode) {
   var r = p.indexOf(charCode);
   return (r >= 0)
 }
-function kirjavm(char) {
-  // Kontrollib, kas tärk on kirjavahemärk
-  return (kirjavmKood(char.charCodeAt(0)))
-}
 function keyCodeToHumanReadable(keyCode) {
   var keycodes = {
     8: 'backspace',
@@ -178,7 +174,34 @@ function keyCodeToHumanReadable(keyCode) {
   return (keycodes[keyCode] || 'tundmatu klahv')
 }
 
-// Teksti töötlemise abifunktsioonid
+// Samatekstitöötluse primitiivid
+function kirjavm(char) {
+  // Kontrollib, kas tärk on kirjavahemärk
+  return (kirjavmKood(char.charCodeAt(0)))
+}
+function leiaTaht(str, index) {
+  /* Tagastab:
+   1) 'taht' - stringis str järjekorranumbriga index (1-põhine) tähe;
+   2) 'eelmineOliTyhik' - kas tähele eelnes tühik.
+   Kirjavahemärke tähtede loendamisel ei arvesta.
+   Ebaõige sisendi korral tagastab tühja stringi.
+  */
+  if (typeof str === 'undefined' || str === null || typeof index !== 'number' || index > str.length || index < 1) {
+    return { taht: '', eelmineOliTyhik: false }
+  }
+  var taheloendur = 0;
+  var eelmineOliTyhik = false;
+  for (var i = 0; i < str.length; i++) {
+    if (!kirjavm(str[i])) {
+      taheloendur += 1;
+      if (taheloendur == index) {
+        return { taht: str[i], eelmineOliTyhik: eelmineOliTyhik };
+      }
+    }
+    eelmineOliTyhik = (str[i] == ' ');
+  }
+  return { taht: '', eelmineOliTyhik: eelmineOliTyhik }
+}
 function tahti(str) {
   // Tagastab tähtede arvu stringis. Ei arvesta punktuatsioone ja kursorijoont
   return str
@@ -186,6 +209,61 @@ function tahti(str) {
     .filter(s => (! kirjavm(s)) && (s != "|"))
     .length;
 }
+function samatekst(str) {
+  // Kontrollib, kas str on samatekst
+  if (typeof str === 'undefined' || str === null) {
+    return false
+  }
+  if (str.length < 2) {
+    return true
+  }
+  var algusest = 0;
+  var lopust = str.length - 1;
+  do {
+    if (kirjavm(str[algusest])) {
+      algusest += 1;
+    }
+    else if (kirjavm(str[lopust])) {
+      lopust -= 1;
+    }
+    else if (str[algusest].toLowerCase() != str[lopust].toLowerCase()) {
+      return false
+    }
+    else {
+      algusest += 1;
+      lopust -= 1;
+    }
+  } 
+  while (algusest < lopust)
+  return true  
+}
+function keskelement(str) {
+  /* Tagastab:
+   1) 'taht' - samateksti str keskelement,
+   väiketähena;
+   2) 'yhekordne' - kas keskelement on ühekordsena (tõeväärtus);
+   3) 'sonaAlguses' - kas keskelement on sõna alguses (true) või lõpus (false).
+   Eeldab samateksti. Ei tohi sisaldada kursorit (|). 
+   */
+  if (typeof str === 'undefined' || str === null || str === '') {
+    return false
+  }
+  var t = tahti(str);
+  if (t == 0) {
+    return false
+  }
+  if (t % 2 == 0) {
+    // Keskelement on kahekordsena
+    var l = leiaTaht(str, t / 2); 
+    return { taht: l.taht.toLowerCase(), yhekordne: false, sonaAlguses: l.eelmineOliTyhik }
+  } 
+  else {
+    // Keskelement on ühekordsena
+    var l = leiaTaht(str, Math.ceil(t / 2));
+    return { taht: l.taht.toLowerCase(), yhekordne: true, sonaAlguses: l.eelmineOliTyhik }
+  }
+}
+// Teksti töötlemise abifunktsioonid
 function markeeriTekstikoguTekst(t) {
   // Tagastab markeeritud keskkohaga teksti
   // Eeldatakse salvestamiseks puhastatud teksti (ei sisalda kursorit)
@@ -434,11 +512,11 @@ function seaTekstikoguKasitlejad() {
     $('#Tekstikogu').toggle();
     if ($('#Tekstikogu').is(':visible')) {
       $('#Otsi').removeClass('disabled');
-      $('#Sirvimine').show();
+      $('#Sirvimine').removeClass('disabled');
     }
     else {
       $('#Otsi').addClass('disabled');
-      $('#Sirvimine').hide();
+      $('#Sirvimine').addClass('disabled');
     }
   });
 
@@ -469,25 +547,47 @@ function seaTekstikoguKasitlejad() {
 }
 
 // Tekstikogu filtreerimise (tekstide otsimise) funktsioonid
-function seaFilter() {
-  // Arvesta, et kui klõpsati valikukasti, siis see
-  // ei ole veel ümber seatud
+function seaFilter(klopsatudValik) {
   var fL = $('#Filtritekst').val().toLowerCase();
-
-  // Kontrolli valikukaste
+  // Võta valikud
   var vasakul = $('#FilterVasakul').prop('checked');
   var paremal = $('#FilterParemal').prop('checked');
   var keskel = $('#FilterKeskel').prop('checked');
-
+  var yhekordseltAlguses = $('#YhekordseltAlguses').prop('checked');
+  var yhekordseltLopus = $('#YhekordseltLopus').prop('checked');
+  // Arvesta, et kui klõpsati valikukasti, siis see
+  // ei ole veel ümber seatud
+  switch (klopsatudValik) {
+    case '#FilterVasakul':
+      vasakul = !vasakul;
+      break 
+    case '#FilterParemal':
+      paremal = !paremal;
+      break 
+    case '#FilterKeskel':
+      keskel = !keskel;
+      break
+    case '#YhekordseltAlguses':
+      yhekordseltAlguses = ! yhekordseltAlguses;
+      break
+    case '#YhekordseltLopus':
+      yhekordseltLopus = ! yhekordseltLopus;
+      break
+  }
+  console.log('Filter: ' + fL + (vasakul ? ': V ' : '') + (paremal ? ': P ' : '') + (keskel ? ': K ' : '') + (yhekordseltAlguses ? ': 1A ' : '') + (yhekordseltLopus ? ': 1L ' : ''));
   // Puhasta eelmine
   $('#Tekstikogu').empty();
   for (var i = 0; i < tekstid.length; i++) {
     var tekstL = tekstid[i].Tekst.toLowerCase();
-    // Lisada ka keskel kontroll
+    // Rakenda piirajad
+    var ke = keskelement(tekstL);
     if (
           (vasakul && tekstL.startsWith(fL + ' ')) ||
           (paremal && tekstL.endsWith(' ' + fL)) ||
-          (!vasakul && !paremal && tekstL.includes(fL))
+          (keskel && fL.length == 1 && fL == keskelement(tekstL)) ||
+          (yhekordseltAlguses && fL.length == 1 && ke.yhekordne && ke.sonaAlguses && fL == ke.taht) ||
+          (yhekordseltLopus && fL.length == 1 &&  ke.yhekordne && !ke.sonaAlguses && fL == ke.taht) ||
+          (!vasakul && !paremal && !keskel && !yhekordseltAlguses && !yhekordseltLopus && tekstL.includes(fL))
         ) {
       var kirje = $('<p></p>')
         .addClass('kirje')
@@ -504,23 +604,28 @@ function seaFilter() {
         .appendTo(kirje);
     }
   }
-  // Filtri puhul sirvimispaneeli ei kuva
-  $('#Sirvimine').toggle();
 }
 function seaFiltriKasitlejad() {
+  // Sea filtrivalikute algväärtused
+  $('#FilterVasakul').prop('checked', false);
+  $('#FilterParemal').prop('checked', false);
+  $('#FilterKeskel').prop('checked', false);
+  $('#YhekordseltAlguses').prop('checked', false);
+  $('#YhekordseltLopus').prop('checked', false);
+
   // Filtridialoogi käsitlejad
   $('#Otsi').click(function() {
     $('#Filtridialoog').toggle();
-    $('#Sirvimine').toggle();
+    $('#Sirvimine').addClass('disabled');
     $('#Filtritekst').val('').focus();
     $('#Otsi').addClass('disabled');
-    seaFilter();
+    seaFilter($(this).attr('id'));
   });
 
   $('#FilterTyhista').click(function() {
     // Eemalda filter, sule filtridialoog, eemalda filtritekst ja fokusseeri tekstile
     // Taasta sirvimine
-    $('#Sirvimine').toggle();
+    $('#Sirvimine').removeClass('disabled');
     kuvaLehekylg(jLk);
     $('#Filtridialoog').toggle();
     $('#Filtritekst').val('');
@@ -531,19 +636,11 @@ function seaFiltriKasitlejad() {
   // Vt HTML5 input event 
   // http://www.geedew.com/the-html5-input-event/ 
   $('#Filtritekst').on('input', function(e){
-    seaFilter();
+    seaFilter($(this).attr('id'));
   });
 
-  $('#FilterVasakul').on('click', function(e){
-    seaFilter();
-  });
-
-  $('#FilterParemal').on('click', function(e){
-    seaFilter();
-  });
-
-  $('#FilterKeskel').on('click', function(e){
-    seaFilter();
+  $('.filtrivalik').on('click', function(e){
+    seaFilter($(this).attr('id'));
   });
 }
 

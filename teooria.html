@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8"/>
+  <title>Samas</title>
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+
+  <!-- Material Design icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+  <!-- Tether on vaja tooltip-de jaoks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+  <!-- Stiilid -->
+  <link rel='stylesheet' href='css/Samas.css'>
+
+  </head>
+
+  <body>
+
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <!-- Infopaan -->
+          <div id='Infopaan' class='d-flex align-items-start'>
+            <!-- Info -->
+            <div id='Infotekst'>
+<p>
+Samatekstide terminoloogia<br>
+<br>
+<b>Liiane tekst</b> - samatekst, mille alguses või lõpus on üks või ka mitu "üleliigset" tähte, st täht(e), millele ei ole vastastähte. Tekst võib olla liiane vasakult (teksti algusest) või paremalt (teksti lõpust). Paremliiane tekst:<br>
+<code>
+yyy a
+</code><br>
+<br>
+Vasakliiane tekst:<br>
+<code>
+a yyy
+</code><br>
+<br>
+<b>Parempoolse ühekordse keskelemendiga tekst</b> - samatekst, mille keskelement on ühekordne ja sõna alguses:<br> 
+<code>
+xxxx axxxx
+</code>
+
+Samatekstide ühendamine. Vasakliiane tekst on muudetav korrektseks samatekstiks kombineerimisega vasakpoolse ühekordse keskelemendiga tekstiga:<br>
+<code>
+a yyy
+</code><br>
++
+<br>
+<code>
+xxxx axxxx
+</code>
+<br>
+=<br>
+<code>
+xxxxa yyy axxxx
+</code>
+</p>
+
+<p>
+Näiteks:<br>
+<br>
+<code>Aegamisi mutta sattumisi mage a</code>
+<br>
++<br>
+<code>Aga harib abirahaga</code>
+<br>
+=<br>
+<code>
+Aga harib aegamisi mutta sattumisi - mage! - abirahaga.
+</code>  
+</p>
+  </div>
+            <!-- Sulgemisnupp -->
+            <div id='InfopaanSulge' class='justify-content-end'>
+              <span>&times;</span>
+            </div>
+          </div>
+
+        </div>  
+      </div>
+
+      <!-- Jalus -->
+      <div class='row' style='margin-top: 3rem; margin-bottom: 3rem;'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+          <p>
+            <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' data-toggle='tooltip' title='Litsents'>CC BY-NC-SA 4.0</a> 
+            <a href='https://github.com/PriitParmakson'>Priit Parmakson</a> 2017
+            &nbsp;&nbsp;&nbsp;
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+
+</html>

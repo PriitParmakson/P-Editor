@@ -18,10 +18,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
   <!-- Stiilid -->
-  <link rel='stylesheet' href='Samas.css'>
+  <link rel='stylesheet' href='css/Samas.css'>
 
   <!-- Skript -->
-  <script src='Samas.js'></script>
+  <script src='js/Samas.js'></script>
 
   </head>
 
@@ -107,34 +107,56 @@
 
           <!-- Filtridialoog -->
           <div id='Filtridialoog' style='display: none;'>
-            <input id='Filtritekst' type='text'
-              class='form-control' autocomplete="off" 
-             >
-            <span class='form-check form-check-inline'>
-              <label class='form-check-label active'>
-                <input type='checkbox' class='form-check-input'
-                  id='FilterVasakul'>
-                Vasakul
-              </label>
-            </span>
-            <span class='form-check form-check-inline'>
-              <label class='form-check-label active'>
-                <input type='checkbox' class='form-check-input'
-                  id='FilterParemal'>
-                Paremal
-              </label>
-            </span>
-            <span class='form-check form-check-inline'>
-              <label class='form-check-label active'>
-                <input type='checkbox' class='form-check-input'
-                  id='FilterKeskel'>
-                Keskel
-              </label>
-            </span>
-            <span id='FilterTyhista' class='nupp'>
-              <i class="ikoon material-icons"
-                style='color: #F48FB1;'>cancel</i>
-            </span>
+            <div class='d-flex flex-wrap align-items-center justify-content-center'>
+              <span>
+                <label class='active'>
+                  <input id='Filtritekst' type='text'
+                    class='form-control' autocomplete="off" 
+                   >
+                </label>
+              </span>
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='FilterVasakul'>
+                  Teksti alguses
+                </label>
+              </span>
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='FilterParemal'>
+                  Teksti lõpus
+                </label>
+              </span>
+              <span id='FilterTyhista' class='align-self-center nupp'>
+                <i class="ikoon material-icons"
+                  style='color: #F48FB1;'>cancel</i>
+              </span>
+            </div>
+            <div class='d-flex align-items-center justify-content-center'>
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='FilterKeskel'>
+                  Keskel
+                </label>
+              </span>
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='YhekordseltAlguses'>
+                  Keskel, ühekordselt, sõna alguses
+                </label>
+              </span>
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='YhekordseltLopus'>
+                  Keskel, ühekordselt, sõna lõpus
+                </label>
+              </span>            
+            </div>
           </div>
 
           <div id='Tekstikogu' style='display: none;'></div>

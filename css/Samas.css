@@ -65,14 +65,6 @@ Värviskeem
   .tooltip-inner { background-color: White;
     color: rgb(117, 117, 117); }
 
-  /* Filter */
-  #Filtritekst { color: rgb(117, 117, 117) !important; }
-  #Filtritekst:focus {
-    border-color: #C5E1A5 !important;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.055) inset, 0 0 8px rgba(220, 180, 220, 0.6);
-    outline: 0 none;      
-  }
-
   /* Infopaan */
   #Infopaan {
     border: 1px solid Aqua;
@@ -133,18 +125,32 @@ Värviskeem
   .disabled { color: Gainsboro !important; cursor: auto; }
 
   /* Filtridialoog */
+  #Filtridialoog { 
+    padding: 0.5rem;
+  }
   #Filtritekst { margin-left: 2rem;
     margin-right: 1rem; width: 8rem; }
+  /* Filter */
+  #Filtritekst { color: rgb(117, 117, 117) !important; }
+  #Filtritekst:focus {
+    border-color: #C5E1A5 !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.055) inset, 0 0 8px rgba(220, 180, 220, 0.6);
+    outline: 0 none;      
+  }
 
-  /* Täpsustava küsimuse vorm */
+  /* Täiendava dialoogi vorm */
   #Salvestusdialoog, #Filtridialoog {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border: 1px solid #C5E1A5;
     border-radius: 4px;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem; 
+  }
+
+  /* Salvestamisel täpsustava küsimuse dialoog */
+  #Salvestusdialoog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Määra üle Bootstrapi lingivärv */
