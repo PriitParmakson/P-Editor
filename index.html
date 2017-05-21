@@ -45,13 +45,15 @@
               <span class='klahv'>Delete</span> kustutamine
             </p>
             <!-- Sulgemisnupp -->
-            <div id='InfopaanSulge' class='justify-content-end'>
+            <div id='InfopaanSulge' class='justify-content-end sulgemisnupuke'>
               <span>&times;</span>
             </div>
           </div>
 
+          <!-- Tekstisisestusala -->
           <div id='Tekst' contenteditable='true' spellcheck='false'></div>
 
+          <!-- Nuppude ala -->
           <p id='Tekstitootlus'>
             <span id='Poolednupp' class='nupp disabled'
               data-toggle='tooltip' title='Vaheta pooled'>
@@ -82,7 +84,103 @@
               data-toggle='tooltip' title='Kuidas kasutada'>
               <i class="ikoon material-icons">info</i>
             </span>
+
+            <span id='Oigekirjakontroll' class='nupp' data-toggle='tooltip' title='Õigekirja kontroll'>
+              <i class='ikoon material-icons'>spellcheck</i>
+            </span>
+
+            <span id='Kool' class='nupp'
+              data-toggle='tooltip' title='Mis see on?'>
+              <i class="ikoon material-icons">school</i>
+            </span>
           </p>
+
+          <!-- Kool -->
+          <div id='Koolitekst' class='d-flex align-items-start peidetud'>
+            <div id='KoolitekstSisemine'>
+              <p>
+              I Määratlused<br>
+              -----------<br>
+              <br>
+              <b>Samatekst</b> - tekst, mis pahupidi lugedes annab sama teksti. Sealjuures: 1) kirjavahemärgid ei tule arvesse*; 2) suur- ja väiketäht on samaväärsed; 3) tekstil on ka mingi mõte.<br>
+              <br>
+              Näiteks: <code>No suu saiaseks, kes aias uus on.</code><br>
+              <br>
+              *Lubatud kirjavahemärkideks on: reavahetus, tühik, koma, punkt, miinus, hüüu- ja küsimärk, sulud, koolon, semikoolon, jutumärgid.<br>
+              <br>
+              <b>Samasõna</b> - sõna või sõnavorm, mis pahupidi lugedes annab sama sõna.<br>
+              <br>
+              Näiteks: <code>samas</code><br>
+              <br>
+              <b>Pahupidi</b> tähendab teksti teisest otsast.<br>
+              <br>
+              <b>Peegeltäht</b> on tähele vastav, sama täht, mis asub samateksti teisest otsast lugedes samas positsioonis. Samatekstis vastab igale tähele täpselt üks peegeltäht. Ühekordne kesktäh (vt allpool) on ise enda peegeltäht.<br>
+              <br>
+              <b>Potentsiaalne samatekst</b> - tekst, mis muidu oleks samatekst, kuid mille alguses või lõpus on üks (erandjuhul ka kaks või kolm) üleliigne täht (üleliigset tähte). Sellist teksti võib nimetada ka <b>liiaseks</b>. Tekst võib olla <b>vasak-</b> või <b>paremliiane</b> (üleliigne täht on vastavalt teksti alguses või lõpus).<br>
+              <br>
+              Paremliiane tekst: <code>auru a</code><br>
+              <br>
+              Vasakliiane tekst: <code>al loll auru all olla</code><br>
+              <br>
+              <b>Kesktäht</b> - samateksti keskel asuv täht. Kesktäht võib olla <b>ühe-</b> või <b>kahekordne</b>. Kesktäht (või -tähed) on iseendi peegelduseks.<br>
+              <br>
+              Ühekordne kesktäht: <code>saatanAna taas</code><br>
+              <br>
+              Kahekordne kesktäht: <code>tegi õNN õiget</code><br>
+              <br>
+              <b>Parempoolse kesktähega samatekst</b> on samatekst, mille kesktäht on ühekordne ja asub sõna alguses.<br>
+              <br>
+              Näiteks: <code>Sukis esikus.</code><br>
+              <br>
+              <b>Vasakpoolse kesktähega samatekst</b> on samatekst, mille kesktäht on ühekordne ja asub sõna lõpus.<br>
+              <br>
+              Näiteks: <code>viskel eksiv</code><br>
+              <br>
+              <br>
+              II Samatekstide ühendamine<br>
+              -----------------------<br>
+              <br>
+              Samatekstide koostamist hõlbustab lühemate samatekstide ühendamine. Seejuures peab muidugi jälgima, et mõte ka kokku sobiks.<br>
+              <br>
+              Moodus 1<br>
+              <br>
+              Kõige lihtsam on laiendada samateksti, mille kesktähtede vahelt jookseb sõnapiir. Sellise teksti sisse saab lisada igasuguse teise samateksti.<br>
+              <br>
+              Moodus 2<br>
+              <br>
+              Paremliiane tekst on ühendatav parempoolse ühekordse kesktähega tekstiga:<br>
+              <br>
+              <code>yyy a</code><br>
+              +<br>
+              <code>xxxx axxxx</code><br>
+              =<br>
+              <code>xxxxa yyy axxxx</code><br>
+              <br>
+              Näiteks:<br>
+              <code>Aegamisi mutta sattumisi mage a</code><br>
+              +<br>
+              <code>Aga harib abirahaga</code><br>
+              =<br>
+              <code>Aga harib aegamisi mutta sattumisi - mage! - abirahaga.</code><br>
+              <br>
+              Samamoodi saab ühendada vasakliiase teksti ja vasakpoolse ühekordse kesktähega teksti.<br>
+              <br>
+              Moodus 3<br>
+              <br>
+              Parempoolse kesktähega tekst on ühendatav teise parempoolse kesktähega tekstiga.<br>
+              <br>
+              <code>Ooh, otse kere! Tere, vaga Tagavere! Terekest, ohoo!</code><br>
+              +<br>
+              <code>Eakas teema. Tere, tere, vana kere! Tere, Kanavere! Teretame, etsa kae!</code><br>
+              =<br>
+              <code>Eakas teema. Tere, tere, vana kere! Tagavere! Terekest, ohoo! Ooh, otse kere! Tere, vaga! Tere, Kanavere! Teretame, etsa kae!</code><br>
+              </p>
+            </div>
+            <!-- Sulgemisnupp -->
+            <div id='KoolSulge' class='justify-content-end sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
+          </div>
 
           <!-- Salvestusdialoog -->
           <div id='Salvestusdialoog' style='display: none;'>
@@ -103,6 +201,25 @@
               <i class="ikoon material-icons"
                 style='color: #F48FB1;'>cancel</i>
             </span>
+          </div>
+
+          <!-- Õigekirjakontrolli dialoog -->
+          <div id='Oigekirjadialoog' class='d-flex align-items-center justify-content-start peidetud'>
+            <div >
+              <label class='active'>
+              Kontrollitav tekst: <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
+              </label>
+            </div>
+            <div id='OigekiriKontrolli' class='nupp'>
+              <i class='ikoon material-icons' style='color: #C5E1A5;'>spellcheck</i>
+            </div>
+            <div id='KontrolliTulemus'>
+              &nbsp;
+            </div>
+            <!-- Sulgemisnupp -->
+            <div id='OigekiriSulge' class='align-self-start ml-auto sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
           </div>
 
           <!-- Filtridialoog -->
@@ -159,8 +276,11 @@
             </div>
           </div>
 
-          <div id='Tekstikogu' style='display: none;'></div>
+          <!-- Tekstikogu -->
+          <div id='Tekstikogu' style='display: none;'>
+          </div>
 
+          <!-- Tekstikogu sirvimine -->
           <p id='Sirvimine' style='display: none;'>
             <span id='FirstPage' class='nupp disabled'>
               <i class="ikoon material-icons">first_page</i>

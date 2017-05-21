@@ -10,11 +10,17 @@
   * Siseesitus  
     * Sisemiselt hoitakse keskelementi alati kahekordselt. Teavet keskelemendi kordsuse kohta hoiab glob-ne muutuja 'kuvaKeskelementYhekordselt'.
     * Samuti hoitakse siseesituses kursori positsiooni (sümbol '|').
-  * Esitus kuval
+    * Reavahetus hoitakse sümboliga '⏎'.
+  * Esitus tekstisisestusalal ja tekstikogus. 
     * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
+    * Reavahetus teostatakse.
+    * Kuvatakse HTML-esituse abil (vt allpool).
   * HTML-esitus
     * Kuval esitatav tekst on jagatud viie span-elemendi vahel (võivad olla tühjad): A, K1, Kt, K2, B.
-    * Tühiteksti puhul pannakse esimesse span-elementi (A) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.   
+    * Tühiteksti puhul pannakse esimesse span-elementi (A) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.
+  * Esitus pilvemälus
+    * Ühekordne keskelement esitatakse ühekordselt
+    * Reavahetus hoitakse sümboliga '⏎'.
  
  Tekstikogu
  ----------
@@ -31,9 +37,25 @@
   
   Logimine
   --------
-  * Logitakse tekstisisestust (elemendis 'Tekst'):
-    * kasutaja sisestatud täht, punktuatsioonimärk või eriklahv, tuvastatud caret positsioon ja selle järgi seatud sisekursor
-    * väljastatud tekst ja seatud caret positsioon.
+  * Logitakse tekstiredigeerimist (elemendis 'Tekst')
+    * nii kasutaja klahvivajutusi
+    * kui ka programmi poolt väljastatud teksti.
+  * Tekstisisestuse logimine
+    * Logiteade moodustatakse ühes kahest funktsioonist:
+      * lisaTahtVoiPunktuatsioon
+      * tootleEriklahv
+    * Logiteade: "Kasutaja vajutas: " + klahvinimetus või tärk + tekstisisestusala seis
+    * Tekstisisestusala analüüsitakse, lüüakse 5 span-elemendi kaupa tükkideks, näidatakse tuvastatud caret positsioon ja selle järgi seatud sisekursor.
+  * Tekstiväljastuse logimine
+    * Logitakse väljastatud tekst ja seatud caret positsioon.
+    * Logiteade koostatakse funktsioonis kuvaTekst
+  * Logitasemed:
+    * 0 - logitakse tekstisisestus ja -väljastus
+    * 1 - logitakse keydown ja keypress sündmused 
+
+  Testimine
+  ---------
+  * Funktsioonitestimise automatiseerimiseks on lehe SamasTest.html; testid pannakse kirja failis SamasTest.js.
 
   Tähtsamad funktsioonid
   ----------------------
@@ -47,16 +69,15 @@
   Teave
   -----
   * Kõigi HTML veebi-API-de nimekiri: https://developer.mozilla.org/en-US/docs/Web/
-  * HTML sündmuste kohta vt https://www.w3schools.com/tags/ref_eventattributes.asp
-  * JQuery sündmusekäsitlejate seadmine vt https://www.w3schools.com/jquery/jquery_events.asp
-  * DOM Node objekt vt: https://www.w3schools.com/xml/dom_node.asp
-  * jQuery-ga tippudele ligipääsemine vt: https://api.jquery.com/get/
+  * HTML sündmuste kohta: https://www.w3schools.com/tags/ref_eventattributes.asp
+  * JQuery sündmusekäsitlejate seadmine: https://www.w3schools.com/jquery/jquery_events.asp
+  * DOM Node objekt: https://www.w3schools.com/xml/dom_node.asp
+  * jQuery-ga tippudele ligipääsemine: https://api.jquery.com/get/
 
   Sündmused
   ---------------
-  * Tähesisestuse töötlemiseks on keypress parem kui keydown, sest
-  keypress näitab, milline tärk sisestati (eristab suur- ja väiketähti). Keydown näitab millist klahvi vajutati.
-  * Väga hea seletus vt http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net
+  * Tähesisestuse töötlemiseks on keypress parem kui keydown, sest keypress näitab, milline tärk sisestati (eristab suur- ja väiketähti). Keydown näitab millist klahvi vajutati.
+  * Väga hea seletus: http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net
 
   Miks ei kasuta input elementi
   -----------------------------
@@ -73,6 +94,7 @@
 
   Ctrl+V (Paste) käsitlemine
   --------------------------
+  * Praegu ei tööta
   * Vt https://www.w3.org/TR/clipboard-apis/
   * Vt onpaste event https://www.w3schools.com/jsref/event_onpaste.asp
   * Allpool on kasutatud: http://stackoverflow.com/questions/6902455/how-do-i-capture-the-input-value-on-a-paste-event
@@ -87,6 +109,8 @@
   * Caret paigutamine tühja teksti - kasuta 0-pikkusega tühikut, vt: http://stackoverflow.com/questions/4063144/setting-the-caret-position-to-an-empty-node-inside-a-contenteditable-element
 
 */
+
+var logimistase = 0; 
 
 // Globaalsed muutujad
 var t = '|'; // Tekst
@@ -120,9 +144,9 @@ function veneTaht(charCode) {
 function kirjavmKood(charCode) {
   // Kontrollib, kas charCode esitab lubatud 
   // kirjavahemärki
-  // tühik 32  , 44  . 46  - 45  ! 33  ? 63
+  // reavahetus 13, tühik 32  , 44  . 46  - 45  ! 33  ? 63
   // ( 40  ) 41  : 58  ; 59  " 34
-  var p = [32, 46, 44, 45, 33, 63, 40, 41, 58, 59, 34];
+  var p = [13, 32, 46, 44, 45, 33, 63, 40, 41, 58, 59, 34];
   var r = p.indexOf(charCode);
   return (r >= 0)
 }
@@ -176,15 +200,17 @@ function keyCodeToHumanReadable(keyCode) {
 
 // Samatekstitöötluse primitiivid
 function kirjavm(char) {
-  // Kontrollib, kas tärk on kirjavahemärk
-  return (kirjavmKood(char.charCodeAt(0)))
+  // Kontrollib, kas tärk on kirjavahemärk.
+  // Kirjavahemärgiks loetakse ka reavahetusmärki (⏎).
+  return (kirjavmKood(char.charCodeAt(0)) || char == '⏎')
 }
 function leiaTaht(str, index) {
   /* Tagastab:
    1) 'taht' - stringis str järjekorranumbriga index (1-põhine) tähe;
-   2) 'eelmineOliTyhik' - kas tähele eelnes tühik.
+   2) 'eelmineOliTyhik' - kas tähele eelnes tühik või reavahetus.
    Kirjavahemärke tähtede loendamisel ei arvesta.
    Ebaõige sisendi korral tagastab tühja stringi.
+   Tähe registrit ei muuda.
   */
   if (typeof str === 'undefined' || str === null || typeof index !== 'number' || index > str.length || index < 1) {
     return { taht: '', eelmineOliTyhik: false }
@@ -198,12 +224,12 @@ function leiaTaht(str, index) {
         return { taht: str[i], eelmineOliTyhik: eelmineOliTyhik };
       }
     }
-    eelmineOliTyhik = (str[i] == ' ');
+    eelmineOliTyhik = (str[i] == ' ' || str[i] == '⏎');
   }
   return { taht: '', eelmineOliTyhik: eelmineOliTyhik }
 }
 function tahti(str) {
-  // Tagastab tähtede arvu stringis. Ei arvesta punktuatsioone ja kursorijoont
+  // Tagastab tähtede arvu stringis. Ei arvesta kirjavahemärke ja kursorijoont
   return str
     .split("")
     .filter(s => (! kirjavm(s)) && (s != "|"))
@@ -291,7 +317,13 @@ function markeeriTekstikoguTekst(t) {
   for (var i = 0; i < t.length; i++) {
     // Punktuatsioon
     if (kirjavm(t[i])) {
-      acc = acc + t[i];
+      // Asenda reavahetuse siseesituse sümbol <br> elemendiga
+      if (t[i] == '⏎') {
+        acc = acc + '<br>';
+      }
+      else {
+        acc = acc + t[i];
+      }
     }
     // Täht
     else {
@@ -315,17 +347,17 @@ function markeeriTekstikoguTekst(t) {
   return acc
 }
 function markeeriTekst() {
-  /* Tagastab markeeritud keskkohaga teksti.
-
-  Teksti struktuur: 
-    span id='A'
-    span id='K1' (esimene keskelement)
-    span id='Kt'
-    span id='K2' (teine keskelement)
-    span id='B'
+  /* Tagastab HTML-i viidud, markeeritud kesktähtedega teksti.
+  Kesktähed jagavad teksti 5 ossa. Tagastatava HTML-i struktuur:
+    <p>
+      tähed enne esimest kesktähte
+      <span id='K1'> esimene kesktäht </span>
+      kirjavahemärgid kesktähtede vahel
+      <span id='K2'>(teine kesktäht)</span>
+      tähed pärast teist kesktähte
+    </p>
   
-  Kursorit sisse ei lülitata. Tekstiosad võivad olla tühjad.
-
+  Kursor jäetakse vahele. Tekstiosad võivad olla tühjad.
   */
 
   var koguja = ['', '', '', '', ''];
@@ -336,7 +368,7 @@ function markeeriTekst() {
   var taheloendur = 0;
 
   if (t.length == 1) {
-    // Tühja teksti puhul lisa esimesse span elementi 0-pikkusega tühik. See on vajalik caret positsioneerimiseks.
+    // Tühja teksti puhul lisa  0-pikkusega tühik. See on vajalik caret positsioneerimiseks.
     koguja[0] = '&#8203;'; 
   }
   else {
@@ -345,9 +377,15 @@ function markeeriTekst() {
       // Kursorijoon, ei esita markeeritud tekstis
       if (t[i] == '|') {
       }
-      // Punktuatsioon
+      // Kirjavahemärk
       else if (kirjavm(t[i])) {
-        koguja[mode] = koguja[mode] + t[i];
+        if (t[i] == '⏎') {
+          // koguja[mode] = '<br>'; ei sobi, sest caret positsioneerimine läheb keerukaks
+          koguja[mode] = koguja[mode] + t[i];
+        }
+        else {
+          koguja[mode] = koguja[mode] + t[i];
+        }
       }
       // Täht
       else {
@@ -376,20 +414,22 @@ function markeeriTekst() {
     }    
   }
   // Lisa markeering
-  var m = "<span id='A'>" + koguja[0] + "</span>" +
+  var m = 
+    "<span id='A'>"  + koguja[0] + "</span>" +
     "<span id='K1' class='kesk'>" + koguja[1] + "</span>" +
     "<span id='Kt'>" + koguja[2] + "</span>" +
     "<span id='K2' class='kesk'>" + koguja[3] + "</span>" +
-    "<span id='B'>" + koguja[4] + "</span>";
+    "<span id='B'>"  + koguja[4];
   return m
 }
 function moodustaTekstiStruktuurKonsoolile() {
   // Silumise abivahend
-  return '|' + $('#A').text() +
-    '|' + $('#K1').text() +
-    '|' + $('#Kt').text() +
-    '|' + $('#K2').text() +
-    '|' + $('#B').text() + '|';
+  var h = $('#Tekst').html();
+  var tagasta = h
+    .replace(/<span id="\w{1,2}" class="kesk">/gi, '¦')
+    .replace(/<span id="\w{1,2}">/gi, '¦')
+    .replace(/<\/span>/gi, '') + '¦';
+  return tagasta;
 }
 
 // Spetsiifilised operatsioonid tekstiga
@@ -448,8 +488,7 @@ function vahetaPooled() {
 
 // Tekstikogu funktsioonid: laadimine, kuvamine, navigeerimine
 function laeTekstid() {
-  // Laeb Google töölehelt "Samatekstid" lehekülje p
-  // tekste 
+  // Laeb Google töölehelt "Samatekstid" kõik tekstid ja kuvab esimese lehekülje (valmistab ette DOM-i, tekstikogu alla võib olla peidetud). 
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
   $.get(url,
     function(data, status, xhr) {
@@ -476,8 +515,12 @@ function kuvaLehekylg(p) {
       .addClass('kirje')
       .appendTo('#Tekstikogu'); 
     // Märgendi Draft lisamine
-    var kuvatavTekst = (tekstid.length - i).toString() + 
-      '.&nbsp;&nbsp;&nbsp;&nbsp;' + markeeriTekstikoguTekst(tekstid[i].Tekst);
+    var kuvatavTekst =
+      '<span class="tekstinr">' +
+      (tekstid.length - i).toString() +
+      '</span>' + 
+      '.&nbsp;&nbsp;&nbsp;&nbsp;' +
+      markeeriTekstikoguTekst(tekstid[i].Tekst);
     if (tekstid[i].Draft) {
       kuvatavTekst = kuvatavTekst + '<span class="margend">kavand</span>';
     }  
@@ -761,10 +804,11 @@ function kuvaTekst() {
   var mTekst = markeeriTekst();
   $('#Tekst').html(mTekst);
   var caretSeadmiseTeade = seaCaret(t.indexOf('|'));
-  console.log(moodustaTekstiStruktuurKonsoolile() + caretSeadmiseTeade);
+  // Standardne logimine
+  console.log('Programm: ' + moodustaTekstiStruktuurKonsoolile() + caretSeadmiseTeade);
 }
 function seaCaret(pos) {
-  /* Seab kursori (caret) kuvatud tekstis. Tagastab vastava silumisotstarbelise teate.
+  /* Seab kursori (caret) kuvatud tekstis. Tagastab vastava logiteate.
   - Positsioonid on nummerdatud 0-st. 0-positsioon on enne esimest tähte.
   - Arvestada, et pos ei arvesta, et kesktäht võib olla ühekordselt.
   */
@@ -775,7 +819,19 @@ function seaCaret(pos) {
   var otsitavTipp;
   var posTipus;
   for (var i = 0; i < tipuIDd.length; i++) {
-    var tipuPikkus = $('#' + tipuIDd[i]).text().length;
+    // Tipupikkuse arvutamisel arvestada, et tipp võib sisaldada reavahetusi. Reavahetus on esitatud <br> elementidega.
+    var tipuHTML = $('#' + tipuIDd[i]).html();
+    // Leia mitu korda <br> esineb
+    // match töötab ainult mittetühja stringiga
+    var tipuPikkus;
+    if (tipuHTML.length < 4) {
+      tipuPikkus = tipuHTML.length;
+    } 
+    else {
+      var reavahetusi = tipuHTML.match(/<br>/g).length;
+      // Iga reavahetus andis HTML-is 3 lisasümbolit
+      tipuPikkus = tipuHTML.length - 3 * reavahetusi;
+    }
     if (pos <= kumPikkus + tipuPikkus) {
       otsitavTipp = tipuIDd[i];
       posTipus = pos - kumPikkus;
@@ -796,7 +852,7 @@ function seaCaret(pos) {
   valik.removeAllRanges();
   valik.addRange(range);
 
-  return ' caret seatud: ' + otsitavTipp + ', ' + posTipus;
+  return ' caret: ' + otsitavTipp + ', ' + posTipus;
 }
 
 // Teksti redigeerimisega seotud funktsioonid
@@ -813,6 +869,7 @@ function tuvastaCaretJaSeaSisekursor() {
     var r = document.getSelection().getRangeAt(0);
     var algusSpan = r.startContainer.parentNode.id;
     var algusPos = r.startOffset;
+    console.log(algusSpan.toString() + ':' + algusPos.toString());
 
     // Leia positsioon, kuhu sisemine kursor (|) liigutada.
     var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B']; 
@@ -843,7 +900,8 @@ function tuvastaCaretJaSeaSisekursor() {
 function tootleEriklahv(keyCode) {
 
   var teade = tuvastaCaretJaSeaSisekursor();
-  console.log('Kasutaja vajutas: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
+  // Standardne logimine
+  console.log('Kasutaja: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
 
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
@@ -949,7 +1007,7 @@ function tootleEriklahv(keyCode) {
   }
 }
 function lisaTahtVoiPunktuatsioon(charCode) {
-  // Lisa kasutaja sisestatud täht või punktuatsioonimärk
+  // Lisa kasutaja sisestatud täht või kirjavahemärk
   // Kontrollib, kas märgikood on lubatute hulgas
   if  (!
         (ladinaTaht(charCode) || tapiTaht(charCode) ||
@@ -960,9 +1018,14 @@ function lisaTahtVoiPunktuatsioon(charCode) {
   }
 
   var teade = tuvastaCaretJaSeaSisekursor();
-  var charTyped = String.fromCharCode(charCode);
-  console.log('Kasutaja sisestas märgi: ' + charTyped + ' - ' + teade);
 
+  // Enter vajutus asenda siseesituses tärgiga ⏎.
+  var charTyped = charCode == 13 ? '⏎' : String.fromCharCode(charCode);
+
+  // Standardne logimine
+  console.log('Kasutaja: ' + charTyped + ' ' + teade);
+
+  // Sisestatud tärgi lisamine siseesitusse
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
   var tekstParast = osad[1]; // Tekst pärast joont
@@ -1018,9 +1081,10 @@ function lisaTahtVoiPunktuatsioon(charCode) {
 } 
 function seaTekstisisestuseKasitlejad() {
   /*
-      Teksti muutvaid ja tekstis navigeerivaid (caret-d muutvaid) klahvivajutusi käsitletakse sündmuste 'keydown',  'keypress' ja 'paste' kaudu.
-      Sündmus 'keydown' tekib klahvi vajutamisel esimesena.
+    * Teksti muutvaid klahvivajutusi käsitletakse sündmuste 'keydown' ja  'keypress' kaudu. (Hiljem võib lisada sündmuse 'paste').
+    * Sündmus 'keydown' tekib klahvi vajutamisel esimesena.
       Seejärel tekib 'keypress'.
+    * Teksti navigeerivaid (caret-d muutvaid) sündmusi (vasakule, paremale) otseselt ei töötle. Caret positsioon selgitatakse välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
 
   */
 
@@ -1028,6 +1092,12 @@ function seaTekstisisestuseKasitlejad() {
   */
   $('#Tekst').on('keydown', function(e) {
     var keyCode = e.keyCode;
+
+    // Standardne logimine
+    if (logimistase == 1) {
+      console.log('keydown: ' + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
+    }
+
     if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
       e.preventDefault();
       tootleEriklahv(keyCode);
@@ -1040,6 +1110,17 @@ function seaTekstisisestuseKasitlejad() {
   /* Sündmuse 'keypress' käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse. */
   $('#Tekst').on('keypress', function(e) {
     var charCode = e.charCode;
+
+    // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
+    if (e.keyCode == 13) {
+      charCode = 13;
+    }
+
+    // Standardne logimine
+    if (logimistase == 1) {
+      console.log('keypress: ' + String.fromCharCode(charCode) + '(' + charCode + ')');
+    }
+
     if (charCode != null && charCode != 0) {
       e.preventDefault();
       lisaTahtVoiPunktuatsioon(charCode);
@@ -1093,6 +1174,38 @@ function seaInfopaaniKasitlejad() {
   });
 }
 
+// Õigekirjakontroll
+function seaOigekirjakasitlejad() {
+  $('#Oigekirjakontroll').click(function() {
+    $('#Oigekirjadialoog').removeClass('peidetud');
+    $('#Oigekirjakontroll').addClass('disabled');
+  });
+
+  $('#OigekiriSulge').click(function() {
+    $('#Oigekirjadialoog').addClass('peidetud');
+    $('#Oigekirjakontroll').removeClass('disabled');
+  });
+
+  $('#OigekiriKontrolli').click(function() {
+    var k = $('#KontrollitavTekst').val();
+    var t = samatekst(k) ? 'on samatekst' : 'ei ole samatekst';
+    $('#KontrolliTulemus').text(t);
+  });
+}
+
+// Kool
+function seaKoolikasitlejad() {
+  $('#Kool').click(function() {
+    $('#Koolitekst').removeClass('peidetud');
+    $('#Kool').addClass('disabled');
+  });
+
+  $('#KoolSulge').click(function() {
+    $('#Koolitekst').addClass('peidetud');
+    $('#Kool').removeClass('disabled');
+  });
+}
+
 // Peaprogramm
 function alusta() {
   // Initsialiseeri tooltip-id
@@ -1104,6 +1217,8 @@ function alusta() {
   seaInfopaaniKasitlejad();
   seaTekstikoguKasitlejad();
   seaFiltriKasitlejad();
+  seaOigekirjakasitlejad();
+  seaKoolikasitlejad();
 
   // Algustekst (kursor)
   kuvaTekst();

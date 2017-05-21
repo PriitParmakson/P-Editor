@@ -22,17 +22,25 @@ Värviskeem
 
 */
 
+  /* Üldine font ja fondisuurus */
   body, textarea, button, input, legend {  
     font-family: 'Times New Roman', serif !important;
     font-size: 14pt !important;
   }
 
+  /* Keha */
   body { padding: 2rem 2rem 8rem 2rem; }
 
-  /* Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
+  /* Mitmesugused korduvkasutatavad stiilid */
+  .tooltip-inner { background-color: White;
+    color: rgb(117, 117, 117); }
+
+  /* Tekstisisestusala
+    Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
   #Tekst { 
     display: block;
-    width: 100%; height: 2.5rem;
+    width: 100%;
+    height: auto; /* 2.5rem; */
     padding: 0.5rem 0.75rem;
     line-height: 1.25;
     color: #464a4c;
@@ -62,17 +70,14 @@ Värviskeem
     margin-top: 1rem;
   }
 
-  .tooltip-inner { background-color: White;
-    color: rgb(117, 117, 117); }
-
-  /* Infopaan */
-  #Infopaan {
+  /* Infopaan ja Kool */
+  #Infopaan, #Koolitekst {
     border: 1px solid Aqua;
     border-radius: 4px; 
     background-color: Azure;
     padding: 0 0 0.5rem;
     margin-bottom: 1rem; } 
-  #Infotekst {
+  #Infotekst, #KoolitekstSisemine {
     margin: 1rem;
   }   
   .klahv {
@@ -81,7 +86,9 @@ Värviskeem
     border: 1px solid rgb(117, 117, 117);
     font-family: 'Courier New', monospace;
   }
-  #InfopaanSulge {
+
+  /* Sulgemisnupuke */
+  .sulgemisnupuke {
     padding: 0 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
     font-family: Arial, sans-serif;
@@ -96,7 +103,12 @@ Värviskeem
 
   /* Tekstikogu */
   #Tekstikogu { }
-  .kirje { margin: 0; }
+  .kirje { 
+    text-indent: -3rem;
+    padding-left: 3rem;
+    margin: 0;
+  }
+  .tekstinr { }
   .margend { 
     border: 1px dotted Aqua;
     border-radius: 2px;
@@ -139,7 +151,7 @@ Värviskeem
   }
 
   /* Täiendava dialoogi vorm */
-  #Salvestusdialoog, #Filtridialoog {
+  #Salvestusdialoog, #Filtridialoog, #Oigekirjadialoog {
     border: 1px solid #C5E1A5;
     border-radius: 4px;
     margin-top: 0.5rem;
@@ -151,6 +163,14 @@ Värviskeem
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Õigekirjakontrolli dialoog */
+  #Oigekirjadialoog {
+    padding: 0.5rem;
+  }
+  #KontrollitavTekst {
+    width: 24rem;
   }
 
   /* Määra üle Bootstrapi lingivärv */

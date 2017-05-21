@@ -28,6 +28,7 @@ function keskelementTestid() {
   test(keskelement('Ajate luul uluuletaja!').sonaAlguses, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaAlguses = true');
   test(keskelement('Kiiremini.. inim-e-riik?').taht, 'i', 'Kirjavahemärkidega, kahekordse keskelemendiga samatekst, taht');
   test(keskelement('Kiiremini.. inim-e-riik?').yhekordne, false, 'Kirjavahemärkidega, kahekordse keskelemendiga samatekst, yhekordne = false');
+  test(keskelement('Eakas teema.⏎Teretame.⏎Etsakae!').taht, 'r', 'Reavahetustega tekstis');
 }
 
 function leiaTahtTestid() {
@@ -43,6 +44,8 @@ function leiaTahtTestid() {
   test(leiaTaht('Ajate luulu, luuletaja!', 11).taht, 'l', 'Otsing kirjavahemärkidega stringis, taht');
   test(leiaTaht('Ajate luulu, luuletaja!', 11).eelmineOliTyhik, true, 'Otsing kirjavahemärkidega stringis, eelmine oli tühik? Jah');
   test(leiaTaht('Ajate luulu, luuletaja!', 10).eelmineOliTyhik, false, 'Otsing kirjavahemärkidega stringis, eelmine oli tühik? Ei');
+  test(leiaTaht('Eakas teema.⏎Teretame.⏎Etsakae!', 11).taht, 'T', 'Otsing reavahetustega tekstis');
+  test(leiaTaht('Eakas teema.⏎Teretame.⏎Etsakae!', 11).eelmineOliTyhik, true, 'Otsing reavahetustega tekstis');
 }
 
 function samatekstTestid() {
@@ -58,6 +61,7 @@ function samatekstTestid() {
   test(samatekst('Ajate luulu, luuletaja!'), true, 'Pikem ühekordse keskelemendiga samatekst kirjavahemärkidega');
   test(samatekst('Kiiremini.. inim-e-riik?'), true, 'Pikem kahekordse keskelemendiga samatekst kirjavahemärkidega');
   test(samatekst('Kiireminx.. inim-e-riik?'), false, 'Pikem mittesamatekst kirjavahemärkidega');
+  test(samatekst('Eakas teema.⏎Teretame.⏎Etsakae!'), true, 'Reavahetusega tekst');
 }
 
 function kuvaFunktsiooniNimetus(fN) {
