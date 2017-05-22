@@ -15,7 +15,19 @@ arendusdokument
 
 - TOC
 {:toc}
+
+## Koodistatistika
+
+|  komponent                                 | SLOC (sh tühiread) |
+|----------------------------------------|---------------|
+| klient (HTML, CSS, Javascript) | 1600  |
+| server (Google Apps Script) | 70  |
+| testimine (HTML, CSS, Javascript) | 200  |
+| dokumentatsioon (Markdown) | 210  |
+| dokumentatsioonikeskkond (Jekyll) | 160  |
  
+Statistika moodustamine: `wc -l $(git ls-files)`
+
 ##  Kasutatud
 
 * Map of keycodes to human readable key names - https://github.com/micro-js/keycodes
