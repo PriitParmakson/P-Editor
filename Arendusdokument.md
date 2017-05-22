@@ -3,6 +3,10 @@ title: Arendusdokument
 ---
 
 # Samatekst 
+{: .no_toc}
+
+- TOC
+{:toc}
 
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
@@ -12,16 +16,71 @@ Priit Parmakson, 2017. MIT litsents
 
 * Map of keycodes to human readable key names - https://github.com/micro-js/keycodes
 
+## Featuurid
+
+- Samateksti sisestamine
+  - Programm kontrollib jooksvalt teksti õigsust...
+  - ... ja lisab ise peegeltähed.
+  - Tekst võib sisaldada kirjavahemärke.
+  - Teksti saab kustutada.
+  - Tekstis saab liikuda ja kursorit seada.
+  - Tekstisisestusalasse saab teksti asetada (Ctrl+V).  <span class='todo'>TO DO</span>
+  - Kesktäht (-tähed) kuvatakse rõhutatult.
+  - Samateksti pooled saab vahetada.
+  - Saab alustada uut samateksti.
+  - Teksti saab salvestada pilvemällu.
+    - salvestamisel saab märkida, kas tekst on kavand.
+- Samatekstilisuse kontroll
+  - Eraldi saab kontrollida, kas tekst on samatekst
+- Tekstikogu
+  - Saab lehitseda salvestatud tekste.
+  - Salvestatud tekste saab otsida.
+    - tähekombinatsiooni sisaldumise järgi
+    - kesktähe kaudu.
+- Infopaanil pakutakse väikest abiteksti.
+- "Kool"
+  - Kasutaja saab tutvuda samateksti "teooriaga"
+    - määratlused
+    - samatekstide kombineerimise meetodid.
+
 ## Teksti esitusvormingud
 
+```
+Esitus teksti-     (1)
+sisestusalal   +------->  Siseesitus
+     ^                         +
+     |                     +   |
+     | (2)                 |   |
+     +           (2)       |   | (3)
+    HTML   <---------------+   |
+                               |
+                               v
+    HTML    <------------+ Pilveesitus
+     +           (4)
+     |
+     | (4)
+     v
+ Tekstikogu
+ esitus
+
+```
+
+(1) kasutaja sisestab tekstisisestusalal; klahvivajutused püütakse sündmuste `keydown` ja `keypress` abil kinni, filtreeritakse (lubatud tähed ja kirjavahemärgid), tehakse kindlaks kursori (ingl _caret_) asukoht. Sisestatavat teksti hoitakse sisekujul.
+
+(2) Tähe lisamisel lisab programm automaatselt peegeltäht ja uuendab tekstisisestusalal olevat teksti. 
+
+(3) Kasutaja saab teksti salvestada. Programm teisendab salvestatava teksti pilveesitusse.
+
+(4) Salvestatud tekste saab sirvida ja otsida. Salvestatud tekstid esitatakse kuval HTML abil.
+
 ### Siseesitus  
-* Sisemiselt hoitakse keskelementi alati kahekordselt. Teavet keskelemendi kordsuse kohta hoiab glob-ne muutuja `kuvaKeskelementYhekordselt`.
+* Sisemiselt hoitakse kesktähte alati kahekordselt. Teavet kesktähe kordsuse kohta hoiab glob-ne muutuja `kuvaKeskelementYhekordselt`.
 * Samuti hoitakse siseesituses kursori positsiooni (sümbol `|`).
-* Reavahetus hoitakse sümboliga '⏎'.
+* Reavahetus hoitakse sümboliga `⏎`.
 
 `IT⏎⏎|Säh, hästi! `
 
-`Samm|as` tähendab `Samas`, kui `kuvaKeskelementYhekordselt` = `true`
+`Samma|s` tähendab `Samas`, kui `kuvaKeskelementYhekordselt` = `true`
 
 ### Esitus tekstisisestusalal 
 
@@ -35,20 +94,22 @@ Nähtav:
 * Reavahetus esitatakse sümboliga `⏎`.
 * Kuvatakse HTML-esituse abil.
   * Kuval esitatav tekst on jagatud viie `span`-elemendi vahel (võivad olla tühjad): `A`, `K1`, `Kt`, `K2`, `B`.
-  * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.
+  * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik (`&#8203;`), seda selleks, et `div`-element ei kollapseeruks.
 
 `<span id='A'>IT⏎⏎Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
 
-`<span id='A'>&#8203;</span><span id='K1'></span><span id='Kt'></span><span id='K2'></span><span id='B'></span>` - (0-pikkusega tühik)
+`<span id='A'>&#8203;</span><span id='K1'></span><span id='Kt'></span><span id='K2'></span><span id='B'></span>` - tühiteksti esitamine 0-pikkusega tühiku abil
 
 ### Esitus tekstikogus
 
-`IT
+```
+IT
 
-Säh, hästi! `
+Säh, hästi!
+```
 
 * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
-* Reavahetus teostatakse.
+* Reavahetus teostatakse, `<br>`-elemendi abil.
 * Kuvatakse HTML-esituse abil.
 
 `<span id='A'>IT<br><br>Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
@@ -57,7 +118,7 @@ Säh, hästi! `
 * Ühekordne keskelement esitatakse ühekordselt
 * Reavahetus hoitakse sümboliga `⏎`.
 
-`IT⏎⏎|Säh, hästi! `
+`IT⏎⏎Säh, hästi! `
  
 ## Tekstikogu
 * Tekstid kuvatakse nummerdatult.
@@ -79,10 +140,9 @@ Säh, hästi! `
     * Logiteade moodustatakse ühes kahest funktsioonist:
       * `lisaTahtVoiPunktuatsioon`
       * `tootleEriklahv`
-    * Logiteade: "Kasutaja vajutas: " + klahvinimetus või tärk + tekstisisestusala seis
-    * Tekstisisestusala analüüsitakse, lüüakse 5 `span`-elemendi kaupa tükkideks, näidatakse tuvastatud caret positsioon ja selle järgi seatud sisekursor.
+    * Logiteade 1: `Kasutaja: ` + klahvinimetus või tärk + caret tuvastatud positsioon tekstisisestusalas + tuvastatud caret positsiooni järgi seatud sisekursor.
   * Tekstiväljastuse logimine
-    * Logitakse väljastatud tekst ja seatud caret positsioon.
+    * Logiteade 2: `Programm: ` + väljastatud tekst + seatud caret positsioon.
     * Logiteade koostatakse funktsioonis `kuvaTekst`
   * Logitasemed:
     * `0` - logitakse tekstisisestus ja -väljastus
@@ -92,7 +152,10 @@ Säh, hästi! `
 * Funktsioonitestimise automatiseerimiseks on lehe `SamasTest.html`; testid pannakse kirja failis `SamasTest.js`.
 
 ## Tähtsamad funktsioonid
-* Kasutaja tegevused elemendis `Tekst` püütakse kinni sündmustega `keydown` ja `keypress`, kust suunatakse tähtede ja punktuatsioonisümbolite töötlemisele (`lisaTahtVoiPunktuatsioon`) või eriklahvivajutuste töötlemisele (`tootleEriklahv`).
+* Kasutaja tegevused elemendis `Tekst` püütakse kinni sündmustega `keydown` ja `keypress`,
+* kust suunatakse tähtede ja punktuatsioonisümbolite töötlemisele (`lisaTahtVoiPunktuatsioon`) või eriklahvivajutuste töötlemisele (`tootleEriklahv`).
+* HTML kujule teisendavad `markeeriTekst` ja `markeeriTekstikoguTekst`.
+* Tekstisisestusala _caret_ positsiooni tuvastavad ja seavad `tuvastaCaretJaSeaSisekursor` ja `seaCaret`.
 
 ## Töövahendid
 * Javascripti süntaksikontrollija: [http://esprima.org/demo/validate.html](http://esprima.org/demo/validate.html)
