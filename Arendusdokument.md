@@ -170,7 +170,7 @@ Säh, hästi!
     * `1` - logitakse `keydown` ja `keypress` sündmused 
 
 ## Testimine
-* Funktsioonitestimise automatiseerimiseks on lehe `SamasTest.html`; testid pannakse kirja failis `SamasTest.js`.
+* Funktsioonitestimise automatiseerimiseks on leht `SamasTest.html`; testid pannakse kirja failis `SamasTest.js`.
 
 ## Tähtsamad funktsioonid
 * Kasutaja tegevused elemendis `Tekst` püütakse kinni sündmustega `keydown` ja `keypress`,
