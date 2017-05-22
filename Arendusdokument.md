@@ -2,9 +2,11 @@
 title: Arendusdokument
 ---
 
-# Samatekstiredaktor (Editor for Palindromic Texts)
+# Samatekst 
 
-Priit Parmakson, 2017. MIT Licence
+Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
+
+Priit Parmakson, 2017. MIT litsents
  
 ##  Kasutatud
 
@@ -17,21 +19,45 @@ Priit Parmakson, 2017. MIT Licence
 * Samuti hoitakse siseesituses kursori positsiooni (sümbol `|`).
 * Reavahetus hoitakse sümboliga '⏎'.
 
+`IT⏎⏎|Säh, hästi! `
+
+`Samm|as` tähendab `Samas`, kui `kuvaKeskelementYhekordselt` = `true`
+
 ### Esitus tekstisisestusalal 
-* Kuval esitatakse keskelement (või -elemendid) rõhutatult.
+
+Nähtav:
+
+`IT⏎⏎|Säh, hästi! `
+
+`|` - tühitekst
+
+* Kesktäht (või -tähed) esitatakse rõhutatult.
 * Reavahetus esitatakse sümboliga `⏎`.
-    * Kuvatakse HTML-esituse abil.
-    * Kuval esitatav tekst on jagatud viie `span`-elemendi vahel (võivad olla tühjad): `A`, `K1`, `Kt`, `K2`, `B`.
-    * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.
+* Kuvatakse HTML-esituse abil.
+  * Kuval esitatav tekst on jagatud viie `span`-elemendi vahel (võivad olla tühjad): `A`, `K1`, `Kt`, `K2`, `B`.
+  * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.
+
+`<span id='A'>IT⏎⏎Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
+
+`<span id='A'>&#8203;</span><span id='K1'></span><span id='Kt'></span><span id='K2'></span><span id='B'></span>` - (0-pikkusega tühik)
 
 ### Esitus tekstikogus
+
+`IT
+
+Säh, hästi! `
+
 * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
 * Reavahetus teostatakse.
 * Kuvatakse HTML-esituse abil.
 
+`<span id='A'>IT<br><br>Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
+
 ### Esitus pilvemälus
 * Ühekordne keskelement esitatakse ühekordselt
 * Reavahetus hoitakse sümboliga `⏎`.
+
+`IT⏎⏎|Säh, hästi! `
  
 ## Tekstikogu
 * Tekstid kuvatakse nummerdatult.
@@ -69,20 +95,20 @@ Priit Parmakson, 2017. MIT Licence
 * Kasutaja tegevused elemendis `Tekst` püütakse kinni sündmustega `keydown` ja `keypress`, kust suunatakse tähtede ja punktuatsioonisümbolite töötlemisele (`lisaTahtVoiPunktuatsioon`) või eriklahvivajutuste töötlemisele (`tootleEriklahv`).
 
 ## Töövahendid
-* Javascripti süntaksikontrollija: [http://esprima.org/demo/validate.html]()
-* HTML validaator: [https://validator.w3.org/nu/#file]() (Firefox-i kontekstimenüüst )
+* Javascripti süntaksikontrollija: [http://esprima.org/demo/validate.html](http://esprima.org/demo/validate.html)
+* HTML validaator: [https://validator.w3.org/nu/#file](https://validator.w3.org/nu/#file) (Firefox-i kontekstimenüüst )
 
   Teave
   -----
-  * Kõigi HTML veebi-API-de nimekiri: [https://developer.mozilla.org/en-US/docs/Web/]()
-  * HTML sündmuste kohta: [https://www.w3schools.com/tags/ref_eventattributes.asp]()
-  * JQuery sündmusekäsitlejate seadmine: [https://www.w3schools.com/jquery/jquery_events.asp]()
-  * DOM `Node` objekt: [https://www.w3schools.com/xml/dom_node.asp]()
-  * jQuery-ga tippudele ligipääsemine: [https://api.jquery.com/get/]()
+  * Kõigi HTML veebi-API-de nimekiri: [https://developer.mozilla.org/en-US/docs/Web/](https://developer.mozilla.org/en-US/docs/Web/)
+  * HTML sündmuste kohta: [https://www.w3schools.com/tags/ref_eventattributes.asp](https://www.w3schools.com/tags/ref_eventattributes.asp)
+  * JQuery sündmusekäsitlejate seadmine: [https://www.w3schools.com/jquery/jquery_events.asp](https://www.w3schools.com/jquery/jquery_events.asp)
+  * DOM `Node` objekt: [https://www.w3schools.com/xml/dom_node.asp](https://www.w3schools.com/xml/dom_node.asp)
+  * jQuery-ga tippudele ligipääsemine: [https://api.jquery.com/get/](https://api.jquery.com/get/)
 
 ## Sündmused
 * Tähesisestuse töötlemiseks on `keypress` parem kui `keydown`, sest `keypress` näitab, milline tärk sisestati (eristab suur- ja väiketähti). `keydown` näitab millist klahvi vajutati.
-  * Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net]()
+  * Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net](http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net)
 
 ## Miks ei kasuta input elementi
 * `Input` elemendis vt: setSelectionRange() HTML veebi-APIs HTMLInputElement - https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
