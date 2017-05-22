@@ -1,0 +1,11 @@
+title: Samatekst
+baseurl: "https://PriitParmakson.github.io/Samatekst"
+
+defaults:
+  -
+    scope:
+      path: "" # Kõik failid
+    values:
+      layout: "Times"
+
+  
