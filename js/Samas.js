@@ -7,18 +7,21 @@
 
   Teksti esitusvormingud
   ----------------------
-  * Siseesitus  
+  (1) Siseesitus  
     * Sisemiselt hoitakse keskelementi alati kahekordselt. Teavet keskelemendi kordsuse kohta hoiab glob-ne muutuja 'kuvaKeskelementYhekordselt'.
     * Samuti hoitakse siseesituses kursori positsiooni (sümbol '|').
     * Reavahetus hoitakse sümboliga '⏎'.
-  * Esitus tekstisisestusalal ja tekstikogus. 
+  (2) Esitus tekstisisestusalal 
     * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
-    * Reavahetus teostatakse.
-    * Kuvatakse HTML-esituse abil (vt allpool).
-  * HTML-esitus
+    * Reavahetus esitatakse sümboliga '⏎'.
+    * Kuvatakse HTML-esituse abil.
     * Kuval esitatav tekst on jagatud viie span-elemendi vahel (võivad olla tühjad): A, K1, Kt, K2, B.
     * Tühiteksti puhul pannakse esimesse span-elementi (A) 0-pikkusega tühik, seda selleks, et div-element ei kollapseeruks.
-  * Esitus pilvemälus
+  (3) Esitus tekstikogus
+    * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
+    * Reavahetus teostatakse.
+    * Kuvatakse HTML-esituse abil.
+  (4) Esitus pilvemälus
     * Ühekordne keskelement esitatakse ühekordselt
     * Reavahetus hoitakse sümboliga '⏎'.
  
@@ -819,19 +822,7 @@ function seaCaret(pos) {
   var otsitavTipp;
   var posTipus;
   for (var i = 0; i < tipuIDd.length; i++) {
-    // Tipupikkuse arvutamisel arvestada, et tipp võib sisaldada reavahetusi. Reavahetus on esitatud <br> elementidega.
-    var tipuHTML = $('#' + tipuIDd[i]).html();
-    // Leia mitu korda <br> esineb
-    // match töötab ainult mittetühja stringiga
-    var tipuPikkus;
-    if (tipuHTML.length < 4) {
-      tipuPikkus = tipuHTML.length;
-    } 
-    else {
-      var reavahetusi = tipuHTML.match(/<br>/g).length;
-      // Iga reavahetus andis HTML-is 3 lisasümbolit
-      tipuPikkus = tipuHTML.length - 3 * reavahetusi;
-    }
+    var tipuPikkus = $('#' + tipuIDd[i]).html().length;
     if (pos <= kumPikkus + tipuPikkus) {
       otsitavTipp = tipuIDd[i];
       posTipus = pos - kumPikkus;
