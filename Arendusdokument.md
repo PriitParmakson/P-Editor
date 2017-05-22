@@ -5,6 +5,10 @@ title: Arendusdokument
 # Samatekst 
 {: .no_toc}
 
+[https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
+
+Arendusdokument
+
 - TOC
 {:toc}
 
@@ -67,18 +71,18 @@ sisestusalal   +------->  Siseesitus
 
 (1) kasutaja sisestab tekstisisestusalal; klahvivajutused püütakse sündmuste `keydown` ja `keypress` abil kinni, filtreeritakse (lubatud tähed ja kirjavahemärgid), tehakse kindlaks kursori (ingl _caret_) asukoht. Sisestatavat teksti hoitakse sisekujul.
 
-(2) Tähe lisamisel lisab programm automaatselt peegeltäht ja uuendab tekstisisestusalal olevat teksti. 
+(2) Tähe lisamisel lisab programm automaatselt peegeltähe ja uuendab tekstisisestusalal olevat teksti. 
 
 (3) Kasutaja saab teksti salvestada. Programm teisendab salvestatava teksti pilveesitusse.
 
 (4) Salvestatud tekste saab sirvida ja otsida. Salvestatud tekstid esitatakse kuval HTML abil.
 
 ### Siseesitus  
-* Sisemiselt hoitakse kesktähte alati kahekordselt. Teavet kesktähe kordsuse kohta hoiab glob-ne muutuja `kuvaKeskelementYhekordselt`.
+* Sisemiselt hoitakse kesktähte alati kahekordselt. Teavet kesktähe kordsuse kohta hoiab globaalne muutuja `kuvaKeskelementYhekordselt`.
 * Samuti hoitakse siseesituses kursori positsiooni (sümbol `|`).
 * Reavahetus hoitakse sümboliga `⏎`.
 
-`IT⏎⏎|Säh, hästi! `
+Näiteks: `IT⏎⏎|Säh, hästi! `
 
 `Samma|s` tähendab `Samas`, kui `kuvaKeskelementYhekordselt` = `true`
 
@@ -94,13 +98,17 @@ Nähtav:
 * Reavahetus esitatakse sümboliga `⏎`.
 * Kuvatakse HTML-esituse abil.
   * Kuval esitatav tekst on jagatud viie `span`-elemendi vahel (võivad olla tühjad): `A`, `K1`, `Kt`, `K2`, `B`.
-  * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik (`&#8203;`), seda selleks, et `div`-element ei kollapseeruks.
+  * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik (`&#8203;`), seda selleks, et tekstisisestusala `div`-element ei kollapseeruks.
+
+Näited:
 
 `<span id='A'>IT⏎⏎Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
 
 `<span id='A'>&#8203;</span><span id='K1'></span><span id='Kt'></span><span id='K2'></span><span id='B'></span>` - tühiteksti esitamine 0-pikkusega tühiku abil
 
 ### Esitus tekstikogus
+
+Näide:
 
 ```
 IT
@@ -110,13 +118,13 @@ Säh, hästi!
 
 * Kuval esitatakse keskelement (või -elemendid) rõhutatult.
 * Reavahetus teostatakse, `<br>`-elemendi abil.
-* Kuvatakse HTML-esituse abil.
+* Kuvatakse HTML-esituse abil. Näide:
 
 `<span id='A'>IT<br><br>Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
 
 ### Esitus pilvemälus
-* Ühekordne keskelement esitatakse ühekordselt
-* Reavahetus hoitakse sümboliga `⏎`.
+* Ühekordne kesktäht esitatakse ühekordselt
+* Reavahetus hoitakse sümboliga `⏎`. Näide:
 
 `IT⏎⏎Säh, hästi! `
  
@@ -125,12 +133,13 @@ Säh, hästi!
 * Salvestamine
     * Toimub väikeses dialoogis, kus kontrollitakse, kas ikka tahetakse salvestada ja soovi korral määratakse, kas tekst on kavand. Salvestusdialoog on modaalse olemusega.
     * Salvestatakse Google Sheet-le, kasutades Google Sheets REST API-t.
-    * Pilve salvestatakse puhta tekstina (rõhutusteta, keskelement ühekordselt, kui nii on määratud).
-* Filtridialoog
-  * Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusala.
+    * Pilve salvestatakse puhta tekstina (rõhutusteta, kesktäht ühekordselt, kui nii on määratud).
+* Filtri- e otsidialoog
+  * Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusalas.
   * Filtreerimisel ei jagata väljundit lehekülgedeks.
 * Turvalisus
-    * Injection-ründe kaitse. Google Sheet-iga seotud Google Apps Script-is kontrollitakse üle, et tekst ei sisalda HTML-i.
+    * Injection-ründe kaitse. Google Sheet-iga seotud serverirakenduses (Google Apps Script-is) kontrollitakse üle, et tekst ei sisalda HTML-i.
+    * samuti kontrollitakse API poolel, et HTTP POST-päringuga salvestamiseks saadetud tekst on tõesti samatekst. <span class='todo'>TO DO</span>
   
 ## Logimine
 * Logitakse tekstiredigeerimist (elemendis `Tekst`)
@@ -161,17 +170,16 @@ Säh, hästi!
 * Javascripti süntaksikontrollija: [http://esprima.org/demo/validate.html](http://esprima.org/demo/validate.html)
 * HTML validaator: [https://validator.w3.org/nu/#file](https://validator.w3.org/nu/#file) (Firefox-i kontekstimenüüst )
 
-  Teave
-  -----
-  * Kõigi HTML veebi-API-de nimekiri: [https://developer.mozilla.org/en-US/docs/Web/](https://developer.mozilla.org/en-US/docs/Web/)
-  * HTML sündmuste kohta: [https://www.w3schools.com/tags/ref_eventattributes.asp](https://www.w3schools.com/tags/ref_eventattributes.asp)
-  * JQuery sündmusekäsitlejate seadmine: [https://www.w3schools.com/jquery/jquery_events.asp](https://www.w3schools.com/jquery/jquery_events.asp)
-  * DOM `Node` objekt: [https://www.w3schools.com/xml/dom_node.asp](https://www.w3schools.com/xml/dom_node.asp)
-  * jQuery-ga tippudele ligipääsemine: [https://api.jquery.com/get/](https://api.jquery.com/get/)
+## Teave
+* Kõigi HTML veebi-API-de nimekiri: [https://developer.mozilla.org/en-US/docs/Web/](https://developer.mozilla.org/en-US/docs/Web/)
+* HTML sündmuste kohta: [https://www.w3schools.com/tags/ref_eventattributes.asp](https://www.w3schools.com/tags/ref_eventattributes.asp)
+* JQuery sündmusekäsitlejate seadmine: [https://www.w3schools.com/jquery/jquery_events.asp](https://www.w3schools.com/jquery/jquery_events.asp)
+* DOM `Node` objekt: [https://www.w3schools.com/xml/dom_node.asp](https://www.w3schools.com/xml/dom_node.asp)
+* jQuery-ga tippudele ligipääsemine: [https://api.jquery.com/get/](https://api.jquery.com/get/)
 
 ## Sündmused
 * Tähesisestuse töötlemiseks on `keypress` parem kui `keydown`, sest `keypress` näitab, milline tärk sisestati (eristab suur- ja väiketähti). `keydown` näitab millist klahvi vajutati.
-  * Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net](http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net)
+* Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net](http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net)
 
 ## Miks ei kasuta input elementi
 * `Input` elemendis vt: setSelectionRange() HTML veebi-APIs HTMLInputElement - https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
