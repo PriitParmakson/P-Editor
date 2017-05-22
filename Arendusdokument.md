@@ -5,16 +5,16 @@ title: Arendusdokument
 # Samatekst 
 {: .no_toc}
 
-[https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
-
-Arendusdokument
-
-- TOC
-{:toc}
-
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
 Priit Parmakson, 2017. MIT litsents
+
+[https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
+
+arendusdokument
+
+- TOC
+{:toc}
  
 ##  Kasutatud
 
