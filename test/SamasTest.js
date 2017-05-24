@@ -1,8 +1,24 @@
 function jooksutaTestid() {
   // Testide käivitaja
+  eemaldaEsityhikTestid();
+  vahetaPooledTestid();
   leiaTahtTestid();
   keskelementTestid();
   samatekstTestid();
+}
+
+function eemaldaEsityhikTestid() {
+  kuvaFunktsiooniNimetus('eemaldaEsityhik');
+  test(eemaldaEsityhik('| abba'), '|abba', 'Kursor ees');
+  test(eemaldaEsityhik(' a|bba'), 'a|bba', 'Kursor ees');
+}
+
+function vahetaPooledTestid() {
+  kuvaFunktsiooniNimetus('vahetaPooled');
+  test(vahetaPooled('|'), '|', 'Tühitekst');
+  test(vahetaPooled('ab|ba'), '|baab', 'Lihtne');
+  test(vahetaPooled('a b|b, a'), '|b, aa b', 'Kirjavahemärkidega');
+  test(vahetaPooled('ab| ba'), '| baab', 'Esitühiku kõrvaldamine');
 }
 
 function keskelementTestid() {
@@ -73,6 +89,9 @@ function kuvaFunktsiooniNimetus(fN) {
 function test(testResult, expectedResult, testTitle) {
   // Testitulemiste raporteerija
   var tulemus = testResult === expectedResult;
+  if (!tulemus) {
+    console.log('oodatud: ' + expectedResult.toString() + ' saadud: ' + testResult.toString());
+  }
   var tulemuserida = $('<div></div>')
     .addClass('tulemuserida')
     .addClass('d-flex justify-content-start')

@@ -182,6 +182,23 @@ function keskelement(str) {
     return { taht: l.taht.toLowerCase(), yhekordne: true, sonaAlguses: l.eelmineOliTyhik }
   }
 }
+function eemaldaEsityhik(str) {
+  // Eemaldab tühikud enne esimest tähte
+  var eemalda = true;
+  acc = '';
+  for (var i = 0; i < str.length; i++) {
+    if (eemalda && str.charCodeAt(i) == 32) {
+
+    }
+    else {
+      acc += str[i]; 
+      if (!kirjavm(str[i]) && str[i] != '|') {
+        eemalda = false;
+      }
+    }
+  }
+  return acc;
+}
 // Teksti töötlemise abifunktsioonid
 function markeeriTekstikoguTekst(t) {
   // Tagastab markeeritud keskkohaga teksti
@@ -354,17 +371,18 @@ function vaiketaheks() {
     tekstParast.substring(1, tekstParast.length);
   kuvaTekst();
 }
-function vahetaPooled() {
+function vahetaPooled(t) {
+  // Eeldab parameetris t sisekujul teksti (kesktäht kahekordselt). Tagastab teksti, milles pooled on vahetatud. Kui pooltevahetusega sattus esimeseks sümboliks tühik, siis see eemaldatakse.
   var p = tahti(t) / 2;
   if (p < 2) {
-    return
+    return t
   }
   var taheloendur = 0;
   var esimesePooleLopp;
   // Leia keskkoht
   for (var i = 0; i < t.length; i++) {
     // Punktuatsioon kanna üle
-    if (! (kirjavm(t[i]) || t[i] == "|") ) {
+    if (! (kirjavm(t[i]) && t[i] != "|") ) {
       taheloendur++;
       if (taheloendur == p) {
         esimesePooleLopp = i;
@@ -372,11 +390,9 @@ function vahetaPooled() {
       }
     }
   }
-  var a = t.substring(0, i + 1);
-  var b = t.substring(i + 1, t.length);
-  t = b + a;
-  kuvaKeskelementYhekordselt = false;
-  kuvaTekst();
+  var a = t.slice(0, esimesePooleLopp + 1);
+  var b = t.slice(esimesePooleLopp + 1);
+  return b + a;
 }
 
 // Tekstikogu funktsioonid: laadimine, kuvamine, navigeerimine
@@ -825,6 +841,7 @@ function tootleEriklahv(keyCode) {
       t = acc;
     }
     aktiveeriTekstinupud(); // Kas see on vajalik? Ja kui tekkis tühitekst?
+    t = eemaldaEsityhik(t);
     kuvaTekst();
   }
 
@@ -861,6 +878,7 @@ function tootleEriklahv(keyCode) {
       t = acc;
     }
     aktiveeriTekstinupud();
+    t = eemaldaEsityhik(t);
     kuvaTekst();
   }
 
@@ -915,6 +933,11 @@ function lisaTahtVoiPunktuatsioon(charCode) {
   var acc = ""; // Akumulaator
   var taheloendur = 0;
 
+  // Mitut tühikut järjest mitte lubada, sest nende kuvamine vajaks teistsugust lahendust
+  if (charCode == 32 && tE > 0 && tekstEnne.charCodeAt(tekstEnne.length - 1) == 32) {
+    return
+  }
+
   if (kirjavmKood(charCode)) {
     t = tekstEnne + charTyped + "|" + tekstParast;
   }
@@ -958,6 +981,7 @@ function lisaTahtVoiPunktuatsioon(charCode) {
 
   aktiveeriTekstinupud();
   // console.log('Tekst: ', t);
+  t = eemaldaEsityhik(t);
   kuvaTekst();
 } 
 function seaTekstisisestuseKasitlejad() {
@@ -1024,7 +1048,10 @@ function seaTekstinupukasitlejad() {
   $('#Poolednupp').click(function() {
     if (dialoogiseisund == 'N') {
       $('#Tekst').focus();
-      vahetaPooled();
+      t = vahetaPooled(t);
+      kuvaKeskelementYhekordselt = false;
+      t = eemaldaEsityhik(t);
+      kuvaTekst();
     }
   });
 
