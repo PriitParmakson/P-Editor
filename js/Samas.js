@@ -100,26 +100,34 @@ function kirjavm(char) {
 function leiaTaht(str, index) {
   /* Tagastab:
    1) 'taht' - stringis str järjekorranumbriga index (1-põhine) tähe;
-   2) 'eelmineOliTyhik' - kas tähele eelnes tühik või reavahetus.
+   2) 'sonaAlguses' - kas tähele eelnes kirjavahemärk (sh tühik või reavahetus) või täht on teksti alguses;
+   3) 'sonaLopus' - kas tähele järgneb kirjavahemärk (sh tühik või reavahetus) või täht on teksti lõpus.
    Kirjavahemärke tähtede loendamisel ei arvesta.
-   Ebaõige sisendi korral tagastab tühja stringi.
+   Ebaõige sisendi korral, sh ka siis, kui tekstis ei ole nii palju tähti, tagastab tühja stringi.
    Tähe registrit ei muuda.
   */
   if (typeof str === 'undefined' || str === null || typeof index !== 'number' || index > str.length || index < 1) {
-    return { taht: '', eelmineOliTyhik: false }
+    return { taht: '', sonaAlguses: false, sonaLopus: false }
   }
   var taheloendur = 0;
-  var eelmineOliTyhik = false;
+  var sonaAlguses = false;
+  var eelmiseTaheIndex = null;
   for (var i = 0; i < str.length; i++) {
     if (!kirjavm(str[i])) {
       taheloendur += 1;
       if (taheloendur == index) {
-        return { taht: str[i], eelmineOliTyhik: eelmineOliTyhik };
+        return {
+          taht: str[i],
+          sonaAlguses: (eelmiseTaheIndex === null || eelmiseTaheIndex < i - 1),
+          sonaLopus: (i == str.length - 1 || kirjavm(str[i + 1]))
+        };
+      }
+      else {
+        eelmiseTaheIndex = i;
       }
     }
-    eelmineOliTyhik = (str[i] == ' ' || str[i] == '⏎');
   }
-  return { taht: '', eelmineOliTyhik: eelmineOliTyhik }
+  return { taht: '', sonaAlguses: false, sonaLopus: false }
 }
 function tahti(str) {
   // Tagastab tähtede arvu stringis. Ei arvesta kirjavahemärke ja kursorijoont
@@ -161,7 +169,8 @@ function keskelement(str) {
    1) 'taht' - samateksti str keskelement,
    väiketähena;
    2) 'yhekordne' - kas keskelement on ühekordsena (tõeväärtus);
-   3) 'sonaAlguses' - kas keskelement on sõna alguses (true) või lõpus (false).
+   3) 'sonaAlguses' - kas keskelement (kahekordse keskelemendi puhul - üks neist) on sõna alguses;
+   4) 'sonaLopus' - kas keskelement (kahekordse keskelemendi puhul - üks neist) on sõna lõpus.
    Eeldab samateksti. Ei tohi sisaldada kursorit (|). 
    */
   if (typeof str === 'undefined' || str === null || str === '') {
@@ -173,13 +182,24 @@ function keskelement(str) {
   }
   if (t % 2 == 0) {
     // Keskelement on kahekordsena
-    var l = leiaTaht(str, t / 2); 
-    return { taht: l.taht.toLowerCase(), yhekordne: false, sonaAlguses: l.eelmineOliTyhik }
+    var k1 = leiaTaht(str, t / 2);
+    var k2 = leiaTaht(str, t / 2 + 1); 
+    return {
+      taht: k1.taht.toLowerCase(),
+      yhekordne: false,
+      sonaAlguses: k1.sonaAlguses || k2.sonaAlguses,
+      sonaLopus: k1.sonaLopus || k2.sonaLopus
+    }
   } 
   else {
     // Keskelement on ühekordsena
-    var l = leiaTaht(str, Math.ceil(t / 2));
-    return { taht: l.taht.toLowerCase(), yhekordne: true, sonaAlguses: l.eelmineOliTyhik }
+    var k = leiaTaht(str, Math.ceil(t / 2));
+    return {
+      taht: k.taht.toLowerCase(),
+      yhekordne: true,
+      sonaAlguses: k.sonaAlguses,
+      sonaLopus: k.sonaLopus
+    }
   }
 }
 function eemaldaEsityhik(str) {
@@ -507,6 +527,7 @@ function seaFilter(klopsatudValik) {
   var keskel = $('#FilterKeskel').prop('checked');
   var yhekordseltAlguses = $('#YhekordseltAlguses').prop('checked');
   var yhekordseltLopus = $('#YhekordseltLopus').prop('checked');
+  var keskelKahesSonas = $('#KeskelKahesSonas').prop('checked');
   // Arvesta, et kui klõpsati valikukasti, siis see
   // ei ole veel ümber seatud
   switch (klopsatudValik) {
@@ -525,8 +546,23 @@ function seaFilter(klopsatudValik) {
     case '#YhekordseltLopus':
       yhekordseltLopus = ! yhekordseltLopus;
       break
+    case '#KeskelKahesSonas':
+      keskelKahesSonas = ! keskelKahesSonas;
+      break
+    case 'Salvestati': // Salvestati uus tekst; uuenda filtrit
+      break
+    default:
+      console.log('VIGA: Filtri seadmisel.');   
   }
-  console.log('Filter: ' + fL + (vasakul ? ': V ' : '') + (paremal ? ': P ' : '') + (keskel ? ': K ' : '') + (yhekordseltAlguses ? ': 1A ' : '') + (yhekordseltLopus ? ': 1L ' : ''));
+  console.log('Filter: ' +
+    fL +
+    (vasakul ? ': (Baa) ' : '') +
+    (paremal ? ': (aaB) ' : '') +
+    (keskel ? ': K ' : '') +
+    (yhekordseltAlguses ? ': (aa Baa) ' : '') +
+    (yhekordseltLopus ? ': (aaB aa) ' : '') +
+    (keskelKahesSonas ? ': (aaB Baa) ' : '')
+  );
   // Puhasta eelmine
   $('#Tekstikogu').empty();
   for (var i = 0; i < tekstid.length; i++) {
@@ -534,12 +570,18 @@ function seaFilter(klopsatudValik) {
     // Rakenda piirajad
     var ke = keskelement(tekstL);
     if (
-          (vasakul && tekstL.startsWith(fL + ' ')) ||
-          (paremal && tekstL.endsWith(' ' + fL)) ||
-          (keskel && fL.length == 1 && fL == keskelement(tekstL)) ||
-          (yhekordseltAlguses && fL.length == 1 && ke.yhekordne && ke.sonaAlguses && fL == ke.taht) ||
-          (yhekordseltLopus && fL.length == 1 &&  ke.yhekordne && !ke.sonaAlguses && fL == ke.taht) ||
-          (!vasakul && !paremal && !keskel && !yhekordseltAlguses && !yhekordseltLopus && tekstL.includes(fL))
+        // Baa 
+        (vasakul && tekstL.startsWith(fL)) ||
+        // aaB
+        (paremal && tekstL.endsWith(fL)) ||
+        // aa Baa  
+        (yhekordseltAlguses && fL.length == 1 && ke.yhekordne && ke.sonaAlguses && fL == ke.taht) ||
+        // aaB aa  
+        (yhekordseltLopus && fL.length == 1 && ke.yhekordne &&ke.sonaLopus && fL == ke.taht) ||
+        // aaB Baa
+        (keskelKahesSonas && fL.length == 1 && !ke.yhekordne && ke.sonaAlguses && ke.sonaLopus && fL == ke.taht) ||
+        //   
+        (!vasakul && !paremal && !yhekordseltAlguses && !yhekordseltLopus && !keskelKahesSonas && tekstL.includes(fL))
         ) {
       var kirje = $('<p></p>')
         .addClass('kirje')
@@ -563,6 +605,7 @@ function seaFiltriKasitlejad() {
   $('#FilterParemal').prop('checked', false);
   $('#FilterKeskel').prop('checked', false);
   $('#YhekordseltAlguses').prop('checked', false);
+  $('#KeskelKahesSonas').prop('checked', false);
   $('#YhekordseltLopus').prop('checked', false);
 
   // Filtridialoogi käsitlejad
@@ -652,7 +695,6 @@ function salvestaTekst() {
       console.log("Lisada tekst: " + u.toString());
       tekstid.unshift(u);
       tekstid[0].Tekst = c;
-      kuvaLehekylg(1);
     });
 }
 function suleSalvestusdialoog() {
@@ -677,6 +719,13 @@ function seaSalvestuseKasitlejad() {
   $('#Salvesta2').click(function() {
     salvestaTekst();
     suleSalvestusdialoog();
+    // Uuenda filtrit, kui see on avatud
+    if ($('#Filtridialoog').is(':visible')) {
+      seaFilter('Salvestati');
+    }
+    else if ($('#Tekstikogu').is(':visible')) {
+      kuvaLehekylg(1);
+    } 
   });
 
   $('#Tyhista').click(function() {

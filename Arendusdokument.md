@@ -154,9 +154,11 @@ Säh, hästi!
     * samuti kontrollitakse API poolel, et HTTP POST-päringuga salvestamiseks saadetud tekst on tõesti samatekst. <span class='todo'>TO DO</span>
   
 ## Logimine
-* Logitakse tekstiredigeerimist (elemendis `Tekst`)
-    * nii kasutaja klahvivajutusi
-    * kui ka programmi poolt väljastatud teksti.
+* Logitakse:
+    * tekstiredigeerimist (elemendis `Tekst`)
+      * nii kasutaja klahvivajutusi
+      * kui ka programmi poolt väljastatud teksti
+    * filtri seadmist (otsistring + piiravad tingimused)
 * Tekstisisestuse logimine
     * Logiteade moodustatakse ühes kahest funktsioonist:
       * `lisaTahtVoiPunktuatsioon`

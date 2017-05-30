@@ -33,7 +33,8 @@
         <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
 
           <!-- Infopaan -->
-          <div id='Infopaan' class='d-flex align-items-start'>
+          <div id='Infopaan'
+            class='d-flex align-items-start'>
             <!-- Info -->
             <p id='Infotekst'>
               <span class='klahv'>&larr;</span>
@@ -52,7 +53,9 @@
           </div>
 
           <!-- Tekstisisestusala -->
-          <div id='Tekst' contenteditable='true' spellcheck='false'></div>
+          <div id='Tekst'
+            contenteditable='true' spellcheck='false'>
+          </div>
 
           <!-- Nuppude ala -->
           <p id='Tekstitootlus'>
@@ -97,7 +100,8 @@
           </p>
 
           <!-- Kool -->
-          <div id='Koolitekst' class='d-flex align-items-start peidetud'>
+          <div id='Koolitekst'
+            class='d-flex align-items-start peidetud'>
             <div id='KoolitekstSisemine'>
               <p>
               I Määratlused<br>
@@ -184,7 +188,8 @@
           </div>
 
           <!-- Salvestusdialoog -->
-          <div id='Salvestusdialoog' style='display: none;'>
+          <div id='Salvestusdialoog'
+            style='display: none;'>
             <span class='form-check form-check-inline'>
               <label class='form-check-label active'>
                 <input type='checkbox' class='form-check-input'
@@ -205,7 +210,8 @@
           </div>
 
           <!-- Õigekirjakontrolli dialoog -->
-          <div id='Oigekirjadialoog' class='d-flex align-items-center justify-content-start peidetud'>
+          <div id='Oigekirjadialoog'
+            class='d-flex align-items-center justify-content-start peidetud'>
             <div >
               <label class='active'>
               Kontrollitav tekst: <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
@@ -224,8 +230,10 @@
           </div>
 
           <!-- Filtridialoog -->
-          <div id='Filtridialoog' style='display: none;'>
-            <div class='d-flex flex-wrap align-items-center justify-content-center'>
+          <div id='Filtridialoog'
+            style='display: none;'>
+            <div class='d-flex flex-wrap align-items-center justify-content-between'>
+              <!-- Filtritekst -->
               <span>
                 <label class='active'>
                   <input id='Filtritekst' type='text'
@@ -233,56 +241,71 @@
                    >
                 </label>
               </span>
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='FilterVasakul'>
-                  Teksti alguses
-                </label>
-              </span>
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='FilterParemal'>
-                  Teksti lõpus
-                </label>
-              </span>
-              <span id='FilterTyhista' class='align-self-center nupp'>
+              <!-- Sulge filtridialoog -->
+              <span id='FilterTyhista'
+                class='align-self-center nupp'
+                data-toggle='tooltip' title='Sulge filter'>
                 <i class="ikoon material-icons"
                   style='color: #F48FB1;'>cancel</i>
               </span>
             </div>
-            <div class='d-flex align-items-center justify-content-center'>
+            <div class='d-flex flex-wrap align-items-center justify-content-around'>
+              <!-- Teksti alguses -->
               <span class='form-check form-check-inline'>
-                <label class='form-check-label'>
+                <label class='form-check-label'
+                  data-toggle='tooltip' title='Teksti alguses'>
                   <input type='checkbox' class='form-check-input filtrivalik'
-                    id='FilterKeskel'>
-                  Keskel
+                    id='FilterVasakul'>
+                  <span class='kesk'>B</span>aa
                 </label>
               </span>
+              <!-- Teksti lõpus -->
               <span class='form-check form-check-inline'>
-                <label class='form-check-label'>
+                <label class='form-check-label'
+                  data-toggle='tooltip' title='Teksti lõpus'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='FilterParemal'>
+                  aa<span class='kesk'>B</span>
+                </label>
+              </span>
+              <!-- Keskel kahes sõnas -->
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'
+                 data-toggle='tooltip' title='Keskel, kahes sõnas'>
+                  <input type='checkbox' class='form-check-input filtrivalik'
+                    id='KeskelKahesSonas'>
+                  aa<span class='kesk'>B</span> <span class='kesk'>B</span>aa
+                </label>
+              </span>
+              <!-- Keskel, ühekordselt, sõna alguses -->
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'
+                 data-toggle='tooltip' title='Keskel, ühekordselt, sõna alguses'>
                   <input type='checkbox' class='form-check-input filtrivalik'
                     id='YhekordseltAlguses'>
-                  Keskel, ühekordselt, sõna alguses
+                  aa <span class='kesk'>B</span>aa
                 </label>
               </span>
+              <!-- Keskel, ühekordselt, sõna lõpus -->
               <span class='form-check form-check-inline'>
-                <label class='form-check-label'>
+                <label class='form-check-label'
+                  data-toggle='tooltip' title='Keskel, ühekordselt, sõna lõpus'>
                   <input type='checkbox' class='form-check-input filtrivalik'
                     id='YhekordseltLopus'>
-                  Keskel, ühekordselt, sõna lõpus
+                  aa<span class='kesk'>B</span> aa
                 </label>
               </span>            
             </div>
           </div>
 
           <!-- Tekstikogu -->
-          <div id='Tekstikogu' style='display: none;'>
+          <div id='Tekstikogu'
+            style='display: none;'>
           </div>
 
           <!-- Tekstikogu sirvimine -->
-          <p id='Sirvimine' style='display: none;'>
+          <p id='Sirvimine'
+            style='display: none;'>
             <span id='FirstPage' class='nupp disabled'>
               <i class="ikoon material-icons">first_page</i>
             </span>
@@ -302,7 +325,8 @@
       </div>
 
       <!-- Jalus -->
-      <div class='row' style='margin-top: 3rem; margin-bottom: 3rem;'>
+      <div class='row'
+         style='margin-top: 3rem; margin-bottom: 3rem;'>
         <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
           <p>
             <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' data-toggle='tooltip' title='Litsents'>CC BY-NC-SA 4.0</a> 
