@@ -1,5 +1,7 @@
 function jooksutaTestid() {
   // Testide käivitaja
+  SalvestuseEksperiment();
+  return
   eemaldaLiigsedTyhikudTestid();
   vahetaPooledTestid();
   leiaTahtTestid();
