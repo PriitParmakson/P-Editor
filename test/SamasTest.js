@@ -1,16 +1,17 @@
 function jooksutaTestid() {
   // Testide käivitaja
-  eemaldaEsityhikTestid();
+  eemaldaLiigsedTyhikudTestid();
   vahetaPooledTestid();
   leiaTahtTestid();
   keskelementTestid();
   samatekstTestid();
 }
 
-function eemaldaEsityhikTestid() {
-  kuvaFunktsiooniNimetus('eemaldaEsityhik');
-  test(eemaldaEsityhik('| abba'), '|abba', 'Kursor ees');
-  test(eemaldaEsityhik(' a|bba'), 'a|bba', 'Kursor ees');
+function eemaldaLiigsedTyhikudTestid() {
+  kuvaFunktsiooniNimetus('eemaldaLiigsedTyhikud');
+  test(eemaldaLiigsedTyhikud('| abba', false), '|abba', 'Kursor ees');
+  test(eemaldaLiigsedTyhikud(' a|bba', false), 'a|bba', 'Ees');
+  test(eemaldaLiigsedTyhikud('a | bba', false), 'a |bba', 'Keskel, 2-kordne');
 }
 
 function vahetaPooledTestid() {

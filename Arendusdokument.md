@@ -195,6 +195,10 @@ Säh, hästi!
 * Tähesisestuse töötlemiseks on `keypress` parem kui `keydown`, sest `keypress` näitab, milline tärk sisestati (eristab suur- ja väiketähti). `keydown` näitab millist klahvi vajutati.
 * Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net](http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net)
 
+## Nuppude töötlus
+* Kasutajaliidese alade peitmiseks `style='display: none;'`; nähtavale toomine ja peitmine vastavalt JQuery `show`, `hide` ja `toggle`.
+* Nuppude mitteaktiivseks tegemine klassiga `disabled`.
+
 ## Miks ei kasuta input elementi
 * `Input` elemendis vt: setSelectionRange() HTML veebi-APIs HTMLInputElement - https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
 * JQuery-s ei ole `oninput` võimalust, vt
