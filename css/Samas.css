@@ -182,6 +182,17 @@ Värviskeem
     width: 24rem;
   }
 
+  /* SamatekstidTekstist dialoog */
+  #SamatekstidTekstistBlokk1 {
+    margin: 1rem;
+  }
+  #SamatekstidTekstistTekst {
+    width: 24rem;
+  }
+  #SamatekstidTekstistTulemus {
+    margin: 1rem;
+  }
+
   /* Määra üle Bootstrapi lingivärv */
   a, a:hover, a:active, a:visited {
     color: 292B2C !important;

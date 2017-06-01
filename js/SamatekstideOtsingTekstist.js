@@ -41,7 +41,7 @@ function samatekstideOtsingTekstist(t) {
 
   // Ühekordse kesktähega tekstide otsimine
   for (var i = 0; i < t.length; i++) {
-    if (!taht(t[i])) { continue; }
+    if (!taht(t.charCodeAt(i))) { continue; }
     et = i;
     jt = i;
     sTahti = 1;
@@ -98,3 +98,30 @@ function samatekstideOtsingTekstist(t) {
 
   return samatekstid;
 }
+
+function seaSamatekstidTekstistKasitlejad() {
+  $('#SamatekstideOtsing').click(function() {
+    $('#SamatekstidTekstistDialoog').removeClass('peidetud');
+    $('#SamatekstideOtsing').addClass('disabled');
+    $('#SamatekstidTekstistTekst').focus();
+  });
+
+  $('#SamatekstidTekstistSulge').click(function() {
+    $('#SamatekstidTekstistDialoog').addClass('peidetud');
+    $('#SamatekstideOtsing').removeClass('disabled');
+    $('#SamatekstidTekstistTekst').val('');
+    $('#SamatekstidTekstistTulemus').empty();
+  });
+
+  $('#SamatekstidTekstistOtsi').click(function() {
+    var t = $('#SamatekstidTekstistTekst').val();
+    var r = samatekstideOtsingTekstist(t);
+    var r2 = '<span> | ';
+    for (var i = 0; i < r.length; i++) {
+      r2 = r2 + r[i] + ' | ';
+    }
+    r2 += '</span>'; 
+    $('#SamatekstidTekstistTulemus').html(r2);
+  });
+}
+
