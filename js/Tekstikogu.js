@@ -64,21 +64,22 @@ function kuvaLehekylg(p) {
 }  
 function seaTekstikoguKasitlejad() {
   $('#AvaTekstikogu').click(function () {
-    $('#Tekstikogu').toggle();
     // Ava tekstikogu
-    if ($('#Tekstikogu').is(':visible')) {
+    if ($('#Tekstikogu').hasClass('peidetud')) {
+      $('#Tekstikogu').removeClass('peidetud');
       $('#Otsi').removeClass('disabled');
-      $('#Sirvimine').show();
+      $('#Sirvimine').removeClass('peidetud');
     }
     // Sule tekstikogu
     else {
-      // Kui filtridialoog oli avatud, siis sule ka see
+      $('#Tekstikogu').addClass('peidetud');
+      // Kui filtridialoog on avatud, siis sule ka see
       if ($('#Filtridialoog').is(':visible')) {
         suleFilter();
       } 
       // Sule tekstikogu
       $('#Otsi').addClass('disabled');
-      $('#Sirvimine').hide();
+      $('#Sirvimine').addClass('peidetud');
     }
   });
 
