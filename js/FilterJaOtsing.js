@@ -53,9 +53,9 @@ function seaFilter(klopsatudValik) {
 }
 function suleFilter() {
   /* Eemalda filter, sule filtridialoog, eemalda filtritekst ja fokusseeri tekstile. Taasta sirvimine */
-  $('#Sirvimine').show();
+  $('#Sirvimine').removeClass('peidetud');
   kuvaLehekylg(jLk);
-  $('#Filtridialoog').hide();
+  $('#Filtridialoog').addClass('peidetud');
   $('#Filtritekst').val('');
   $('#Tekst').focus();
   $('#Otsi').removeClass('disabled');
@@ -72,8 +72,8 @@ function seaFiltriKasitlejad() {
   // Filtridialoogi käsitlejad
   $('#Otsi').click(function() {
     if (!$('#Otsi').hasClass('disabled')) {
-      $('#Filtridialoog').toggle();
-      $('#Sirvimine').hide();
+      $('#Filtridialoog').removeClass('peidetud');
+      $('#Sirvimine').addClass('peidetud');
       $('#Filtritekst').val('').focus();
       $('#Otsi').addClass('disabled');
       seaFilter($(this).attr('id'));

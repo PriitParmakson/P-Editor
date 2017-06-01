@@ -7,18 +7,30 @@ Teave
 
 Värviskeem
 ----------
-* (värvimääranguid on ka HTML-is)
-* keskelemendi rõhutus - DarkBlue
-* dialoogikasti ääris, märgend - #C5E1A5 (nõrk roheline)
-* võimaldatud nupp, tooltip - rgb(117, 117, 117)
-* mittevõimalik nupp - Gainsboro
-* sisestatav tekst - #464a4c
-* Infopaan - taust Azure, ääris Aqua
-* Infopaani sulgur - Gray
-* Salvesta (OK-roheline) - #C5E1A5
-* Tühista (nupp) - #F48FB1
-* Link - rgb(41, 43, 44) (Bootstrap4 vaikimisi tekstivärv)
-  - allpunktiir - DarkBlue
+* DarkBlue
+            - keskelemendi rõhutus
+* #757575 (keskmiselt hall)
+            - võimaldatud nupp, tooltip 
+* Gainsboro (helehall)
+            - mittevõimalik nupp 
+* #464a4c (tumehall)
+            - sisestatav tekst 
+* Azure (pastellroheline)
+            - informatsioonilise paani (Infopaan, Kool) taust
+* Aqua (ereroheline)
+            - informatsioonilise paani ääris
+* Gray
+            - paani sulgur
+* #C5E1A5 (nõrk roheline)
+            - normaaltoimingu nupp (Salvesta)
+            - dialoogikasti ääris, märgendi ääris
+* #F48FB1 (punane)
+            - tühistava toimingu nupp 
+* 292B2C (Bootstrap4 vaikimisi tekstivärv)
+  - DarkBlue - allpunktiir
+            - link
+
+(värvimääranguid on ka HTML-is)
 
 */
 
@@ -33,7 +45,7 @@ Värviskeem
 
   /* Mitmesugused korduvkasutatavad stiilid */
   .tooltip-inner { background-color: White;
-    color: rgb(117, 117, 117); }
+    color: #757575; }
 
   /* Tekstisisestusala
     Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
@@ -45,7 +57,7 @@ Värviskeem
     line-height: 1.25;
     color: #464a4c;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
+    border-radius: 4px;
     margin-bottom: 1rem; }
   #Tekst:focus {
     border-color: LightGray;
@@ -55,10 +67,6 @@ Värviskeem
 
   .kesk { color: DarkBlue;
     font-weight: 600; }
-  .nupp { margin: 1rem;
-    cursor: pointer;
-    color: rgb(117, 117, 117);
-  }
   .ikoon { font-family: 'Material Icons';
     font-size: 48px;
   }
@@ -70,25 +78,22 @@ Värviskeem
     margin-top: 1rem;
   }
 
-  /* Infopaan ja Kool */
-  #Infopaan, #Koolitekst {
-    border: 1px solid Aqua;
+  /* Paanid - Ühised omadused
+     ------ 
+    Paanid on: 1) Infopaan; 2) Koolitekst; 3) Salvestusdialoog; 4) Oigekirjadialoog; 5) Filtridialoog. 
+  */
+  .paan {
     border-radius: 4px; 
-    background-color: Azure;
     padding: 0 0 0.5rem;
-    margin-bottom: 1rem; } 
-  #Infotekst, #KoolitekstSisemine {
-    margin: 1rem;
-  }   
-  .klahv {
-    border-radius: 3px;
-    padding-left: 1px; padding-right: 1px;
-    border: 1px solid rgb(117, 117, 117);
-    font-family: 'Courier New', monospace;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem; 
   }
-
-  /* Sulgemisnupuke */
+  .peidetud { 
+    /* display: flex; ülekirjutamiseks */
+    display: none !important;
+  }
   .sulgemisnupuke {
+    /* Sulgemisnupuke */
     padding: 0 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
     font-family: Arial, sans-serif;
@@ -96,9 +101,33 @@ Värviskeem
     font-weight: bold;
     color: Gray;
   }
-  .peidetud { 
-    /* display: flex; ülekirjutamiseks */
-    display: none !important;
+  .dialoog {
+    /* Avatav/suletav dialoogivorm */
+    border: 1px solid #C5E1A5;
+  }
+  .teabepaan {
+    /* Teavet esitav paan */
+    border: 1px solid Aqua;
+    background-color: Azure;
+  }
+
+  /* Nupud */
+  .nupp { margin: 1rem 0.5rem;
+    cursor: pointer;
+    color: #757575;
+  }
+  .disabled { color: Gainsboro !important; cursor: auto; }
+
+  /* Paanide spetsiifilised elemendid */
+    
+  #Infotekst, #KoolitekstSisemine {
+    margin: 1rem;
+  }   
+  .klahv {
+    border-radius: 3px;
+    padding-left: 1px; padding-right: 1px;
+    border: 1px solid #757575;
+    font-family: 'Courier New', monospace;
   }
 
   /* Tekstikogu */
@@ -117,7 +146,7 @@ Värviskeem
     font-size: 10pt;
     text-transform: uppercase;
     margin-left: 1rem; }
-
+  
   /* Sirvimisnupud */
   #Sirvimine {
     display: flex;
@@ -134,48 +163,28 @@ Värviskeem
     vertical-align: middle;
     height: 100%;
   }
-  .disabled { color: Gainsboro !important; cursor: auto; }
 
-  /* Filtridialoog */
-  #Filtridialoog { 
-    padding: 0.5rem;
-  }
-  #Filtritekst { margin-left: 2rem;
-    margin-right: 1rem; width: 8rem; }
   /* Filter */
-  #Filtritekst { color: rgb(117, 117, 117) !important; }
+  #Filtritekst { margin: 1rem;
+    width: 8rem;
+    color: #757575 !important; }
   #Filtritekst:focus {
     border-color: #C5E1A5 !important;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.055) inset, 0 0 8px rgba(220, 180, 220, 0.6);
     outline: 0 none;      
   }
 
-  /* Täiendava dialoogi vorm */
-  #Salvestusdialoog, #Filtridialoog, #Oigekirjadialoog {
-    border: 1px solid #C5E1A5;
-    border-radius: 4px;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem; 
-  }
-
-  /* Salvestamisel täpsustava küsimuse dialoog */
-  #Salvestusdialoog {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   /* Õigekirjakontrolli dialoog */
-  #Oigekirjadialoog {
-    padding: 0.5rem;
+  #KontrTekstiblokk {
+    margin: 1rem;
   }
-  #KontrollitavTekst {
+  #KontrollitavTekst { 
     width: 24rem;
   }
 
   /* Määra üle Bootstrapi lingivärv */
   a, a:hover, a:active, a:visited {
-    color: rgb(41, 43, 44) !important;
+    color: 292B2C !important;
     text-decoration: underline;
     text-decoration-style: dashed;
     text-decoration-color: DarkBlue;

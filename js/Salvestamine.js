@@ -56,7 +56,7 @@ function salvestaTekst(s) {
 
 function suleSalvestusdialoog() {
   // Sule salvestusdialoog
-  $('#Salvestusdialoog').hide();
+  $('#Salvestusdialoog').addClass('peidetud');
   aktiveeriTekstinupud();
   dialoogiseisund = 'N';
   $('#Tekst').focus();  
@@ -67,7 +67,7 @@ function seaSalvestuseKasitlejad() {
   $('#Salvesta1').click(function() {
     // Ava salvestusdialoog 
     if (dialoogiseisund == 'N') {
-      $('#Salvestusdialoog').toggle();
+      $('#Salvestusdialoog').removeClass('peidetud');
       deaktiveeriTekstinupud();
       dialoogiseisund = 'S';
       $('#draftNupp').focus();

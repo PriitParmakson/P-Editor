@@ -40,7 +40,7 @@
 
           <!-- Infopaan -->
           <div id='Infopaan'
-            class='d-flex align-items-start'>
+            class='paan teabepaan d-flex align-items-start'>
             <!-- Info -->
             <p id='Infotekst'>
               <span class='klahv'>&larr;</span>
@@ -108,7 +108,7 @@
 
           <!-- Kool -->
           <div id='Koolitekst'
-            class='d-flex align-items-start peidetud'>
+            class='paan teabepaan d-flex align-items-start peidetud'>
             <div id='KoolitekstSisemine'>
               <p>
               I Määratlused<br>
@@ -196,7 +196,8 @@
 
           <!-- Salvestusdialoog -->
           <div id='Salvestusdialoog'
-            style='display: none;'>
+            class='paan dialoog d-flex align-items-center
+            justify-content-center peidetud'>
             <span class='form-check form-check-inline'>
               <label class='form-check-label active'>
                 <input type='checkbox' class='form-check-input'
@@ -218,8 +219,8 @@
 
           <!-- Õigekirjakontrolli dialoog -->
           <div id='Oigekirjadialoog'
-            class='d-flex align-items-center justify-content-start peidetud'>
-            <div >
+            class='paan dialoog d-flex align-items-center justify-content-start peidetud'>
+            <div id='KontrTekstiblokk'>
               <label class='active'>
               Kontrollitav tekst: <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
               </label>
@@ -238,7 +239,7 @@
 
           <!-- Filtridialoog -->
           <div id='Filtridialoog'
-            style='display: none;'>
+            class='paan dialoog peidetud'>
             <div class='d-flex flex-wrap align-items-center justify-content-between'>
               <!-- Filtritekst -->
               <span>
@@ -249,12 +250,10 @@
                 </label>
               </span>
               <!-- Sulge filtridialoog -->
-              <span id='FilterTyhista'
-                class='align-self-center nupp'
-                data-toggle='tooltip' title='Sulge filter'>
-                <i class="ikoon material-icons"
-                  style='color: #F48FB1;'>cancel</i>
-              </span>
+              <div id='FilterTyhista'
+                class='align-self-start sulgemisnupuke'
+                <span>&times;</span>
+              </div>
             </div>
             <div class='d-flex flex-wrap align-items-center justify-content-around'>
               <!-- Teksti alguses -->
@@ -307,12 +306,12 @@
 
           <!-- Tekstikogu -->
           <div id='Tekstikogu'
-            style='display: none;'>
+            class='peidetud'>
           </div>
 
           <!-- Tekstikogu sirvimine -->
           <p id='Sirvimine'
-            style='display: none;'>
+            class='peidetud'>
             <span id='FirstPage' class='nupp disabled'>
               <i class="ikoon material-icons">first_page</i>
             </span>
