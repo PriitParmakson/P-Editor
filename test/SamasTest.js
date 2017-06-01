@@ -1,12 +1,29 @@
 function jooksutaTestid() {
   // Testide käivitaja
-  SalvestuseEksperiment();
+  // SalvestuseEksperiment();
+  samatekstideOtsingTekstistTestid();
   return
   eemaldaLiigsedTyhikudTestid();
   vahetaPooledTestid();
   leiaTahtTestid();
   keskelementTestid();
   samatekstTestid();
+}
+
+function samatekstideOtsingTekstistTestid() {
+  kuvaFunktsiooniNimetus('samatekstideOtsingTekstist');
+  test(samatekstideOtsingTekstist('iba abi'), ['iba abi'], 'iba abi');
+  test(samatekstideOtsingTekstist('aba cdc'), [], 'aba cdc');
+  test(samatekstideOtsingTekstist('jamaib ,a . abi kkk'), ['ib ,a . abi'], 'jamaib ,a . abi kkk');
+  kuvaFunktsiooniNimetus('eelmineTaht');
+  test(eelmineTaht(0, 'A, bce. f'), false, 'Alguses');
+  test(eelmineTaht(8, 'A, bce. f'), 5, 'Lopus');
+  test(eelmineTaht(3, 'A, bce. f'), 0, 'Keskel, üle kirjavahemärgi');
+  kuvaFunktsiooniNimetus('jargmineTaht');
+  test(jargmineTaht(0, 'A, bce. f'), 3, 'Alguses');
+  test(jargmineTaht(8, 'A, bce. f'), false, 'Lopus');
+  test(jargmineTaht(3, 'A, bce. f'), 4, 'Keskel');
+  test(jargmineTaht(5, 'A, bce. f'), 8, 'Keskel, üle kirjavahemärgi');
 }
 
 function eemaldaLiigsedTyhikudTestid() {
@@ -94,7 +111,13 @@ function kuvaFunktsiooniNimetus(fN) {
 
 function test(testResult, expectedResult, testTitle) {
   // Testitulemiste raporteerija
-  var tulemus = testResult === expectedResult;
+  var tulemus;
+  if (isArray(expectedResult)) {
+    tulemus = arraysEqual(expectedResult, testResult);
+  }
+  else {
+    tulemus = testResult === expectedResult;
+  }
   if (!tulemus) {
     console.log('oodatud: ' + expectedResult.toString() + ' saadud: ' + testResult.toString());
   }
@@ -117,3 +140,12 @@ function test(testResult, expectedResult, testTitle) {
     .appendTo(tulemuserida);
 }
 
+function arraysEqual(a, b) {
+  a = Array.isArray(a) ? a : [];
+  b = Array.isArray(b) ? b : [];
+  return a.length === b.length && a.every((el, ix) => el === b[ix]);
+}
+
+function isArray(o) {
+  return Object.prototype.toString.call(o) === '[object Array]'; 
+}

@@ -1,9 +1,4 @@
 // Samatekstitöötluse primitiivid
-function kirjavm(char) {
-  // Kontrollib, kas tärk on kirjavahemärk.
-  // Kirjavahemärgiks loetakse ka reavahetusmärki (⏎).
-  return (kirjavmKood(char.charCodeAt(0)) || char == '⏎')
-}
 function leiaTaht(str, index) {
   /* Tagastab:
    1) 'taht' - stringis str järjekorranumbriga index (1-põhine) tähe;
