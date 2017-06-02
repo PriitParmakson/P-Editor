@@ -223,3 +223,7 @@ Säh, hästi!
 * `Range` objekt vt: https://developer.mozilla.org/en-US/docs/Web/API/Range
 * `Selection` objekt vt: https://developer.mozilla.org/en-US/docs/Web/API/Selection
 * Caret paigutamine tühja teksti - kasuta 0-pikkusega tühikut, vt: http://stackoverflow.com/questions/4063144/setting-the-caret-position-to-an-empty-node-inside-a-contenteditable-element
+
+## Visuaalne hierarhia
+
+![](resource/VisuaalneHierarhia.PNG)
