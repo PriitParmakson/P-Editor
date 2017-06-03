@@ -20,7 +20,13 @@ Senises "s" esines?
 Seni "s" esines.
 
 5
-Senisest. "S" esines.
+Sama siin. Nii - sama "s".
+
+6
+Niisama "s"? Sama siin.
+
+7
+Senisest. "s" esines.
 ```
 
 **[Samatekstiredaktor](https://priitparmakson.github.io/Samatekstiredaktor)** on veebipõhine spetsialiseeritud redaktor samatekstide koostamiseks.
