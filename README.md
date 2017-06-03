@@ -26,7 +26,10 @@ Sama siin. Nii - sama "s".
 Niisama "s"? Sama siin.
 
 7
-Senisest. "s" esines.
+(Senisest. "s" esines.)
+
+8
+Sama jama - "s".
 ```
 
 **[Samatekstiredaktor](https://priitparmakson.github.io/Samatekstiredaktor)** on veebipõhine spetsialiseeritud redaktor samatekstide koostamiseks.
