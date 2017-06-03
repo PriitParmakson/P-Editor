@@ -4,6 +4,22 @@
 Ajate luulu, luuletaja!
 ```
 
+```
+"S"
+
+1
+Nii, "s" - siin.
+
+2
+Senises "s" esines?
+
+3
+Seni "s" esines.
+
+4
+Senisest. "S" esines.
+```
+
 **[Samatekstiredaktor](https://priitparmakson.github.io/Samatekstiredaktor)** on veebipõhine spetsialiseeritud redaktor samatekstide koostamiseks.
 
 Redaktor pakub ka võimalust tekste salvestada Google pilves hoitavasse tekstikogusse.
