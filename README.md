@@ -14,21 +14,27 @@ Nii, "s" - siin.
 Siinsamas, nii - "s".
 
 3
-Senises "s" esines?
+"s" ees.
 
 4
-Seni "s" esines.
+See "s" - sees.
 
 5
-Sama siin. Nii - sama "s".
+Senises "s" esines?
 
 6
-Niisama "s"? Sama siin.
+Seni "s" esines.
 
 7
-(Senisest. "s" esines.)
+Sama siin. Nii - sama "s".
 
 8
+Niisama "s"? Sama siin.
+
+9
+(Senisest. "s" esines.)
+
+10
 Sama jama - "s".
 ```
 
