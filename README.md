@@ -11,12 +11,15 @@ Ajate luulu, luuletaja!
 Nii, "s" - siin.
 
 2
-Senises "s" esines?
+Siinsamas, nii - "s".
 
 3
-Seni "s" esines.
+Senises "s" esines?
 
 4
+Seni "s" esines.
+
+5
 Senisest. "S" esines.
 ```
 
