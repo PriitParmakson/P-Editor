@@ -81,5 +81,5 @@ function keyCodeToHumanReadable(keyCode) {
     221: ']',
     222: "'"
   }
-  return (keycodes[keyCode] || 'tundmatu klahv')
+  return (keycodes[keyCode] || '')
 }

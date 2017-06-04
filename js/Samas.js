@@ -2,7 +2,16 @@
   Samatekstiredaktor (Editor for Palindromic Texts), Priit Parmakson, 2017. MIT Licence
 */
 
-var logimistase = 0; 
+var logimistase = 1; 
+/*
+  0 
+    - seatud filter
+    - salvestatud tekst
+    - redaktoris kuvamiseks moodustatatud tekst
+  1 
+    - kasutaja klahvivajutus (KEYDOWN)
+    - kasutaja sisestatud tark (KEYPRESS) 
+*/
 
 // Globaalsed muutujad
 var t = '|'; // Tekst

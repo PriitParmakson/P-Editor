@@ -242,46 +242,58 @@ function seaRedaktoriKasitlejad() {
     välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
   */
 
-  /* 
-    Sündmuse 'keydown' käsitleja. Püüame kinni eriklahvide 
+  $('#Tekst').on('keydown', function (e) {
+    /* 
+    Sündmuse KEYDOWN käsitleja. Püüame kinni eriklahvide 
      vajutused, mida tahame töödelda: 8 (Backspace), 46 (Delete), 
      33 (PgUp), 34 (PgDn), 38 (Up), 40 (Down). Nende vaikimisi 
-     toiming tühistatakse.
-  */
-  $('#Tekst').on('keydown', function (e) {
-    var keyCode = e.keyCode;
+     toiming tühistatakse ja vajutusi käsitletakse spetsiifiliselt.
 
-    // Standardne logimine
+     Märkus. Ctrl + klahv vajutustest tekib kaks KEYDOWN sündmust - esimene keyCode = 17 (Ctrl), seejärel keyCode = klahvi kood (tõeväärtus ctrlDown on mõlemal juhul tõene).
+    */
+    var keyCode = e.keyCode;
+    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+
+    // Logimine
     if (logimistase == 1) {
-      console.log('keydown: ' + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
+      console.log('KEYDOWN:' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
     }
+
+    // Kui Ctrl+c (keyCode 67) või Ctrl+v (keyCode 86), siis lase seda käsitleda vastavatel süsteemsetel sündmusekäsitlejatel
+    if (ctrlDown && [67, 86].includes(keyCode)) { return }
 
     if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
       e.preventDefault();
       tootleEriklahv(keyCode);
     }
-    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
-    // Kui Ctrl+c (keyCode 67) või Ctrl+v (keyCode 86), siis lase seda käsitleda vastavatel süsteemsetel sündmusekäsitlejatel
-    if (ctrlDown && [67, 86].includes(keyCode)) { return }
   });
 
-  /* 
-    Sündmuse 'keypress' käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
-  */
   $('#Tekst').on('keypress', function (e) {
+    /* 
+      Sündmuse KEYPRESS käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
+
+      Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel. 
+    */
     var charCode = e.charCode;
+    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
 
     // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
     if (e.keyCode == 13) {
       charCode = 13;
     }
 
-    // Standardne logimine
+    // Logimine
     if (logimistase == 1) {
-      console.log('keypress: ' + String.fromCharCode(charCode) + '(' + charCode + ')');
+      if (ctrlDown) {
+        console.log('KEYPRESS: Ctrl'); 
+      }
+      else {
+        console.log('KEYPRESS: ' + String.fromCharCode(charCode) + ' (' + charCode + ')');
+      }
     }
 
-    if (charCode != null && charCode != 0) {
+    // Ctrl-kombinatsioone tähesisestuseks ei loe
+    if (!ctrlDown && charCode != null && charCode != 0) {
       e.preventDefault();
       lisaTahtVoiPunktuatsioon(charCode);
     }
@@ -293,8 +305,18 @@ function seaRedaktoriKasitlejad() {
     // common browser -> e.originalEvent.clipboardData
     // uncommon browser -> window.clipboardData
     var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
-    var pastedData = clipboardData.getData('text');
-    console.log('pasted data: ' + pastedData);
-    e.preventDefault(); // We are already handling the data from the clipboard, we do not want it inserted into the document
+    var LisatavTekst = clipboardData.getData('text');
+    console.log('pasted data: ' + LisatavTekst);
+    /* Lasta vaikereaktsioonil toimuda. 
+       Selleks seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
+       Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
+       Kui ei ole, siis anda veateada ja sisendid mitte aktsepteerida.
+       Taastada siseesituse põhjal toimingueelne tekst
+       Luua veateatepaan.
+    */
+    setTimeout(function() {
+
+    }, 50);
   });
+
 }
