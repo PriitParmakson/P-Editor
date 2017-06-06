@@ -254,6 +254,11 @@ function seaRedaktoriKasitlejad() {
     var keyCode = e.keyCode;
     var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
 
+    if (!$('#Teatepaan').hasClass('peidetud')) {
+      e.preventDefault();
+      return
+    }
+
     // Logimine
     if (logimistase == 1) {
       console.log('KEYDOWN:' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
@@ -272,10 +277,18 @@ function seaRedaktoriKasitlejad() {
     /* 
       Sündmuse KEYPRESS käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
 
-      Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel. 
+      Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel.
+    
+      Kui Teatepaan on avatud (asetamise viga), siis ignoreeritakse.
     */
     var charCode = e.charCode;
     var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+
+    if (!$('#Teatepaan').hasClass('peidetud')) {
+      // Asetamise veateade tuleb enne sulgeda
+      e.preventDefault();
+      return
+    }
 
     // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
     if (e.keyCode == 13) {
@@ -304,29 +317,34 @@ function seaRedaktoriKasitlejad() {
        Tavaline sirvija -> e.originalEvent.clipboardData
        Ebatavaline sirvija -> window.clipboardData
     */
+
+    if (!$('#Teatepaan').hasClass('peidetud')) {
+      // Asetamise veateade tuleb enne sulgeda
+      e.preventDefault();
+      return
+    }    
+
     var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
     var LisatavTekst = clipboardData.getData('text');
     /* Lasta vaikereaktsioonil toimuda. 
        Selleks:
        1) seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
-       2) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
-       3) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
-       4) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
+       2) puhastada sisend kõrvalistest tärkidest. Eriti on vaja kõrvaldada &#8203; (Zero-Width Space)
+       3) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
+       4) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
+       5) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
        Taastada siseesituse põhjal toimingueelne tekst.
     */
     setTimeout(function() {
       var asetatudTekst = $('#Tekst').text();
       console.log('Asetatud tekst: ' + asetatudTekst);
-      if (samatekst(asetatudTekst)) {
-        /* Moodusta siseesitus. Arvesta, et siseesituses kesktäht on kahekordselt; samuti lisa sisekursor (algusesse)
+      var puhastatudTekst = puhastaTekst(asetatudTekst);
+      if (samatekst(puhastatudTekst)) {
+        /* Moodusta siseesitus.  samuti lisa sisekursor (algusesse)
         */
-        var tahti = tahti(asetatudTekst);
-        if (tahti % 2 == 1) {
-          // Kesktäht on ühekordselt
-          var kesktaht = tuvastaKesktaht(asetatudTekst);
-          t = asetatudTekst.substring(0, kesktaht.indeks) + kesktaht.taht + kesktaht.taht + asetatudTekst.substring(kesktaht.indeks + 1, asetatudTekst.length);
-        } 
-        t = '|' + eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
+        var siseEsituses = tekstistSiseesitusse(puhastatudTekst);
+        t = siseEsituses.tekst;
+        kuvaKesktahtYhekordselt = siseEsituses.kuvaKesktahtYhekordselt;
         kuvaTekst();
         aktiveeriTekstinupud();
       }
