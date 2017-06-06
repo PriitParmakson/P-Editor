@@ -1,20 +1,16 @@
 // Samatekstitöötluse primitiivid
-function kirjavm(char) {
-  // Kontrollib, kas tärk on kirjavahemärk.
-  // Kirjavahemärgiks loetakse ka reavahetusmärki (⏎).
-  return (kirjavmKood(char.charCodeAt(0)) || char == '⏎')
-}
 function leiaTaht(str, index) {
-  /* Tagastab:
+  /* Tagastab objekti, mille struktuur on:
    1) 'taht' - stringis str järjekorranumbriga index (1-põhine) tähe;
-   2) 'sonaAlguses' - kas tähele eelnes kirjavahemärk (sh tühik või reavahetus) või täht on teksti alguses;
-   3) 'sonaLopus' - kas tähele järgneb kirjavahemärk (sh tühik või reavahetus) või täht on teksti lõpus.
+   2) 'indeks' - leitud tähe kui tärgi indeks stringis (0-põhine);
+   3) 'sonaAlguses' - kas tähele eelnes kirjavahemärk (sh tühik või reavahetus) või täht on teksti alguses;
+   4) 'sonaLopus' - kas tähele järgneb kirjavahemärk (sh tühik või reavahetus) või täht on teksti lõpus.
    Kirjavahemärke tähtede loendamisel ei arvesta.
-   Ebaõige sisendi korral, sh ka siis, kui tekstis ei ole nii palju tähti, tagastab tühja stringi.
+   Ebaõige sisendi korral, sh ka siis, kui tekstis ei ole nii palju tähti, tagastab tühja stringi, teised parameetrid false.
    Tähe registrit ei muuda.
   */
   if (typeof str === 'undefined' || str === null || typeof index !== 'number' || index > str.length || index < 1) {
-    return { taht: '', sonaAlguses: false, sonaLopus: false }
+    return { taht: '', indeks: false, sonaAlguses: false, sonaLopus: false }
   }
   var taheloendur = 0;
   var sonaAlguses = false;
@@ -25,6 +21,7 @@ function leiaTaht(str, index) {
       if (taheloendur == index) {
         return {
           taht: str[i],
+          indeks: i,
           sonaAlguses: (eelmiseTaheIndex === null || eelmiseTaheIndex < i - 1),
           sonaLopus: (i == str.length - 1 || kirjavm(str[i + 1]))
         };
@@ -34,23 +31,24 @@ function leiaTaht(str, index) {
       }
     }
   }
-  return { taht: '', sonaAlguses: false, sonaLopus: false }
+  return { taht: '', indeks: false, sonaAlguses: false, sonaLopus: false }
 }
 function tahti(str) {
   /* Tagastab tähtede arvu stringis. Ei arvesta kirjavahemärke ja kursorijoont. Ei arvesta, kas kesktähte kuvatakse ühekordselt. Tagastatav väärtus on alati paarisarv. */
   return str
     .split("")
-    .filter(s => (! kirjavm(s)) && (s != "|"))
+    .filter(s => (!kirjavm(s)) && (s != "|"))
     .length;
 }
 function samatekst(str) {
-  // Kontrollib, kas str on samatekst
+  /* Kontrollib, kas str on samatekst.
+    - undefined, null, tühiteksti või ainult kirjavahemärkidest koosneva teksti puhul tagastab false
+  */
   if (typeof str === 'undefined' || str === null) {
     return false
   }
-  if (str.length < 2) {
-    return true
-  }
+  if (str.length == 0) { return false }
+  var tahti = 0;
   var algusest = 0;
   var lopust = str.length - 1;
   do {
@@ -66,18 +64,29 @@ function samatekst(str) {
     else {
       algusest += 1;
       lopust -= 1;
+      if (algusest == lopust) {
+        tahti += 1;
+      }
+      else {
+        tahti += 2;
+      }
     }
-  } 
+  }
   while (algusest < lopust)
-  return true  
+  if (tahti > 0) {
+    return true
+  }
+  else {
+    return false
+  }
 }
-function keskelement(str) {
-  /* Tagastab:
-   1) 'taht' - samateksti str keskelement,
+function tuvastaKesktaht(str) {
+  /* Tagastab objekti, mille struktuur on:
+   1) 'taht' - samateksti str kesktäht,
    väiketähena;
-   2) 'yhekordne' - kas keskelement on ühekordsena (tõeväärtus);
-   3) 'sonaAlguses' - kas keskelement (kahekordse keskelemendi puhul - üks neist) on sõna alguses;
-   4) 'sonaLopus' - kas keskelement (kahekordse keskelemendi puhul - üks neist) on sõna lõpus.
+   2) 'yhekordne' - kas kesktäht on ühekordsena (tõeväärtus);
+   3) 'sonaAlguses' - kas kesktäht (kahekordse kesktähe puhul - üks neist) on sõna alguses;
+   4) 'sonaLopus' - kas kesktäht (kahekordse kesktähe puhul - üks neist) on sõna lõpus.
    Eeldab samateksti. Ei tohi sisaldada kursorit (|). 
    */
   if (typeof str === 'undefined' || str === null || str === '') {
@@ -88,18 +97,18 @@ function keskelement(str) {
     return false
   }
   if (t % 2 == 0) {
-    // Keskelement on kahekordsena
+    // Kesktäht on kahekordsena
     var k1 = leiaTaht(str, t / 2);
-    var k2 = leiaTaht(str, t / 2 + 1); 
+    var k2 = leiaTaht(str, t / 2 + 1);
     return {
       taht: k1.taht.toLowerCase(),
       yhekordne: false,
       sonaAlguses: k1.sonaAlguses || k2.sonaAlguses,
       sonaLopus: k1.sonaLopus || k2.sonaLopus
     }
-  } 
+  }
   else {
-    // Keskelement on ühekordsena
+    // Kesktäht on ühekordsena
     var k = leiaTaht(str, Math.ceil(t / 2));
     return {
       taht: k.taht.toLowerCase(),

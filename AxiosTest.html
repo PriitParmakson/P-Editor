@@ -2,7 +2,7 @@
 <html>
   <head>
   <meta charset="utf-8"/>
-  <title>Samas Test</title>
+  <title>Axios Test</title>
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery.min.js"></script>
@@ -21,16 +21,26 @@
   <link rel='stylesheet' href='test/SamasTest.css'>
 
   <!-- Skript -->
-  <script src='js/Targifunktsioonid.js'></script>
-  <script src='js/SamatekstiPrimitiivid.js'></script>
-  <script src='js/OperatsioonidTekstiga.js'></script>
-  <script src='js/Tekstikogu.js'></script>
-  <script src='js/FilterJaOtsing.js'></script>
-  <script src='js/Salvestamine.js'></script>
-  <script src='js/SamatekstideOtsingTekstist.js'></script>
-  <script src='js/Samas.js'></script>
-  <!-- script src='test/SalvestuseEksperiment.js'></script -->
-  <script src='test/SamasTest.js'></script>
+  <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+  
+  <script>
+  function jooksutaTestid() {
+    var urlG = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+    // var url = 'http://www.eki.ee/dict/qs/index.cgi?Q=*dne&F=M';
+    var url = 'https://www.eki.ee/dict/qs/index.cgi';
+    var urlX = 'https://86.50.27.139';
+    /* axios.get(url)
+      .then(function (response) {
+        $('#Testitulemused').text(JSON.stringify(response));
+      })
+      .catch(function (error) {
+        console.log(error);
+      }); */
+    $.get(urlX, function(data) {
+      alert('jQuery päring');
+    });  
+  }
+  </script>
 
   </head>
 

@@ -19,6 +19,14 @@ function veneTaht(charCode) {
   // 1024-1279
   return (charCode >= 1024 && charCode <= 1279)
 }
+function taht(charCode) {
+  return ladinaTaht(charCode) || tapiTaht(charCode) || veneTaht()
+}
+function kirjavm(char) {
+  // Kontrollib, kas tärk on kirjavahemärk.
+  // Kirjavahemärgiks loetakse ka reavahetusmärki (⏎).
+  return (kirjavmKood(char.charCodeAt(0)) || char == '⏎')
+}
 function kirjavmKood(charCode) {
   // Kontrollib, kas charCode esitab lubatud 
   // kirjavahemärki
@@ -73,5 +81,5 @@ function keyCodeToHumanReadable(keyCode) {
     221: ']',
     222: "'"
   }
-  return (keycodes[keyCode] || 'tundmatu klahv')
+  return (keycodes[keyCode] || '')
 }

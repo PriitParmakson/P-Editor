@@ -25,9 +25,14 @@
   <script src='js/Targifunktsioonid.js'></script>
   <script src='js/SamatekstiPrimitiivid.js'></script>
   <script src='js/OperatsioonidTekstiga.js'></script>
+  <script src='js/TekstiredigeerimisePohi.js'></script>
+  <script src='js/TekstiKuvamineRedaktoris.js'></script>
   <script src='js/Tekstikogu.js'></script>
   <script src='js/FilterJaOtsing.js'></script>
   <script src='js/Salvestamine.js'></script>
+  <script src='js/SamatekstideOtsingTekstist.js'></script>
+  <script src='js/Oigekirjakontroll.js'></script>
+  <script src='js/ModaalsusJaNupukasitlejad.js'></script>
   <script src='js/Samas.js'></script>
 
   </head>
@@ -54,6 +59,17 @@
             </p>
             <!-- Sulgemisnupp -->
             <div id='InfopaanSulge' class='justify-content-end sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
+          </div>
+
+          <!-- Teatepaan -->
+          <div id='Teatepaan' class='paan peidetud d-flex align-items-start'>
+            <!-- Teade -->
+            <p id='Teatetekst'>
+            </p>
+            <!-- Sulgemisnupp -->
+            <div id='TeatepaanSulge' class='justify-content-end sulgemisnupuke'>
               <span>&times;</span>
             </div>
           </div>
@@ -98,6 +114,11 @@
             <span id='Oigekirjakontroll' class='nupp'
               data-toggle='tooltip' title='Õigekirja kontroll'>
               <i class='ikoon material-icons'>spellcheck</i>
+            </span>
+
+            <span id='SamatekstideOtsing' class='nupp'
+              data-toggle='tooltip' title='Samatekstide otsing tekstist'>
+              <i class='ikoon material-icons'>help_outline</i>
             </span>
 
             <span id='Kool' class='nupp'
@@ -237,10 +258,41 @@
             </div>
           </div>
 
+          <!-- Samatekstide tekstist otsimise dialoog -->
+          <div id='SamatekstidTekstistDialoog'
+            class='paan dialoog peidetud'>
+            
+            <div id='STTRida1' class='d-flex align-items-center justify-content-between'>
+              <!-- Tekst, millest otsitakse -->
+              <div id='SamatekstidTekstistBlokk1'>
+                <label class='active'>
+                Tekst: <input id='SamatekstidTekstistTekst' type='text' class='form-control' autocomplete='off'>
+                </label>
+              </div>
+              <!-- Otsingu käivitamise nupp -->
+              <div id='SamatekstidTekstistOtsi' class='nupp'>
+                <i class='ikoon material-icons' style='color: #C5E1A5;'>help_outline</i>
+              </div>
+              <!-- Sulgemisnupp -->
+              <div id='SamatekstidTekstistSulge' class='align-self-start ml-auto sulgemisnupuke'>
+                <span>&times;</span>
+              </div>
+            </div>
+
+            <div id='STTRida2' class='d-flex'>
+              <div id='SamatekstidTekstistTulemus'>
+                &nbsp;
+              </div>
+            </div>
+
+          </div>
+
           <!-- Filtridialoog -->
           <div id='Filtridialoog'
             class='paan dialoog peidetud'>
-            <div class='d-flex flex-wrap align-items-center justify-content-between'>
+
+            <div id='FDRida1'
+              class='d-flex flex-wrap align-items-center justify-content-between'>
               <!-- Filtritekst -->
               <span>
                 <label class='active'>
@@ -255,7 +307,9 @@
                 <span>&times;</span>
               </div>
             </div>
-            <div class='d-flex flex-wrap align-items-center justify-content-around'>
+
+            <div id='FDRida2'
+              class='d-flex flex-wrap align-items-center justify-content-around'>
               <!-- Teksti alguses -->
               <span class='form-check form-check-inline'>
                 <label class='form-check-label'
@@ -302,6 +356,7 @@
                 </label>
               </span>            
             </div>
+
           </div>
 
           <!-- Tekstikogu -->
