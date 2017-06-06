@@ -128,7 +128,7 @@ IT
 Säh, hästi!
 ```
 
-* Kuval esitatakse keskelement (või -elemendid) rõhutatult.
+* Kuval esitatakse kesktäht (või -tähed) rõhutatult.
 * Reavahetus teostatakse, `<br>`-elemendi abil.
 * Kuvatakse HTML-esituse abil. Näide:
 

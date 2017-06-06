@@ -28,7 +28,7 @@ function tuvastaCaretJaSeaSisekursor() {
     }
   }
   if (algusSpan == 'B' && kuvaKesktahtYhekordselt) {
-    kum += 1; // Sest siseesituses on keskelement alati kahekordselt
+    kum += 1; // Sest siseesituses on kesktäht alati kahekordselt
   }
   // Aseta sisemine kursor positsioonile kum
   t = t.replace('|', '');

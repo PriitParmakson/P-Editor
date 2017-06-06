@@ -20,7 +20,7 @@ function seaFilter(klopsatudValik) {
   for (var i = 0; i < tekstid.length; i++) {
     var tekstL = tekstid[i].Tekst.toLowerCase();
     // Rakenda piirajad
-    var ke = keskelement(tekstL);
+    var ke = tuvastaKesktaht(tekstL).taht;
     if (
         // B aa 
         (vasakul && fL.length == 1 && tekstL.startsWith(fL + ' ')) ||
