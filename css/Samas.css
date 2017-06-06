@@ -19,6 +19,11 @@ Värviskeem
             - informatsioonilise paani (Infopaan, Kool) taust
 * Aqua (ereroheline)
             - informatsioonilise paani ääris
+* Coral
+            - veateatepaani ääris,
+              veateate tekst
+* Lavenderblush
+            - veateatepaani taust
 * Gray
             - paani sulgur
 * #C5E1A5 (nõrk roheline)
@@ -79,8 +84,8 @@ Värviskeem
   }
 
   /* Paanid - Ühised omadused
-     ------ 
-    Paanid on: 1) Infopaan; 2) Koolitekst; 3) Salvestusdialoog; 4) Oigekirjadialoog; 5) Filtridialoog. 
+     ------------------------ 
+    Paanid on: 1) Infopaan; 2) Teatepaan; 3) Koolitekst; 4) Salvestusdialoog; 5) Oigekirjadialoog; 6) Filtridialoog. 
   */
   .paan {
     border-radius: 4px; 
@@ -111,6 +116,16 @@ Värviskeem
     background-color: Azure;
   }
 
+  /* Paanid - spetsiifilised omadused
+     --------------------------------
+  */
+  #Teatepaan { 
+    border: 1px solid coral;
+    background-color: lavenderblush;
+    padding: 1rem;
+    color: coral;
+  }
+
   /* Nupud */
   .nupp { margin: 1rem 0.5rem;
     cursor: pointer;
@@ -131,13 +146,11 @@ Värviskeem
   }
 
   /* Tekstikogu */
-  #Tekstikogu { }
   .kirje { 
     text-indent: -3rem;
     padding-left: 3rem;
     margin: 0;
   }
-  .tekstinr { }
   .margend { 
     border: 1px dotted Aqua;
     border-radius: 2px;

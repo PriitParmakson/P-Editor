@@ -6,7 +6,7 @@ function aktiveeriTekstinupud() {
     $('#Poolednupp').addClass('disabled');
     $('#Uusnupp').addClass('disabled');
     $('#Salvesta1').addClass('disabled');
-  } 
+  }
   else {
     $('#Poolednupp').removeClass('disabled');
     $('#Uusnupp').removeClass('disabled');
@@ -23,7 +23,7 @@ function deaktiveeriTekstinupud() {
 
 function seaTekstinupukasitlejad() {
   // Sea sisestatava teksti käsitlejad
-  $('#Poolednupp').click(function() {
+  $('#Poolednupp').click(function () {
     if (dialoogiseisund == 'N') {
       $('#Tekst').focus();
       t = vahetaPooled(t);
@@ -33,7 +33,7 @@ function seaTekstinupukasitlejad() {
     }
   });
 
-  $('#Uusnupp').click(function() {
+  $('#Uusnupp').click(function () {
     if (dialoogiseisund == 'N') {
       $('#Tekst').focus();
       t = "|";
@@ -46,28 +46,36 @@ function seaTekstinupukasitlejad() {
   aktiveeriTekstinupud();
 }
 
+function seaTeatepaaniKasitlejad() {
+  $('#TeatepaanSulge').click(function() {
+    $('#Teatepaan').addClass('peidetud');
+    kuvaTekst();
+    aktiveeriTekstinupud();
+  });
+}
+
 // Teabepaani nupukäsitlejad
 function seaInfopaaniKasitlejad() {
   // Infopaani käsitlejad
-  $('#Info').click(function() {
+  $('#Info').click(function () {
     $('#Infopaan').removeClass('peidetud');
     $('#Info').addClass('disabled');
   });
 
-  $('#InfopaanSulge').click(function() {
+  $('#InfopaanSulge').click(function () {
     $('#Infopaan').addClass('peidetud');
     $('#Info').removeClass('disabled');
   });
 }
 
-// "Kooli" nupukäsitlejad
 function seaKoolikasitlejad() {
-  $('#Kool').click(function() {
+  // "Kooli" nupukäsitlejad
+  $('#Kool').click(function () {
     $('#Koolitekst').removeClass('peidetud');
     $('#Kool').addClass('disabled');
   });
 
-  $('#KoolSulge').click(function() {
+  $('#KoolSulge').click(function () {
     $('#Koolitekst').addClass('peidetud');
     $('#Kool').removeClass('disabled');
   });

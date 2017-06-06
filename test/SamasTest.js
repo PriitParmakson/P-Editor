@@ -1,13 +1,19 @@
+var edukaidTeste = 0;
+var mitteedukaidTeste = 0;
+
 function jooksutaTestid() {
-  // Testide käivitaja
+  /* Testide käivitaja
+
+  */
   // SalvestuseEksperiment();
   samatekstideOtsingTekstistTestid();
-  return
   eemaldaLiigsedTyhikudTestid();
   vahetaPooledTestid();
   leiaTahtTestid();
-  keskelementTestid();
+  tuvastaKesktahtTestid();
   samatekstTestid();
+
+  kuvaStatistika();
 }
 
 function samatekstideOtsingTekstistTestid() {
@@ -41,31 +47,31 @@ function vahetaPooledTestid() {
   test(vahetaPooled('ab| ba'), '| baab', 'Esitühiku kõrvaldamine');
 }
 
-function keskelementTestid() {
-  kuvaFunktsiooniNimetus('keskelement');
+function tuvastaKesktahtTestid() {
+  kuvaFunktsiooniNimetus('tuvastaKesktaht');
   // taht, yhekordne, sonaAlguses
-  test(keskelement(), false, 'Argument puudu');
-  test(keskelement(''), false, 'Tühitekst');
-  test(keskelement(' !(),.'), false, 'Ainult kirjavahemärgid');
-  test(keskelement('a').taht, 'a', 'Ühetähetekst, täht');
-  test(keskelement('a').yhekordne, true, 'Ühetähetekst, ühekordne');
-  test(keskelement('a').sonaAlguses, true, 'Ühetähetekst, ühekordne, sonaAlguses');
-  test(keskelement('aa').taht, 'a', 'Kahetähetekst, täht');
-  test(keskelement('aa').yhekordne, false, 'Kahetähetekst, yhekordne');
-  test(keskelement('aa').sonaAlguses, true, 'Kahetähetekst, sonaAlguses');
-  test(keskelement('aba').taht, 'b', 'Ühekordse keskelemendiga samatekst, taht');
-  test(keskelement('aba').yhekordne, true, 'Ühekordse keskelemendiga samatekst, yhekordne');
-  test(keskelement('aba').sonaAlguses, false, 'Ühekordse keskelemendiga samatekst, sonaAlguses');
-  test(keskelement('abba').taht, 'b', 'Kahekordse keskelemendiga samatekst, taht');
-  test(keskelement('abba').yhekordne, false, 'Kahekordse keskelemendiga samatekst, yhekordne');
-  test(keskelement('Ajate luulu, luuletaja!').taht, 'u', 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, taht');
-  test(keskelement('Ajate luulu, luuletaja!').yhekordne, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, yhekordne');
-  test(keskelement('Ajate luulu, luuletaja!').sonaAlguses, false, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaAlguses = false');
-  test(keskelement('Ajate luulu, luuletaja!').sonaLopus, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaLopus = true');
-  test(keskelement('Ajate luul uluuletaja!').sonaAlguses, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaAlguses = true');
-  test(keskelement('Kiiremini.. inim-e-riik?').taht, 'i', 'Kirjavahemärkidega, kahekordse keskelemendiga samatekst, taht');
-  test(keskelement('Kiiremini.. inim-e-riik?').yhekordne, false, 'Kirjavahemärkidega, kahekordse keskelemendiga samatekst, yhekordne = false');
-  test(keskelement('Eakas teema.⏎Teretame.⏎Etsakae!').taht, 'r', 'Reavahetustega tekstis');
+  test(tuvastaKesktaht(), false, 'Argument puudu');
+  test(tuvastaKesktaht(''), false, 'Tühitekst');
+  test(tuvastaKesktaht(' !(),.'), false, 'Ainult kirjavahemärgid');
+  test(tuvastaKesktaht('a').taht, 'a', 'Ühetähetekst, täht');
+  test(tuvastaKesktaht('a').yhekordne, true, 'Ühetähetekst, ühekordne');
+  test(tuvastaKesktaht('a').sonaAlguses, true, 'Ühetähetekst, ühekordne, sonaAlguses');
+  test(tuvastaKesktaht('aa').taht, 'a', 'Kahetähetekst, täht');
+  test(tuvastaKesktaht('aa').yhekordne, false, 'Kahetähetekst, yhekordne');
+  test(tuvastaKesktaht('aa').sonaAlguses, true, 'Kahetähetekst, sonaAlguses');
+  test(tuvastaKesktaht('aba').taht, 'b', 'Ühekordse keskelemendiga samatekst, taht');
+  test(tuvastaKesktaht('aba').yhekordne, true, 'Ühekordse keskelemendiga samatekst, yhekordne');
+  test(tuvastaKesktaht('aba').sonaAlguses, false, 'Ühekordse keskelemendiga samatekst, sonaAlguses');
+  test(tuvastaKesktaht('abba').taht, 'b', 'Kahekordse keskelemendiga samatekst, taht');
+  test(tuvastaKesktaht('abba').yhekordne, false, 'Kahekordse keskelemendiga samatekst, yhekordne');
+  test(tuvastaKesktaht('Ajate luulu, luuletaja!').taht, 'u', 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, taht');
+  test(tuvastaKesktaht('Ajate luulu, luuletaja!').yhekordne, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, yhekordne');
+  test(tuvastaKesktaht('Ajate luulu, luuletaja!').sonaAlguses, false, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaAlguses = false');
+  test(tuvastaKesktaht('Ajate luulu, luuletaja!').sonaLopus, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaLopus = true');
+  test(tuvastaKesktaht('Ajate luul uluuletaja!').sonaAlguses, true, 'Kirjavahemärkidega, ühekordse keskelemendiga samatekst, sonaAlguses = true');
+  test(tuvastaKesktaht('Kiiremini.. inim-e-riik?').taht, 'i', 'Kirjavahemärkidega, kahekordse keskelemendiga samatekst, taht');
+  test(tuvastaKesktaht('Kiiremini.. inim-e-riik?').yhekordne, false, 'Kirjavahemärkidega, kahekordse keskelemendiga samatekst, yhekordne = false');
+  test(tuvastaKesktaht('Eakas teema.⏎Teretame.⏎Etsakae!').taht, 'r', 'Reavahetustega tekstis');
 }
 
 function leiaTahtTestid() {
@@ -76,11 +82,14 @@ function leiaTahtTestid() {
   test(leiaTaht('a', 2).taht, '', 'index liiga suur');
   test(leiaTaht('a', -1).taht, '', 'index liiga väike');
   test(leiaTaht('abc', 2).taht, 'b', 'Lihtne otsing, taht');
+  test(leiaTaht('abc', 2).indeks, 1, 'Lihtne otsing, taht');
   test(leiaTaht('abc', 2).sonaAlguses, false, 'Lihtne otsing, sõna alguses? Ei');
   test(leiaTaht('abc', 2).sonaLopus, false, 'Lihtne otsing, sõna lõpus? Ei');
   test(leiaTaht('a bc', 2).sonaAlguses, true, 'Lihtne otsing, sõna alguses? Jah');
   test(leiaTaht('a bc', 1).sonaLopus, true, 'Lihtne otsing, sõna lõpus? Jah');
+  test(leiaTaht('a bc', 1).indeks, 0, 'Lihtne otsing, sõna lõpus? Jah');
   test(leiaTaht('Ajate luulu, luuletaja!', 11).taht, 'l', 'Otsing kirjavahemärkidega stringis, taht');
+  test(leiaTaht('Ajate luulu, luuletaja!', 11).indeks, 13, 'Otsing kirjavahemärkidega stringis, taht');
   test(leiaTaht('Ajate luulu, luuletaja!', 11).sonaAlguses, true, 'Otsing kirjavahemärkidega stringis, sõna alguses? Jah');
   test(leiaTaht('Ajate luulu, luuletaja!', 10).sonaAlguses, false, 'Otsing kirjavahemärkidega stringis, sõna alguses? Ei');
   test(leiaTaht('Eakas teema.⏎Teretame.⏎Etsakae!', 11).taht, 'T', 'Otsing reavahetustega tekstis');
@@ -90,9 +99,9 @@ function leiaTahtTestid() {
 function samatekstTestid() {
   kuvaFunktsiooniNimetus('samatekst');
   test(samatekst(), false, 'str puudu');
-  test(samatekst(''), true, 'Tühitekst');
+  test(samatekst(''), false, 'Tühitekst');
   test(samatekst('a'), true, 'Ühetähetekst');
-  test(samatekst(' '), true, 'Ühe kirjavahemärgi tekst');
+  test(samatekst(' '), false, 'Ühe kirjavahemärgi tekst');
   test(samatekst('aa'), true, 'Kahetäheline samatekst');
   test(samatekst('ab'), false, 'Kahetäheline mittesamatekst');
   test(samatekst('a a.'), true, 'Kahetäheline samatekst kirjavahemärkidega');
@@ -110,7 +119,9 @@ function kuvaFunktsiooniNimetus(fN) {
 }
 
 function test(testResult, expectedResult, testTitle) {
-  // Testitulemiste raporteerija
+  /* Testitulemuste raporteerija
+
+  */
   var tulemus;
   if (isArray(expectedResult)) {
     tulemus = arraysEqual(expectedResult, testResult);
@@ -138,6 +149,18 @@ function test(testResult, expectedResult, testTitle) {
     .addClass('tekstiosa')
     .text(testTitle)
     .appendTo(tulemuserida);
+  if (tulemus) {
+    edukaidTeste += 1;
+  }
+  else {
+    mitteedukaidTeste = +1;
+  }
+}
+
+function kuvaStatistika() {
+  $('<p></p>')
+    .text('TESTE: edukaid: ' + edukaidTeste.toString() + '  mitteedukaid: ' + mitteedukaidTeste.toString())  
+    .prependTo('#Testitulemused');
 }
 
 function arraysEqual(a, b) {

@@ -299,23 +299,43 @@ function seaRedaktoriKasitlejad() {
     }
   });
 
-  // Ctrl-V (Paste) töötleja
   $('#Tekst').on('paste', function (e) {
-    console.log('paste');
-    // common browser -> e.originalEvent.clipboardData
-    // uncommon browser -> window.clipboardData
+    /* Ctrl-V (Paste) töötleja
+       Tavaline sirvija -> e.originalEvent.clipboardData
+       Ebatavaline sirvija -> window.clipboardData
+    */
     var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
     var LisatavTekst = clipboardData.getData('text');
-    console.log('pasted data: ' + LisatavTekst);
     /* Lasta vaikereaktsioonil toimuda. 
-       Selleks seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
-       Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
-       Kui ei ole, siis anda veateada ja sisendid mitte aktsepteerida.
-       Taastada siseesituse põhjal toimingueelne tekst
-       Luua veateatepaan.
+       Selleks:
+       1) seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
+       2) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
+       3) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
+       4) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
+       Taastada siseesituse põhjal toimingueelne tekst.
     */
     setTimeout(function() {
-
+      var asetatudTekst = $('#Tekst').text();
+      console.log('Asetatud tekst: ' + asetatudTekst);
+      if (samatekst(asetatudTekst)) {
+        /* Moodusta siseesitus. Arvesta, et siseesituses kesktäht on kahekordselt; samuti lisa sisekursor (algusesse)
+        */
+        var tahti = tahti(asetatudTekst);
+        if (tahti % 2 == 1) {
+          // Kesktäht on ühekordselt
+          var kesktaht = tuvastaKesktaht(asetatudTekst);
+          t = asetatudTekst.substring(0, kesktaht.indeks) + kesktaht.taht + kesktaht.taht + asetatudTekst.substring(kesktaht.indeks + 1, asetatudTekst.length);
+        } 
+        t = '|' + eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
+        kuvaTekst();
+        aktiveeriTekstinupud();
+      }
+      else {
+        $('#Teatetekst').text('Asetatud tekst ei ole samatekst.');
+        $('#Teatepaan')
+          .removeClass('peidetud');
+        deaktiveeriTekstinupud();
+      }
     }, 50);
   });
 

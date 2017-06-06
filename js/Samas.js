@@ -30,6 +30,7 @@ function alusta() {
   seaTekstinupukasitlejad();
   seaSalvestuseKasitlejad();
   seaInfopaaniKasitlejad();
+  seaTeatepaaniKasitlejad();
   seaTekstikoguKasitlejad();
   seaFiltriKasitlejad();
   seaOigekirjakasitlejad();
