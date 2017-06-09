@@ -131,3 +131,29 @@ function eemaldaLiigsedTyhikud(str, kuvaKesktahtYhekordselt) {
     .replace(/ \| /, ' |');
   return res;
 }
+function puhastaTekst(str) {
+  /* Eemaldab tekstist kõik tärgid, mis ei kuulu defineeritud kirjavahemärkide ja tähtede hulka
+  */
+  return str
+    .split("")
+    .filter(s => kirjavm(s) || taht(s.charCodeAt(0)))
+    .join('');
+}
+function tekstistSiseesitusse(str) {
+  /* Eeldab samateksti. Lisab sisekursori (|) teksti algusesse.
+    Arvestab, et siseesituses kesktäht esitatakse alati kahekordselt.
+    Eemaldab liigsed tühikud.
+    Tagastab objekti: { tekst: ..., kuvaKesktahtYhekordselt: boolean }
+  */
+  var kuvaKesktahtYhekordselt = (tahti(str) % 2 == 1);
+  var t;
+  if (kuvaKesktahtYhekordselt) {
+    let kesktaht = leiaTaht(str, Math.ceil(tahti(str) / 2));
+    t = str.substring(0, kesktaht.indeks) + kesktaht.taht + kesktaht.taht + str.substring(kesktaht.indeks + 1, str.length);
+  } 
+  else {
+    t = str;
+  }
+  t = '|' + eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
+  return { tekst: t, kuvaKesktahtYhekordselt: kuvaKesktahtYhekordselt };
+}

@@ -51,6 +51,7 @@ function seaTeatepaaniKasitlejad() {
     $('#Teatepaan').addClass('peidetud');
     kuvaTekst();
     aktiveeriTekstinupud();
+    $('#Tekst').focus();
   });
 }
 

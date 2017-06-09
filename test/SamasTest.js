@@ -6,6 +6,8 @@ function jooksutaTestid() {
 
   */
   // SalvestuseEksperiment();
+  puhastaTekstTestid();
+  tekstistSiseesitusseTestid();
   samatekstideOtsingTekstistTestid();
   eemaldaLiigsedTyhikudTestid();
   vahetaPooledTestid();
@@ -14,6 +16,20 @@ function jooksutaTestid() {
   samatekstTestid();
 
   kuvaStatistika();
+}
+
+function puhastaTekstTestid() {
+  kuvaFunktsiooniNimetus('puhastaTekst');
+  test(puhastaTekst('kirik'), 'kirik', 'Zero-Width Space');
+  test(puhastaTekst('`´ab,.'), 'ab,.', 'Lihtne test');
+}
+
+function tekstistSiseesitusseTestid() {
+  kuvaFunktsiooniNimetus('tekstistSiseesitusse');
+  test(tekstistSiseesitusse('a b a').tekst, '|a bb a', 'Lihtne test');
+  test(tekstistSiseesitusse('a b a').kuvaKesktahtYhekordselt, true, 'Kesktähe test');
+  test(tekstistSiseesitusse(' a, b b  a').tekst, '|a, b b a', 'Tühikute eemaldamine');
+  test(tekstistSiseesitusse(' a, b b  a').kuvaKesktahtYhekordselt, false, 'Tühikute eemaldamine');
 }
 
 function samatekstideOtsingTekstistTestid() {
@@ -113,6 +129,8 @@ function samatekstTestid() {
 }
 
 function kuvaFunktsiooniNimetus(fN) {
+  $('<hr>')
+    .appendTo('#Testitulemused');
   $('<p></p>')
     .text(fN)
     .appendTo('#Testitulemused');

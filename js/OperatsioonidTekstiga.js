@@ -37,12 +37,12 @@ function markeeriTekstikoguTekst(t) {
     // Täht
     else {
       taheloendur++;
-      // Esimene keskelement markeerida
+      // Esimene kesktäht markeerida
       if (taheloendur == m1) {
         acc = acc + "<span class='kesk'>" + 
           t[i] + "</span>";
       }
-      // Teine keskelement...
+      // Teine kesktäht...
       else if (taheloendur == m1 + 1 && !keskelementYhekordselt) {
         acc = acc + "<span class='kesk'>" + 
           t[i] + "</span>";
@@ -99,12 +99,12 @@ function markeeriTekst() {
       // Täht
       else {
         taheloendur++;
-        // Esimene keskelement markeerida
+        // Esimene kesktäht markeerida
         if (taheloendur == p) {
           koguja[1] = t[i];
           mode = 2;  
         }
-        // Teine keskelement...
+        // Teine kesktäht...
         else if (taheloendur == p + 1) {
           if (kuvaKesktahtYhekordselt) {
             // ...mitte kuvada
