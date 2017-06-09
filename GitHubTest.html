@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8"/>
+  <title>GitHub Test</title>
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+
+  <!-- Material Design icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+  <!-- Tether on vaja tooltip-de jaoks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+  <!-- Stiilid -->
+  <link rel='stylesheet' href='test/SamasTest.css'>
+
+  <!-- Skript -->
+  <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+  
+  <script>
+
+  function b64EncodeUnicode(str) {
+      // Vt https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa 
+      // first we use encodeURIComponent to get percent-encoded UTF-8,
+      // then we convert the percent encodings into raw bytes which
+      // can be fed into btoa.
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+          function toSolidBytes(match, p1) {
+              return String.fromCharCode('0x' + p1);
+      }));
+  }
+
+  /* GitHub Basic Authentication */
+
+  function jooksutaTestid() {
+    var urlG = 'https://api.github.com/repos/PriitParmakson/Samatekst/readme';
+    var urlP = 'https://api.github.com/repos/PriitParmakson/Samatekst/GTest.md';
+    /* $.ajax(urlG, {
+      method: 'GET',
+      success: function(data) {
+        alert('jQuery päring');
+        console.log(data);
+        }
+    });  
+    return */
+
+    var PAT = '';
+
+    var sisu = JSON.stringify(
+      {
+        message: 'Testimine',
+        committer: { 
+          name: "Priit Parmakson",
+          email: "priit.parmakson@gmail.com"
+        },
+        content: b64EncodeUnicode('Faili sisu')
+      });
+
+    $.ajax({
+      method: 'PUT',
+      url: urlP,
+      data: sisu,
+      processData: false,
+      contentType: 'application/json',
+      headers: {
+        Authorization: 'token ' + PAT
+      },
+      password: PAT,
+      success: function(data) {
+        console.log(data);
+        }
+    });  
+  }
+  </script>
+
+  </head>
+
+  <body onload='jooksutaTestid();'>
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+        <div id='Testitulemused'></div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
