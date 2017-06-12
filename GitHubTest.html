@@ -50,33 +50,38 @@
     });  
     return */
 
-    var PAT = '';
+    function teeParing() {
+      var PAT = '';
 
-    var sisu = JSON.stringify(
-      {
-        message: 'Testimine',
-        committer: { 
-          name: "Priit Parmakson",
-          email: "priit.parmakson@gmail.com"
+      var sisu = JSON.stringify(
+        {
+          message: 'Testimine',
+          committer: { 
+            name: "Priit Parmakson",
+            email: "priit.parmakson@gmail.com"
+          },
+          content: b64EncodeUnicode('Faili sisu')
+        });
+
+      $.ajax({
+        method: 'PUT',
+        url: urlP,
+        data: sisu,
+        processData: false,
+        contentType: 'application/json',
+        headers: {
+          Authorization: 'token ' + PAT
         },
-        content: b64EncodeUnicode('Faili sisu')
-      });
-
-    $.ajax({
-      method: 'PUT',
-      url: urlP,
-      data: sisu,
-      processData: false,
-      contentType: 'application/json',
-      headers: {
-        Authorization: 'token ' + PAT
-      },
-      password: PAT,
-      success: function(data) {
-        console.log(data);
-        }
-    });  
+        password: PAT,
+        success: function(data) {
+          console.log(data);
+          }
+      });  
+    }
   }
+
+  console.log(b64EncodeUnicode('Proov'));
+
   </script>
 
   </head>

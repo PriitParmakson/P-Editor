@@ -35,6 +35,28 @@ Niisama "s"? Sama siin.
 (Senisest. "s" esines.)
 
 10
+
+"s" eeskujuks ees.
+
+11
+Saias "s" sees. "s" saias!
+
+12
+"s" aias.
+
+13
+"s" alati talas.
+
+14
+"s", issi, sissis!
+
+15
+"s" udus. "s" sudus.
+
+16
+("s") - ulu sulus!
+
+17
 Sama jama - "s".
 ```
 
