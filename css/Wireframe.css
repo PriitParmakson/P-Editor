@@ -1,0 +1,32 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background-color: transparent;
+  /* background: repeating-linear-gradient( to right,
+  DarkGray,
+  lightcyan 10px,
+  #ffd180 10px,
+  #ffd180 20px); */
+  background-image: linear-gradient(0deg,
+  transparent 25%,
+  Gray 26%,
+  transparent 27%,
+  transparent 74%,
+  Gray 76%,
+  transparent 77%,
+  transparent),
+  linear-gradient(90deg,
+  transparent 24%,
+  Gray 25%,
+  transparent 27%,
+  transparent 74%,
+  Gray 75%,
+  transparent 77%, transparent);
+  height: 100%;
+  background-size: 4rem 4rem;
+}
+.paan { border: 1px solid black !important;
+  background-color: white !important; }
+.peidetud { display: block !important; }

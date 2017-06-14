@@ -70,6 +70,11 @@ function seaInfopaaniKasitlejad() {
 }
 
 function seaKoolikasitlejad() {
+  /* Lae fail docs/Tutvustus.md,
+    eemalda front matter, teisenda HTML-ks ja
+    aset #KoolitekstSisemine
+  */
+
   // "Kooli" nupukäsitlejad
   $('#Kool').click(function () {
     $('#Koolitekst').removeClass('peidetud');

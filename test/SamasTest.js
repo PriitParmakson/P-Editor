@@ -65,7 +65,11 @@ function vahetaPooledTestid() {
 
 function tuvastaKesktahtTestid() {
   kuvaFunktsiooniNimetus('tuvastaKesktaht');
-  // taht, yhekordne, sonaAlguses
+  // taht, yhekordne, sonaAlguses, sonaLopus
+  test(tuvastaKesktaht('Seal! Laes!').taht, 'l', 'Seal laes 1');
+  test(tuvastaKesktaht('Seal! Laes!').yhekordne, false, 'Seal laes 2');
+  test(tuvastaKesktaht('Seal! Laes!').sonaAlguses, true, 'Seal laes 3');
+  test(tuvastaKesktaht('Seal! Laes!').sonaLopus, true, 'Seal laes 4');
   test(tuvastaKesktaht(), false, 'Argument puudu');
   test(tuvastaKesktaht(''), false, 'Tühitekst');
   test(tuvastaKesktaht(' !(),.'), false, 'Ainult kirjavahemärgid');
