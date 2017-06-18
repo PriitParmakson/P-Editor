@@ -145,6 +145,17 @@ Värviskeem
     font-family: 'Courier New', monospace;
   }
 
+  /* Tutvustustekst */
+  #KoolitekstSisemine h1 {
+    font-size: 14pt !important;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  #KoolitekstSisemine h2 {
+    font-size: 14pt !important;
+    font-weight: bold;
+  }
+
   /* Tekstikogu */
   .kirje { 
     text-indent: -3rem;
