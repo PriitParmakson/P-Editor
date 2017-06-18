@@ -53,18 +53,11 @@ Moodus 2
 
 Paremliiane tekst on ühendatav parempoolse ühekordse kesktähega tekstiga:
 
-`yyy a`
-+
-`xxxx axxxx`
-=
-`xxxxa yyy axxxx`
+`yyy a` + `xxxx axxxx` -> `xxxxa yyy axxxx`
 
 Näiteks:
-`Aegamisi mutta sattumisi mage a`
-+
-`Aga harib abirahaga`
-=
-`Aga harib aegamisi mutta sattumisi - mage! - abirahaga.`
+
+`Aegamisi mutta sattumisi mage a` + `Aga harib abirahaga` = `Aga harib aegamisi mutta sattumisi - mage! - abirahaga.`
 
 Samamoodi saab ühendada vasakliiase teksti ja vasakpoolse ühekordse kesktähega teksti.
 
@@ -72,9 +65,5 @@ Moodus 3
 
 Parempoolse kesktähega tekst on ühendatav teise parempoolse kesktähega tekstiga.
 
-`Ooh, otse kere! Tere, vaga Tagavere! Terekest, ohoo!`
-+
-`Eakas teema. Tere, tere, vana kere! Tere, Kanavere! Teretame, etsa kae!`
-=
-`Eakas teema. Tere, tere, vana kere! Tagavere! Terekest, ohoo! Ooh, otse kere! Tere, vaga! Tere, Kanavere! Teretame, etsa kae!`
+`Ooh, otse kere! Tere, vaga Tagavere! Terekest, ohoo!` + `Eakas teema. Tere, tere, vana kere! Tere, Kanavere! Teretame, etsa kae!` = `Eakas teema. Tere, tere, vana kere! Tagavere! Terekest, ohoo! Ooh, otse kere! Tere, vaga! Tere, Kanavere! Teretame, etsa kae!`
 

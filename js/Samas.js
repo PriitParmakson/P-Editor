@@ -34,7 +34,8 @@ function alusta() {
   seaTekstikoguKasitlejad();
   seaFiltriKasitlejad();
   seaOigekirjakasitlejad();
-  seaKoolikasitlejad();
+  loeTutvustustekst();
+  seaTutvustustekstiKasitlejad();
   seaSamatekstidTekstistKasitlejad();
 
   // Algustekst (kursor)

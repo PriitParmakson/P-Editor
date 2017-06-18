@@ -1,101 +1,92 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <meta charset="utf-8"/>
+
+<head>
+  <meta charset="utf-8" />
   <title>GitHub Test</title>
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery.min.js"></script>
 
   <!-- Material Design icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    crossorigin="anonymous">
   <!-- Tether on vaja tooltip-de jaoks -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+	<!-- Remarkable https://github.com/jonschlinkert/remarkable -->
+	<script src="https://cdn.jsdelivr.net/remarkable/1.6.0/remarkable.min.js"></script>
+	
+  <script src="base64Teisendused.js"></script>
 
   <!-- Stiilid -->
   <link rel='stylesheet' href='test/SamasTest.css'>
 
   <!-- Skript -->
   <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
-  
-  <script>
 
-  function b64EncodeUnicode(str) {
+  <script>
+    function b64EncodeUnicode(str) {
       // Vt https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa 
       // first we use encodeURIComponent to get percent-encoded UTF-8,
       // then we convert the percent encodings into raw bytes which
       // can be fed into btoa.
       return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-          function toSolidBytes(match, p1) {
-              return String.fromCharCode('0x' + p1);
-      }));
-  }
-
-  /* GitHub Basic Authentication */
-
-  function jooksutaTestid() {
-    var urlG = 'https://api.github.com/repos/PriitParmakson/Samatekst/readme';
-    var urlP = 'https://api.github.com/repos/PriitParmakson/Samatekst/GTest.md';
-    /* $.ajax(urlG, {
-      method: 'GET',
-      success: function(data) {
-        alert('jQuery päring');
-        console.log(data);
-        }
-    });  
-    return */
-
-    function teeParing() {
-      var PAT = '';
-
-      var sisu = JSON.stringify(
-        {
-          message: 'Testimine',
-          committer: { 
-            name: "Priit Parmakson",
-            email: "priit.parmakson@gmail.com"
-          },
-          content: b64EncodeUnicode('Faili sisu')
-        });
-
-      $.ajax({
-        method: 'PUT',
-        url: urlP,
-        data: sisu,
-        processData: false,
-        contentType: 'application/json',
-        headers: {
-          Authorization: 'token ' + PAT
-        },
-        password: PAT,
-        success: function(data) {
-          console.log(data);
-          }
-      });  
+        function toSolidBytes(match, p1) {
+          return String.fromCharCode('0x' + p1);
+        }));
     }
-  }
 
-  console.log(b64EncodeUnicode('Proov'));
+    function jooksutaTestid() {
+      /* Loe GitHub-st fail docs/Tutvustus.md,
+      eemalda front matter, teisenda HTML-ks ja
+      aset #KoolitekstSisemine.
+      Ei pea tegema läbi serveri, sest GitHub API toetab CORS-i.
+      Vastuse struktuur vt: https://developer.github.com/v3/repos/contents/#get-contents.
+      sisu (t.content) on base64-kodeeritud
+    */
 
+      var u = 'https://api.github.com/repos/PriitParmakson/Samatekst/contents/docs/Tutvustus.md';
+      $.ajax(u, {
+        method: 'GET',
+        success: function (saadudAndmed) {
+          // base64 -> UTF-8
+          var t = decodeURIComponent(escape(window.atob(saadudAndmed.content)));
+          // Eemalda front matter
+          if (t.startsWith('---')) {
+            var p = t.indexOf('---', 3);
+            var pt = t.slice(p + 4);
+            console.log('Loetud: ' + pt.length);
+            // Teisenda HTML-ks
+            var md = new Remarkable({
+              html: true, // Enable HTML tags in source
+            });
+            htmlTekst = md.render(pt);
+            // Kuva HTML
+            $('#Testitulemused').html(htmlTekst);
+          }
+        }
+      });
+    }
   </script>
 
-  </head>
+</head>
 
-  <body onload='jooksutaTestid();'>
-    <div class='container-fluid'>
-      <div class='row'>
-        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+<body onload='jooksutaTestid();'>
+  <div class='container-fluid'>
+    <div class='row'>
+      <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
 
         <div id='Testitulemused'></div>
 
-        </div>
       </div>
     </div>
+  </div>
 
-  </body>
+</body>
+
 </html>
