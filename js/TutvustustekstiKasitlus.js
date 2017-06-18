@@ -11,7 +11,7 @@ function loeTutvustustekst() {
     method: 'GET',
     success: function (saadudAndmed) {
       // base64 -> UTF-8
-      var t = base64DecodeUnicode(saadudAndmed.content);
+      var t = b64DecodeUnicode(saadudAndmed.content);
       // Eemalda front matter
       if (t.startsWith('---')) {
         var p = t.indexOf('---', 3);
