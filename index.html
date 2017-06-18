@@ -38,6 +38,7 @@
   <script src='js/Oigekirjakontroll.js'></script>
   <script src='js/ModaalsusJaNupukasitlejad.js'></script>
   <script src='js/TutvustustekstiKasitlus.js'></script>
+  <script src='js/Sonastik.js'></script>
   <script src='js/Samas.js'></script>
 
   </head>
@@ -116,6 +117,11 @@
               <i class="ikoon material-icons">info</i>
             </span>
 
+            <span id='Sonastik' class='nupp'
+              data-toggle='tooltip' title='Sonastik'>
+              <i class="ikoon material-icons">language</i>
+            </span>
+
             <span id='Oigekirjakontroll' class='nupp'
               data-toggle='tooltip' title='Õigekirja kontroll'>
               <i class='ikoon material-icons'>spellcheck</i>
@@ -164,6 +170,26 @@
               <i class="ikoon material-icons"
                 style='color: #F48FB1;'>cancel</i>
             </span>
+          </div>
+
+          <!-- Sõnastiku dialoog -->
+          <div id='Sonastikudialoog'
+            class='paan dialoog d-flex align-items-center justify-content-start peidetud'>
+            <div id='Otsistringiblokk'>
+              <label class='active'>
+              Otsi: <input id='Otsistring' type='text' class='form-control' autocomplete='off'>
+              </label>
+            </div>
+            <div id='OtsiSonastikust' class='nupp'>
+              <i class='ikoon material-icons' style='color: #C5E1A5;'>language</i>
+            </div>
+            <div id='OtsinguTulemus'>
+              &nbsp;
+            </div>
+            <!-- Sulgemisnupp -->
+            <div id='SonastikSulge' class='align-self-start ml-auto sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
           </div>
 
           <!-- Õigekirjakontrolli dialoog -->

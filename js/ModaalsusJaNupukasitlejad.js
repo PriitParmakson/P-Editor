@@ -69,3 +69,30 @@ function seaInfopaaniKasitlejad() {
   });
 }
 
+/*
+*/
+function seaSonastikuKasitlejad() {
+  $('#Sonastik').click(function () {
+    $('#Sonastikudialoog').removeClass('peidetud');
+    $('#Sonastik').addClass('disabled');
+  });
+
+  $('#SonastikSulge').click(function () {
+    $('#Sonastikudialoog').addClass('peidetud');
+    $('#Sonastik').removeClass('disabled');
+    $('#OtsinguTulemus').text('');
+    $('#Otsistring').val('');
+  });
+
+  $('#OtsiSonastikust').click(function() {
+    var otsistring = $('#Otsistring').val();
+    var v = '';
+    for (var i = 0; i < sonastik.length; i++) {
+      if (sonastik[i].includes(otsistring)) {
+        v += sonastik[i] + ' ';
+      }
+    }
+    $('#OtsinguTulemus').text(v);
+  });
+  
+}

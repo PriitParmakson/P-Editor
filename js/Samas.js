@@ -37,6 +37,7 @@ function alusta() {
   loeTutvustustekst();
   seaTutvustustekstiKasitlejad();
   seaSamatekstidTekstistKasitlejad();
+  seaSonastikuKasitlejad();
 
   // Algustekst (kursor)
   kuvaTekst();
