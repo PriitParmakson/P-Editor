@@ -84,15 +84,57 @@ function seaSonastikuKasitlejad() {
     $('#Otsistring').val('');
   });
 
-  $('#OtsiSonastikust').click(function() {
+  /* Otsistringis lubatud kujud: <string>, <string>*, *<string>.
+    Otsimise käivitamiseks on kaks moodust: vajutada Enter otsistringi väljas või vajutada nuppu 'OtsiSonastikust'
+  */
+
+  function teeOtsing() {
     var otsistring = $('#Otsistring').val();
-    var v = '';
+    var otsireziim;
+    if (otsistring.startsWith('*')) {
+      otsireziim = 1;
+      otsistring = otsistring.substr(1);
+    }
+    else if (otsistring.endsWith('*')) {
+      otsireziim = 2;
+      otsistring = otsistring.substr(0, otsistring.length - 1);
+    }
+    else {
+      otsireziim = 3; 
+    }
+    var v = ''; // Vastuste koguja
     for (var i = 0; i < sonastik.length; i++) {
-      if (sonastik[i].includes(otsistring)) {
-        v += sonastik[i] + ' ';
+      switch (otsireziim) {
+        case 1:
+          if (sonastik[i].endsWith(otsistring)) {
+            v += sonastik[i] + ' ';
+          }
+          break;
+        case 2:
+          if (sonastik[i].startsWith(otsistring)) {
+            v += sonastik[i] + ' ';
+          }
+          break;
+        case 3:
+          if (sonastik[i].includes(otsistring)) {
+            v += sonastik[i] + ' ';
+          }
+          break;      
+        default:
+          break;
       }
     }
     $('#OtsinguTulemus').text(v);
+  }
+
+  $('#Otsistring').on('keypress', function (e) {
+    if (e.keyCode == 13) { // Enter vajutatud
+      teeOtsing();
+    }
   });
-  
-}
+
+  $('#OtsiSonastikust').click(function () {
+    teeOtsing();
+  });
+
+}  

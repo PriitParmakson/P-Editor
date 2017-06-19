@@ -5,14 +5,19 @@ Teave
 * Flexbox: vt https://v4-alpha.getbootstrap.com/utilities/flexbox/#align-content
 * Vormid: vt https://v4-alpha.getbootstrap.com/components/forms/
 
+Fondid
+------
+Times New Roman 14pt - tekst
+Roboto, Arial, sans-serif 10pt, Gainsboro - tooltips, vihjed
+
 Värviskeem
 ----------
 * DarkBlue
             - keskelemendi rõhutus
 * #757575 (keskmiselt hall)
-            - võimaldatud nupp, tooltip 
+            - võimaldatud nupp
 * Gainsboro (helehall)
-            - mittevõimalik nupp 
+            - mittevõimalik nupp, tooltip, vihje  
 * #464a4c (tumehall)
             - sisestatav tekst 
 * Azure (pastellroheline)
@@ -49,8 +54,12 @@ Värviskeem
   body { padding: 2rem 2rem 8rem 2rem; }
 
   /* Mitmesugused korduvkasutatavad stiilid */
-  .tooltip-inner { background-color: White;
-    color: #757575; }
+  .tooltip-inner, .vihje {
+    background-color: White;
+    font-family: 'Roboto', 'Arial', sans-serif !important;
+    font-size: 10pt !important;
+    color: Gray;
+  }
 
   /* Tekstisisestusala
     Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
