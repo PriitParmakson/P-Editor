@@ -24,6 +24,8 @@ Värviskeem
             - informatsioonilise paani (Infopaan, Kool) taust
 * Aqua (ereroheline)
             - informatsioonilise paani ääris
+* Tomato
+            - pöördtekst
 * Coral
             - veateatepaani ääris,
               veateate tekst
@@ -81,6 +83,7 @@ Värviskeem
 
   .kesk { color: DarkBlue;
     font-weight: 600; }
+  .poord { color: Tomato; }  
   .ikoon { font-family: 'Material Icons';
     font-size: 48px;
   }

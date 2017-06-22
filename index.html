@@ -38,6 +38,7 @@
   <script src='js/Oigekirjakontroll.js'></script>
   <script src='js/ModaalsusJaNupukasitlejad.js'></script>
   <script src='js/TutvustustekstiKasitlus.js'></script>
+  <script src='js/Sonastikukasitlejad.js'></script>
   <script src='js/Sonastik.js'></script>
   <script src='js/Samas.js'></script>
 
@@ -179,8 +180,17 @@
               <label class='active'>
               Otsi sõnastikust: <input id='Otsistring' type='text' class='form-control' autocomplete='off'>
               </label>
-              <div class='vihje'>(võib alata või lõppeda *-ga)</div>
+              <div class='vihje'>Otsistring võib alata või lõppeda *-ga</div>
             </div>
+            <!-- Kuva pöördkuju -->
+            <span class='form-check form-check-inline'>
+              <label class='form-check-label'
+                data-toggle='tooltip' title='Kuva pöördkuju'>
+                <input type='checkbox' class='form-check-input'
+                  id='KuvaPoordkuju' autocomplete="off">
+                kuva pöördkuju
+              </label>
+            </span>
             <div id='OtsiSonastikust' class='nupp'>
               <i class='ikoon material-icons' style='color: #C5E1A5;'>language</i>
             </div>

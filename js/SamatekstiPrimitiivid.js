@@ -157,3 +157,10 @@ function tekstistSiseesitusse(str) {
   t = '|' + eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
   return { tekst: t, kuvaKesktahtYhekordselt: kuvaKesktahtYhekordselt };
 }
+function pooraYmber(str) {
+  var r = '';
+  for (var i = 0; i < str.length; i++) {
+    r = str[i] + r;
+  }
+  return r
+}
