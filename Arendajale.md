@@ -1,16 +1,16 @@
 ---
-title: Arendus
-permalink: Arendus
+title: Arendajale
+permalink: Arendajale
 ---
 
-# Samatekst 
+# Samatekstiredaktori arendajale 
 {: .no_toc}
 
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
-Priit Parmakson, 2017. MIT litsents
+Priit Parmakson, 2017
 
-[https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
+Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
 
 arendusdokument
 

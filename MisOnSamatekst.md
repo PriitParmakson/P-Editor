@@ -1,6 +1,6 @@
 ---
-title: Tutvustus
-permalink: Tutvustus
+title: Mis on samatekst?
+permalink: MisOnSamatekst
 ---
               
 # Mis on samatekst?
