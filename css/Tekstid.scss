@@ -3,7 +3,10 @@
 
 /* 
 
-Stiilid Markdown-lehtedele. Ühtlustatud rakenduse stiilidega.
+Stiilid Markdown-lehtedele.
+
+* Ühtlustatud rakenduse stiilidega.
+* Bootstrap 4 alusel.
 
 */
 
@@ -13,18 +16,14 @@ $bluegrey100: #CFD8DC;
 
 /* ---- Keha -------- */
 body {
-  max-width: 50em; 
-  padding: 2rem 2rem 8rem 2rem; 
-  line-height: 1.25;
+  line-height: 1.25 !important;
   font-family: 'Times New Roman', serif; 
-  font-size: 14pt; 
-  color: $tekstihall;
+  font-size: 14pt !important; 
+  color: $tekstihall !important;
   }
 
 /* ---- Paigutus ---- */
 
-#Tekst { max-width: 44rem; 
-}
 
 /* Pealkirjad */
 h1, h2, h3 {
@@ -48,9 +47,9 @@ h3 {
 p { margin: 0 0 1em 0; }
 
 /* Loetelud */
-#Tekst ul { list-style: none; margin: 0 0 1em 0;
+ul { list-style: none; margin: 0 0 1em 0;
     padding-left: 1em; }
-#Tekst ul > li:before { display: inline-block;
+ul > li:before { display: inline-block;
     content: "-"; width: 1em; margin-left: -1em; }
 
 /* Tabelid */
