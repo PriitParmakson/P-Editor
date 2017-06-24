@@ -46,14 +46,14 @@ Värviskeem
 
 */
 
+  /* Keha */
+  body { padding: 2rem 2rem 8rem 2rem; }
+
   /* Üldine font ja fondisuurus */
   body, textarea, button, input, legend {  
     font-family: 'Times New Roman', serif !important;
     font-size: 14pt !important;
   }
-
-  /* Keha */
-  body { padding: 2rem 2rem 8rem 2rem; }
 
   /* Mitmesugused korduvkasutatavad stiilid */
   .tooltip-inner, .vihje {
@@ -133,9 +133,9 @@ Värviskeem
   */
   #Teatepaan { 
     border: 1px solid coral;
+    color: coral;
     background-color: lavenderblush;
     padding: 1rem;
-    color: coral;
   }
 
   /* Nupud */
@@ -157,13 +157,12 @@ Värviskeem
     font-family: 'Courier New', monospace;
   }
 
-  /* Tutvustustekst */
-  #KoolitekstSisemine h1 {
+  h1 {
     font-size: 14pt !important;
     text-transform: uppercase;
     font-weight: bold;
   }
-  #KoolitekstSisemine h2 {
+  h2 {
     font-size: 14pt !important;
     font-weight: bold;
   }

@@ -1,17 +1,24 @@
 ---
 ---
 
+/* 
+
+Stiilid Markdown-lehtedele. Ühtlustatud rakenduse stiilidega.
+
+*/
+
+$tekstihall: #464a4c;
 $mutedblue: #607D8B;
 $bluegrey100: #CFD8DC;
 
 /* ---- Keha -------- */
 body {
-  max-width: 50em; margin: 0 0; 
-  padding: 0.6em 1.5em 2em 2em; 
-  line-height: 1.2;
+  max-width: 50em; 
+  padding: 2rem 2rem 8rem 2rem; 
+  line-height: 1.25;
   font-family: 'Times New Roman', serif; 
-  color: #333;
-  font-size: 12pt; 
+  font-size: 14pt; 
+  color: $tekstihall;
   }
 
 /* ---- Paigutus ---- */
@@ -19,19 +26,23 @@ body {
 #Tekst { max-width: 44rem; 
 }
 
-/* Jaotisepealkiri */
+/* Pealkirjad */
+h1, h2, h3 {
+  font-size: 14pt !important;
+  line-height: 1.25;
+}
 h1, h2 { 
-  line-height: 1.2;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif; 
-  margin-top: 1em; margin-bottom: 0; }
-
-h1 { font-size: 130%; }
-h2 { font-size: 110%; }
-
-h3 { font-size: 12pt; font-style: italic; font-weight: normal;
-  line-height: 1.2; text-decoration: underline;
-  margin: 0.2em 0 0.2em 0; }  
+  margin-top: 1em; margin-bottom: 0;
+}
+h1 {
+  text-transform: uppercase;
+}
+h3 {
+  font-style: italic;
+  text-decoration: underline;
+  margin: 0.2em 0 0.2em 0;
+}  
 
 /* Tekstiparagrahv */
 p { margin: 0 0 1em 0; }
@@ -76,10 +87,6 @@ pre, code, samp {
   page-break-inside: avoid; hyphens: none;
   text-transform: none;
 }
-pre code,
-code code {
-  font-size: 100%;
-}
 pre { margin-top: 1em; margin-bottom: 1em; }
 
 /* Lingid */
@@ -113,7 +120,7 @@ a[href]:active {
   border-radius: 2px;
   padding: 2px;
   font-family: 'Courier New', monospace;
-  font-size: 10pt;
+  font-size: 14pt;
   text-transform: uppercase;
   margin-left: 1rem; 
 }
