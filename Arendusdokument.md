@@ -1,5 +1,6 @@
 ---
-title: Arendusdokument
+title: Arendus
+permalink: Arendus
 ---
 
 # Samatekst 
@@ -22,7 +23,7 @@ arendusdokument
 |----------------------------------------|---------------|
 | klient (HTML, CSS, Javascript) | 1600  |
 | server (Google Apps Script) | 70  |
-| testimine (HTML, CSS, Javascript) | 200  |
+| testimine (HTML, CSS, Javascript) | 300  |
 | dokumentatsioon (Markdown) | 210  |
 | dokumentatsioonikeskkond (Jekyll) | 160  |
  
