@@ -50,19 +50,13 @@ permalink: Valik
 
 `Niisama saama? Nii, Hiinamaa? Sama siin.`
 
-``
-
-``
-
-
-
 ## Ajate luulu...
 
 `Ajate luulu, luuletaja!`
 
 `Melu tuhinaga, aga nihu tulem.`
 
-## Seesamuses...
+## Samusesse sumas
 
 `Seesamusesse sumas ees.`
 
@@ -70,11 +64,11 @@ permalink: Valik
 
 `No suu saiaseks. Eemal üks külamees, kes aias uus on.`
 
-## Iisaku
+## Iisaku...
 
 `Tere, Pirita, Iisaku, Puka! Siia tiri peret!`
 
-## Lajata
+## Ata! - jalaga lajata
 
 `Soo, lajatad negatiivset takuga nagu kattes viitagendat ajaloos!`
 
@@ -117,7 +111,7 @@ Teretame, etsakae!
 
 `Aga harib alet sopaapostel abirahaga.`
 
-## Nii..
+## Nii piin
 
 `Niipidi paan, naapidi piin.`
 
@@ -141,9 +135,7 @@ Teretame, etsakae!
 
 `"Tere ka teie", teieta keret.`
 
-# Agul..
-
-`Agul! Eluga!`
+## Agul! Eluga!
 
 `Agul - ei! Eluga!`
 
