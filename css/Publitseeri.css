@@ -49,7 +49,7 @@ ul { list-style: none;
 /* Vahedeta tekst */
 pre, code {
   font-family: 'Times New Roman', Times, serif !important;
-  font-size: 14px;
+  font-size: 14px !important;
   color: #464a4c !important;
   background-color: white !important;
   padding: 0 !important;
