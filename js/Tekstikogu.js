@@ -8,6 +8,13 @@ function laeTekstid() {
       tekstid = data.Tekstid;
       // Kuva saadud tekstid
       kuvaLehekylg(1);
+      // Samatekstilisuse kontroll
+      for (var i = 0; i < tekstid.length; i++) {
+        if (!samatekst(tekstid[i].Tekst)) {
+          $('#Teatepaan').removeClass('peidetud');
+          $('#Teatetekst').html($('#Teatetekst').html() + 'Ei ole samatekst: ' + tekstid[i].Tekst);
+        }
+      }
     }); 
 }
 function kuvaLehekylg(p) {
@@ -108,4 +115,3 @@ function seaTekstikoguKasitlejad() {
     }
   });
 }
-

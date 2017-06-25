@@ -6,6 +6,7 @@ function jooksutaTestid() {
 
   */
   // SalvestuseEksperiment();
+  kanoonilineKujuTestid();
   puhastaTekstTestid();
   tekstistSiseesitusseTestid();
   samatekstideOtsingTekstistTestid();
@@ -16,6 +17,11 @@ function jooksutaTestid() {
   samatekstTestid();
 
   kuvaStatistika();
+}
+
+function kanoonilineKujuTestid() {
+  kuvaFunktsiooniNimetus('kanoonilineKuju');
+  test(kanoonilineKuju('Abitu iba!'), 'abituiba', 'Lihtne test');
 }
 
 function puhastaTekstTestid() {

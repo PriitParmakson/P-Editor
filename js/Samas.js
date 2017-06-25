@@ -16,7 +16,7 @@ var logimistase = 1;
 // Globaalsed muutujad
 var t = '|'; // Tekst
 var kuvaKesktahtYhekordselt = false;
-var tekstid; // Hoiab kõiki alla laetud tekste
+var tekstid; // Hoiab kõiki allalaetud tekste
 var jLk = 1; // Jooksva lehekülje nr
 var tLk = 20; // Tekste leheküljel
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis

@@ -40,6 +40,22 @@ function tahti(str) {
     .filter(s => (!kirjavm(s)) && (s != "|"))
     .length;
 }
+function kanoonilineKuju(str) {
+  /* Eemaldab kõik kirjavahemärgid jm sümbolid, mis ei ole tähed,
+     teisendab väiketähtedeks.
+  */
+  if (typeof str === 'undefined' || str === null) {
+    return false
+  }
+  if (str.length == 0) { return false }
+  var k = '';
+  for (var i = 0; i < str.length; i++) {
+    if (taht(str.charCodeAt(i))) {
+      k += str[i].toLowerCase();
+    }
+  }
+  return k;
+}
 function samatekst(str) {
   /* Kontrollib, kas str on samatekst.
     - undefined, null, tühiteksti või ainult kirjavahemärkidest koosneva teksti puhul tagastab false

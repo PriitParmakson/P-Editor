@@ -135,7 +135,6 @@ Värviskeem
     border: 1px solid coral;
     color: coral;
     background-color: lavenderblush;
-    padding: 1rem;
   }
 
   /* Nupud */
@@ -147,7 +146,7 @@ Värviskeem
 
   /* Paanide spetsiifilised elemendid */
     
-  #Infotekst, #KoolitekstSisemine {
+  #Infotekst, #KoolitekstSisemine, #Teatetekst {
     margin: 1rem;
   }   
   .klahv {
