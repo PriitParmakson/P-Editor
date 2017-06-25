@@ -1,6 +1,7 @@
 ---
 title: Valik samatekste
 permalink: Valik
+layout: Publitseeri
 ---
 
 {: .no_toc}
@@ -10,87 +11,117 @@ permalink: Valik
 
 ## OK
 
-`Kodud OK?`
+Kodud OK?
 
-`Kodunenud - OK?`
+Kodunenud - OK?
 
-`Kokk OK?`
+Kokk OK?
 
-`Koduõpetajate põud - OK?`
+Koduõpetajate põud - OK?
 
-`Kodutud OK?`
+Kodutud OK?
 
-`Koduõu. Kast napsu. Uus pant. Saku õud. OK?`
+Koduõu. Kast napsu. Uus pant. Saku õud. OK?
 
-`Kodarad OK?`
+Kodarad OK?
 
-`Kobab. OK?`
+Kobab. OK?
 
-`Koba - töötab OK.`
+Koba - töötab OK.
 
 ## Uju
 
-`Ujuks ees - eeskuju.`
+Ujuks ees - eeskuju.
 
-`Uju, kivikuju!`
+Uju, kivikuju!
 
-`Ujukil oli kuju.`
+Ujukil oli kuju.
 
 ## S
 
-`Senises "s" esines?`
+Nii, "s" siin.
 
-`See saias, saia sees.`
+Siinsamas, nii, "s".
 
-## Samas
+"s" ees.
 
-`Niisama jamas. <-> Sama jama siin.`
+See "s" - sees.
 
-`Sama seest, seesama seest susamas samasust - seesama seest, seesamas...`
+Senises "s" esines?
 
-`Niisama saama? Nii, Hiinamaa? Sama siin.`
+Seni "s" esines.
+
+Sama siin. Niisama "s".
+
+Niisama "s"? Sama siin.
+
+Senisest. "s" esines.
+
+Sama "s"?
+
+Sama jama - "s".
+
+"s" aias. "s" saias.
+
+See "s" saias, saias sees.
+
+## Saiamaias
+
+No suu saiaseks, kes aias uus on.
+
+## Samasust susamas
+
+Ust "uks" kutsu.
+
+Niisama jamas. Sama jama siin.
+
+Sama seest, seesama seest susamas samasust - seesama seest, seesamas...
+
+Niisama saama? Nii, Hiinamaa? Sama siin.
 
 ## Ajate luulu...
 
-`Ajate luulu, luuletaja!`
+Ajate luulu, luuletaja!
 
-`Melu tuhinaga, aga nihu tulem.`
+Melu tuhinaga, aga nihu tulem.
 
 ## Samusesse sumas
 
-`Seesamusesse sumas ees.`
+Seesamusesse sumas ees.
 
-`Seesamuses ise suma sees!`
+Seesamuses ise suma sees!
 
-`No suu saiaseks. Eemal üks külamees, kes aias uus on.`
+No suu saiaseks. Eemal üks külamees, kes aias uus on.
 
 ## Iisaku...
 
-`Tere, Pirita, Iisaku, Puka! Siia tiri peret!`
+Tere, Pirita, Iisaku, Puka! Siia tiri peret!
 
 ## Ata! - jalaga lajata
 
-`Soo, lajatad negatiivset takuga nagu kattes viitagendat ajaloos!`
+Soo, lajatad negatiivset takuga nagu kattes viitagendat ajaloos!
 
-`Ata - jalaga aga lajata!`
+Ata - jalaga aga lajata!
 
-`Aga vanade juustu kutsu ujedana "Vaga".`
+Aga vanade juustu kutsu ujedana "Vaga".
 
 ## Stilistilist
 
-`Stilistilist: otsi litsi, lits!`
+Stilistilist: otsi litsi, lits!
 
 ## Iba abi
 
-`Abivajav ibaajaja.`
+Abivajav ibaajaja.
 
-`Te vaete teavet?`
+Te vaete teavet?
+
+Enimat iva - etteavitamine.
 
 ## Laval
 
-`Elavalt lavale!`
+Elavalt lavale!
 
-`Kipute lavale? Tupik!`
+Kipute lavale? Tupik!
 
 ## Eakas teema
 
@@ -105,62 +136,96 @@ Teretame, etsakae!
 
 ## Loo kool
 
-`Loo kool, lahe! Halloo, kool!`
+Loo kool, lahe! Halloo, kool!
 
 ## Sopaapostel
 
-`Aga harib alet sopaapostel abirahaga.`
+Aga harib alet sopaapostel abirahaga.
 
 ## Nii piin
 
-`Niipidi paan, naapidi piin.`
+Niipidi paan, naapidi piin.
 
-`Niisama. Nii, padusadist! Oo, lootsid asuda piinama siin?`
+Niisama. Nii, padusadist! Oo, lootsid asuda piinama siin?
 
 ## Maamats
 
-`Kivi osta, maamats-oivik!`
+Kivi osta, maamats-oivik!
 
-`Sulas osta, maamats, osalus!`
+Sulas osta, maamats, osalus!
+
+Ajaks oma vagu, maamats? Osta maa, mugavam oskaja!
 
 ## Kiire e-riik
 
-`Kiiremini.. inim-e-riik?`
+Kiiremini.. inim-e-riik?
 
 ## Tere
 
-`Ema, tere! Teretame.`
+Ema, tere! Teretame.
 
-`"Tere ka!" Tereta keret.`
+"Tere ka!" Tereta keret.
 
-`"Tere ka teie", teieta keret.`
+"Tere ka teie", teieta keret.
 
 ## Agul! Eluga!
 
-`Agul - ei! Eluga!`
+Agul - ei! Eluga!
 
-`Agul ei paki. Peletist otsite? Lepi kapieluga.`
+Agul ei paki. Peletist otsite? Lepi kapieluga.
 
 ## Teet, see esteet
 
-`Teet sebib - esteet!`
+Teet sebib - esteet!
 
 ## Elu, tule!
 
-`Elavad? Äh, hädavale!`
+Elavad? Äh, hädavale!
 
-`Hädavaled elavad, äh!`
+Hädavaled elavad, äh!
 
-`Ela! (Meediast said eemale?)`
+Ela! (Meediast said eemale?)
 
 ## Öötöö
 
-`Ajatööta ajatöötaja ja tööta, jaa, töötaja.`
+Ajatööta ajatöötaja ja tööta, jaa, töötaja.
 
 ## IT
 
-`IT.. Kes usub ususekti?`
+IT.. Kes usub ususekti?
 
-`Huupi IP, uuh!`
+Huupi IP, uuh!
 
-`Sitke fetiš IT efektis.`
+Sitke fetiš IT efektis.
+
+IT - säh, hästi!
+
+IT - sama neeger, rege enamasti.
+
+Annad lutti, IT. Tuld anna!
+
+IT - säh, häh, äh, hästi!
+
+Piraki! Peetis IT eepika. RIP.
+
+ETIS-t otsite?
+
+Aga lootke - fetiš-IT efekt - oo, laga!
+
+Huugan: no Eesti IT - see on nagu ...uh!
+
+IT segi? Õigesti?
+
+IT - kasutu jama majutusakti!
+
+Enim ISKE-t - eksimine.
+
+## Sukastriptiis...
+
+...siit pirtsakus?
+
+## Aja
+
+Ajata suusataja.
+
+Ajuti lülituja.

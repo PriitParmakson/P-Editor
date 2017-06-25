@@ -1,0 +1,67 @@
+/* 
+
+Minimalistlik kujundus samatekstide kogule
+* Bootstrap 4 alusel.
+
+#464a4c (tume hall) - tekst
+
+*/
+
+$tekstihall: #464a4c;
+$mutedblue: #607D8B;
+$bluegrey100: #CFD8DC;
+
+/* ---- Keha -------- */
+body {
+  padding: 2rem 2rem 8rem 2rem;
+  line-height: 1.25 !important;
+  font-family: 'Times New Roman', serif; 
+  font-size: 14pt !important; 
+  color: #464a4c !important;
+  }
+
+/* ---- Paigutus ---- */
+
+/* Pealkirjad */
+h1, h2 {
+  font-size: 14pt !important;
+  line-height: 1.25;
+}
+h1, h2 { 
+  font-weight: bold;
+  margin-top: 1em; margin-bottom: 0;
+}
+h1 {
+  text-transform: uppercase;
+}
+
+/* Tekstiparagrahv */
+p { margin: 0 0 1em 0; }
+
+/* Loetelud - Sisukord */
+ul { list-style: none;
+    margin: 0 0 1em 4rem;
+}
+
+/* TOC genereeritud */
+#markdown-toc > li {
+  list-style: none;
+}
+
+/* Vahedeta tekst */
+pre {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  color: #464a4c !important;
+  background-color: white !important;
+  padding: 0 !important;
+}
+pre { margin-top: 1em; margin-bottom: 1em; }
+
+/* Määra üle Bootstrapi lingivärv */
+a, a:hover, a:active, a:visited {
+  color: Darkblue !important;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-color: DarkBlue;
+}
