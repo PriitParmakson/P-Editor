@@ -4,6 +4,7 @@ permalink: Valik
 layout: Publitseeri
 ---
 
+# Abitut iba
 {: .no_toc}
 
 - TOC
@@ -83,6 +84,8 @@ Niisama saama? Nii, Hiinamaa? Sama siin.
 
 Ajate luulu, luuletaja!
 
+## Melu tulem
+
 Melu tuhinaga, aga nihu tulem.
 
 ## Samusesse sumas
@@ -109,13 +112,21 @@ Aga vanade juustu kutsu ujedana "Vaga".
 
 Stilistilist: otsi litsi, lits!
 
-## Iba abi
+## Ibaabi
+
+Iba ajav - vaja abi?
 
 Abivajav ibaajaja.
 
+Abitut iba.
+
 Te vaete teavet?
 
+Ajav iba - teade: segi Ruunavere ja Jerevan. Uurige seda. Et abi vaja?
+
 Enimat iva - etteavitamine.
+
+Enimat, sibavat, ulatavat - tavatalutav abistamine.
 
 ## Laval
 
@@ -224,8 +235,24 @@ Enim ISKE-t - eksimine.
 
 ...siit pirtsakus?
 
-## Aja
+## Ajaja
 
 Ajata suusataja.
 
 Ajuti lülituja.
+
+Ajatu reaalala - aerutaja.
+
+Ajata ajajaataja.
+
+Ajatu luukerekuulutaja.
+
+Aja tusakasutaja.
+
+Ajatu kekutaja.
+
+Ajataja-sajataja.
+
+
+
+
