@@ -33,11 +33,12 @@ h1 {
 }
 
 /* Tekstiparagrahv */
-p { margin: 0 0 1em 0; }
+p { margin: 0 0 1em 6rem; }
+.nihketa { margin-left: 0 !important;}
 
 /* Loetelud - Sisukord */
 ul { list-style: none;
-    margin: 0 0 1em 4rem;
+    margin: 0 0 1em 6rem;
 }
 
 /* TOC genereeritud */
