@@ -4,12 +4,9 @@ Minimalistlik kujundus samatekstide kogule
 * Bootstrap 4 alusel.
 
 #464a4c (tume hall) - tekst
+#607D8B (muted blue) - lingid
 
 */
-
-$tekstihall: #464a4c;
-$mutedblue: #607D8B;
-$bluegrey100: #CFD8DC;
 
 /* ---- Keha -------- */
 body {
@@ -50,7 +47,7 @@ ul { list-style: none;
 
 /* Vahedeta tekst */
 pre {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Times New Roman', Times, serif !important;
   font-size: 14px;
   color: #464a4c !important;
   background-color: white !important;
@@ -60,8 +57,8 @@ pre { margin-top: 1em; margin-bottom: 1em; }
 
 /* Määra üle Bootstrapi lingivärv */
 a, a:hover, a:active, a:visited {
-  color: Darkblue !important;
+  color: #607D8B !important;
   text-decoration: underline;
   text-decoration-style: dashed;
-  text-decoration-color: DarkBlue;
+  text-decoration-color: #607D8B;
 }
