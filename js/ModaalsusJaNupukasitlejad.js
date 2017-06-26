@@ -6,11 +6,13 @@ function aktiveeriTekstinupud() {
     $('#Poolednupp').addClass('disabled');
     $('#Uusnupp').addClass('disabled');
     $('#Salvesta1').addClass('disabled');
+    $('#SeotudTekstid').addClass('disabled');
   }
   else {
     $('#Poolednupp').removeClass('disabled');
     $('#Uusnupp').removeClass('disabled');
     $('#Salvesta1').removeClass('disabled');
+    $('#SeotudTekstid').removeClass('disabled');
   }
   // Ei puutu Infonuppu
 }
@@ -18,6 +20,7 @@ function deaktiveeriTekstinupud() {
   $('#Poolednupp').addClass('disabled');
   $('#Uusnupp').addClass('disabled');
   $('#Salvesta1').addClass('disabled');
+  $('#SeotudTekstid').addClass('disabled');
   // Ei puutu Infonuppu
 }
 

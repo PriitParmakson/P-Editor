@@ -40,6 +40,7 @@
   <script src='js/TutvustustekstiKasitlus.js'></script>
   <script src='js/Sonastikukasitlejad.js'></script>
   <script src='js/Sonastik.js'></script>
+  <script src='js/SeotudTekstid.js'></script>
   <script src='js/Samas.js'></script>
 
   </head>
@@ -121,6 +122,11 @@
               <i class="ikoon material-icons">search</i>
             </span>
 
+            <span id='SeotudTekstid' class='nupp disabled'
+              data-toggle='tooltip' title='Seotud tekstid'>
+              <i class="ikoon material-icons">call_split</i>
+            </span>
+
             <span id='Info' class='nupp disabled'
               data-toggle='tooltip' title='Kuidas kasutada'>
               <i class="ikoon material-icons">info</i>
@@ -141,22 +147,22 @@
               <i class='ikoon material-icons'>help_outline</i>
             </span>
 
-            <span id='Kool' class='nupp'
+            <!-- span id='Kool' class='nupp'
               data-toggle='tooltip' title='Mis on samatekst?'>
               <i class="ikoon material-icons">school</i>
-            </span>
+            </span -->
           </p>
 
-          <!-- Kool -->
+          <!-- Kool 
           <div id='Koolitekst'
             class='paan teabepaan d-flex align-items-start peidetud'>
             <div id='KoolitekstSisemine'>
             </div>
-            <!-- Sulgemisnupp -->
+            <!-- Sulgemisnupp >
             <div id='KoolSulge' class='justify-content-end sulgemisnupuke'>
               <span>&times;</span>
             </div>
-          </div>
+          </div -->
 
           <!-- Salvestusdialoog -->
           <div id='Salvestusdialoog'
@@ -179,6 +185,18 @@
               <i class="ikoon material-icons"
                 style='color: #F48FB1;'>cancel</i>
             </span>
+          </div>
+
+          <!-- Seotud tekstide dialoog -->
+          <div id='SeotudTekstideDialoog'
+            class='paan dialoog d-flex align-items-center justify-content-start peidetud'>
+            <div id='LeitudSeosed'>
+              &nbsp;
+            </div>
+            <!-- Sulgemisnupp -->
+            <div id='SeotudTekstidSulge' class='align-self-start ml-auto sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
           </div>
 
           <!-- Sõnastiku dialoog -->

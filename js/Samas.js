@@ -16,7 +16,9 @@ var logimistase = 1;
 // Globaalsed muutujad
 var t = '|'; // Tekst
 var kuvaKesktahtYhekordselt = false;
-var tekstid; // Hoiab kõiki allalaetud tekste
+var tekstid; /* Hoiab kõiki allalaetud tekste
+  Struktuur: { Tekst:..., }
+*/
 var jLk = 1; // Jooksva lehekülje nr
 var tLk = 20; // Tekste leheküljel
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
@@ -34,10 +36,12 @@ function alusta() {
   seaTekstikoguKasitlejad();
   seaFiltriKasitlejad();
   seaOigekirjakasitlejad();
-  loeTutvustustekst();
+  /* loeTutvustustekst();
   seaTutvustustekstiKasitlejad();
+  */
   seaSamatekstidTekstistKasitlejad();
   seaSonastikuKasitlejad();
+  seaSeotudTekstiKasitlejad();
 
   // Algustekst (kursor)
   kuvaTekst();

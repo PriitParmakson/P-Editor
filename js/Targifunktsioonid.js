@@ -20,7 +20,7 @@ function veneTaht(charCode) {
   return (charCode >= 1024 && charCode <= 1279)
 }
 function taht(charCode) {
-  return ladinaTaht(charCode) || tapiTaht(charCode) || veneTaht()
+  return ladinaTaht(charCode) || tapiTaht(charCode) || veneTaht(charCode)
 }
 function kirjavm(char) {
   // Kontrollib, kas tärk on kirjavahemärk.
