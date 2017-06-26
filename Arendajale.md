@@ -3,16 +3,12 @@ title: Arendajale
 permalink: Arendajale
 ---
 
-# Samatekstiredaktori arendajale 
+# Arendajale 
 {: .no_toc}
 
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
-Priit Parmakson, 2017
-
 Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
-
-arendusdokument
 
 - TOC
 {:toc}
@@ -21,17 +17,19 @@ arendusdokument
 
 |  komponent                                 | SLOC (sh tühiread) |
 |----------------------------------------|---------------|
-| klient (HTML, CSS, Javascript) | 1600  |
+| Javascript (klient) | 77 funktsiooni 16 failis, 1600 rida |
+| HTML | 400  |
+| CSS (rakendus) | 242 |
+| CSS (dokumentatsioon, tekstivalik) | 65 |
 | server (Google Apps Script) | 70  |
 | testimine (HTML, CSS, Javascript) | 300  |
 | dokumentatsioon (Markdown) | 210  |
 | dokumentatsioonikeskkond (Jekyll) | 160  |
  
-Statistika moodustamine: `wc -l $(git ls-files)`
-
 ##  Kasutatud
 
 * Map of keycodes to human readable key names - https://github.com/micro-js/keycodes
+* Longest common substring - https://github.com/mirkokiefer/longest-common-substring 
 
 ## Featuurid
 

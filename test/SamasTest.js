@@ -6,6 +6,7 @@ function jooksutaTestid() {
 
   */
   // SalvestuseEksperiment();
+  tuvastaSuheTestid();
   kanoonilineKujuTestid();
   puhastaTekstTestid();
   tekstistSiseesitusseTestid();
@@ -17,6 +18,16 @@ function jooksutaTestid() {
   samatekstTestid();
 
   kuvaStatistika();
+}
+
+function tuvastaSuheTestid() {
+  kuvaFunktsiooniNimetus('tuvastaSuhe');
+  test(tuvastaSuhe('Kodutud OK?', 'iba abi'), null, 'Suhte puudumise test');
+  test(tuvastaSuhe('iba abi', 'iba abi'), '=', 'Võrdsuse test');
+  test(tuvastaSuhe('iba abi', 'su tiba abitus'), '<', 'Lihtne test 1');
+  test(tuvastaSuhe('iba abi', 'liba abil'), '<', 'Lihtne test 2');
+  test(tuvastaSuhe('Kodutud OK?', 'Kodud OK?'), '>', 'Lihtne test 3');
+  test(tuvastaSuhe('Su teretus.', 'Ema: Tere, tere, Venevere! Teretame.'), 'teret', 'Ühise teksti test');
 }
 
 function kanoonilineKujuTestid() {

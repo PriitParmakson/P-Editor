@@ -180,3 +180,68 @@ function pooraYmber(str) {
   }
   return r
 }
+function pikimYhineAlamsone(s1, s2) {
+  /*
+    After: https://github.com/mirkokiefer/longest-common-substring
+    Tagastab objekti { startString1: .., startString2: .., length: .. }
+  */
+  function indexMap(list) {
+    var map = {}
+    list.forEach(function(each, i) {
+      map[each] = map[each] || []
+      map[each].push(i)
+    })
+    return map
+  }
+
+  var seq1 = s1.split('');  
+  var seq2 = s2.split('');  
+  var result = {startString1:0, startString2:0, length:0}
+  var indexMapBefore = indexMap(seq1)
+  var previousOverlap = []
+  seq2.forEach(function(eachAfter, indexAfter) {
+    var overlapLength
+    var overlap = []
+    var indexesBefore = indexMapBefore[eachAfter] || []
+    indexesBefore.forEach(function(indexBefore) {
+      overlapLength = ((indexBefore && previousOverlap[indexBefore-1]) || 0) + 1;
+      if (overlapLength > result.length) {
+        result.length = overlapLength;
+        result.startString1 = indexBefore - overlapLength + 1;
+        result.startString2 = indexAfter - overlapLength + 1;
+      }
+      overlap[indexBefore] = overlapLength
+    })
+    previousOverlap = overlap
+  })
+  return result
+}
+
+function tuvastaSuhe(s1, s2) {
+  /*
+    1) Viib mõlemad tekstid kanoonilisele kujule.
+    2) Kui s1 ja s2 kanoonilised kujud ühtivad, siis ütleme, et s1 ja s2 on võrdväärsed ja tähistame seda s1 = s2. Funktsioon tagastab sellisel juhul väärtuse '='.
+    3) s1 ja s2 on suhtes eeltekst-järeltekst <=> s1 pooltekst (ilma kesktäheta) sisaldub s2-s. Sedapidi suhet tähistame s1 < s2 ja funktsioon tagastab väärtuse '<'.
+    4) Vastupidist suhet tähistame s1 > s2. Funktsioon tagastab sellisel juhul väärtuse '>'.
+    5) Leiab pikima ühise alamsõne. Kui selle pikkus on vähemalt 4, siis tagastab selle alamsõne.
+    6) Kui ühtki ülalnimetatud suhet ei tuvastatud, siis tagastab funktsioon väärtuse null.
+  */
+  var k1 = kanoonilineKuju(s1);
+  var k2 = kanoonilineKuju(s2);
+  if (k1 == k2) {
+    return '=' // Võrdväärsed
+  }
+  var p1 = k1.substr(0, Math.floor(k1.length / 2)); 
+  var p2 = k2.substr(0, Math.floor(k2.length / 2));
+  if (k2.includes(p1) && k1.length < k2.length) {
+    return '<' // s1 on s2 eellane
+  }
+  if (k1.includes(p2) && k1.length > k2.length) {
+    return '>' // s2 on s1 eellane
+  }
+  var y = pikimYhineAlamsone(k1, k2);
+  if (y.length >= 4) {
+    return k1.substr(y.startString1, y.length);
+  }
+  return null
+}
