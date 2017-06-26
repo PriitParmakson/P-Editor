@@ -243,3 +243,11 @@ Värviskeem
     text-decoration-color: DarkBlue;
   }
 
+  #Valmistekste {
+    border: 1px dotted Tomato;
+    color: Tomato;
+    border-radius: 2px;
+    padding: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: 12pt;
+  }
