@@ -63,25 +63,44 @@ function suleSalvestusdialoog() {
 }
 
 function seaSalvestuseKasitlejad() {
-  // Salvestusdialoogi käsitlejad
+
   $('#Salvesta1').click(function() {
-    // Ava salvestusdialoog 
+    // Salvestusdialoogi avamine
     if (dialoogiseisund == 'N') {
       $('#Salvestusdialoog').removeClass('peidetud');
       deaktiveeriTekstinupud();
       dialoogiseisund = 'S';
+      /* Duplikaadikontroll
+      */
+      var s = tekstSalvestuskujule(t);
+      var k1 = kanoonilineKuju(s.Tekst);
+      // Sule teatepaan, kui see oli avatud
+      $('#Teatetekst').html('');
+      $('#Teatepaan').addClass('peidetud');
+      tekstid.some(function(t2) {
+        if (k1 == kanoonilineKuju(t2.Tekst)) {
+          $('#Teatepaan').removeClass('peidetud');
+          $('#Teatetekst').html('Duplikaattekst');
+          return true;
+        }
+        else return false;
+      });
       $('#draftNupp').focus();
     }
   });
 
   $('#Salvesta2').click(function() {
     var s = tekstSalvestuskujule(t);
+    /* Salvestamine
+    */
     salvestaTekst(s).done(function() {
       suleSalvestusdialoog();
       console.log('Salvestatud tekst: ' + s.Tekst);
       // Uuenda tekstikogu
       // Lisada tekst
       tekstid.unshift(s);
+      // Uuendada tekstide arvu
+      $('#Valmistekste').text(tekstid.length.toString());
 
       // Uuenda filtrit, kui see on avatud
       if ($('#Filtridialoog').is(':visible')) {
