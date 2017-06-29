@@ -27,7 +27,7 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
 | ühikteste | 92 |
 | ühiktestide kood (HTML, CSS, Javascript) | 300 rida  |
  
-## Featuurid
+## Funktsionaalsed omadused (Mida tarkvara teeb?)
 
 - Samateksti sisestamine
   - Programm kontrollib jooksvalt teksti õigsust...
@@ -35,7 +35,7 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
   - Tekst võib sisaldada kirjavahemärke.
   - Teksti saab kustutada.
   - Tekstis saab liikuda ja kursorit seada.
-  - Tekstisisestusalasse saab teksti asetada (Ctrl+V).  <span class='todo'>TO DO</span>
+  - Tekstisisestusalasse saab teksti asetada (Ctrl+V).
   - Kesktäht (-tähed) kuvatakse rõhutatult.
   - Samateksti pooled saab vahetada.
   - Saab alustada uut samateksti.
