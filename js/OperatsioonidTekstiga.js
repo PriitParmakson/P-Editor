@@ -1,7 +1,7 @@
-// Teksti töötlemise abifunktsioonid
 function markeeriTekstikoguTekst(t) {
-  // Tagastab markeeritud keskkohaga teksti
-  // Eeldatakse salvestamiseks puhastatud teksti (ei sisalda kursorit)
+  /* Tagastab markeeritud keskkohaga teksti
+   Eeldatakse salvestamiseks puhastatud teksti (ei sisalda kursorit).
+  */
   var acc = ''; // Tagastatav tekst, lisatud markeering
   var m1 = null; // Esimese markeeritava tähe indeks (1-baas)
   var keskelementYhekordselt = null;
@@ -141,35 +141,40 @@ function moodustaTekstiStruktuurKonsoolile() {
   return tagasta;
 }
 
-// Spetsiifilised operatsioonid tekstiga
-function suurtaheks() {
-  // Kursori järel olev täht muudatakse suurtäheks
+function suurtaheks(t) {
+  /* Kursori järel olev täht muudetakse suurtäheks
+     Sisendis eeldab siseesituse kursorit ('|') sisaldavat teksti.
+     Ei sõltu globaalsetest muutujatest.
+  */
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
   var tekstParast = osad[1]; // Tekst pärast joont
   // Kursor teksti lõpus?
   if (tekstParast.length == 0) {
-    return
+    return t
   }
   var s = tekstParast[0].toUpperCase();
-  t = tekstEnne + "|" + s +
+  return tekstEnne + "|" + s +
     tekstParast.substring(1, tekstParast.length);
-  kuvaTekst();
 }
-function vaiketaheks() {
-  // Kursori järel olev täht muudetakse väiketäheks
+
+function vaiketaheks(t) {
+  /* Kursori järel olev täht muudetakse väiketäheks.
+     Sisendis eeldab siseesituse kursorit ('|') sisaldavat teksti.
+     Ei sõltu globaalsetest muutujatest.
+  */
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
   var tekstParast = osad[1]; // Tekst pärast joont
   // Kursor teksti lõpus?
   if (tekstParast.length == 0) {
-    return
+    return t
   }
   var s = tekstParast[0].toLowerCase();
-  t = tekstEnne + "|" + s +
+  return tekstEnne + "|" + s +
     tekstParast.substring(1, tekstParast.length);
-  kuvaTekst();
 }
+
 function vahetaPooled(t) {
   // Eeldab parameetris t sisekujul teksti (kesktäht kahekordselt). Tagastab teksti, milles pooled on vahetatud. Kui pooltevahetusega sattus esimeseks sümboliks tühik, siis see eemaldatakse.
   var p = tahti(t) / 2;

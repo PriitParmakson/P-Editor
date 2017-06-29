@@ -4,21 +4,26 @@
 
 var logimistase = 1; 
 /*
-  0 
+  Mida suurem, seda rohkem teavet konsoolile kuvatakse
+  0
+    - ei kuvata midagi
+  1
     - seatud filter
     - salvestatud tekst
     - redaktoris kuvamiseks moodustatatud tekst
-  1 
+  2 
     - kasutaja klahvivajutus (KEYDOWN)
     - kasutaja sisestatud tark (KEYPRESS) 
 */
 
 // Globaalsed muutujad
-var t = '|'; // Tekst
+/* Väljas #Tekst oleva teksti mudel */
+var t = '|';
 var kuvaKesktahtYhekordselt = false;
-var tekstid; /* Hoiab kõiki allalaetud tekste
-  Struktuur: { Tekst:..., }
+/* Hoiab kõiki allalaetud tekste
+  Struktuur: { Tekst: <string>, Draft: <boolean> }
 */
+var tekstid;
 var jLk = 1; // Jooksva lehekülje nr
 var tLk = 20; // Tekste leheküljel
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis

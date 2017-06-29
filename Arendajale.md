@@ -15,22 +15,18 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
 
 ## Koodistatistika
 
-|  komponent                                 | SLOC (sh tühiread) |
+|  komponent                                 |  |
 |----------------------------------------|---------------|
 | Javascript (klient) | 77 funktsiooni 16 failis, 1600 rida |
-| HTML | 400  |
-| CSS (rakendus) | 242 |
-| CSS (dokumentatsioon, tekstivalik) | 65 |
-| server (Google Apps Script) | 70  |
-| testimine (HTML, CSS, Javascript) | 300  |
+| HTML | 400  rida |
+| CSS (rakendus) | 242 rida |
+| CSS (dokumentatsioon, antoloogia) | 65 rida |
+| server (Google Apps Script) | 70 rida  |
 | dokumentatsioon (Markdown) | 210  |
 | dokumentatsioonikeskkond (Jekyll) | 160  |
+| ühikteste | 92 |
+| ühiktestide kood (HTML, CSS, Javascript) | 300 rida  |
  
-##  Kasutatud
-
-* Map of keycodes to human readable key names - https://github.com/micro-js/keycodes
-* Longest common substring - https://github.com/mirkokiefer/longest-common-substring 
-
 ## Featuurid
 
 - Samateksti sisestamine
@@ -60,23 +56,35 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
 
 ## Teksti esitusvormingud
 
+Suur osa funktsionaalsusest on seotud samatekstide teisendamisega ühest esitusest (kujust) teise. Samatekst võib olla mitmes erinevas esituses:
+
+1. kasutajale nähtav esitus tekstisisestusalal (`#Tekst`)
+2. siseesitus
+3. HTML-esitus kuvamiseks tekstisisestusalal
+4. pilveesitus (salvestatud kuju)
+5. esitus tekstikogus ja antoloogias
+6. HTML-esitus kuvamiseks tekstikogus
+7. esitus sirvija konsoolil (logimine silumise eesmärgil). 
+
+Tähtsamad teisendused:
+
 ```
-Esitus teksti-     (1)
-sisestusalal   +------->  Siseesitus
-     ^                         +
-     |                     +   |
-     | (2)                 |   |
-     +           (2)       |   | (3)
-    HTML   <---------------+   |
-                               |
-                               v
-    HTML    <------------+ Pilveesitus
-     +           (4)
-     |
-     | (4)
-     v
- Tekstikogu
- esitus
+        Esitus teksti-     (1)
+        sisestusalal   +------->  Siseesitus
+            ^                         +
+            |                     +   |
+            | (2)                 |   |
+            +           (2)       |   | (3)
+            HTML   <---------------+   |
+                                      |
+                                      v
+            HTML    <------------+ Pilveesitus
+            +           (4)
+            |
+            | (4)
+            v
+        Tekstikogu
+        esitus
 
 ```
 
@@ -167,55 +175,88 @@ Säh, hästi!
     * Logiteade 2: `Programm: ` + väljastatud tekst + seatud caret positsioon.
     * Logiteade koostatakse funktsioonis `kuvaTekst`
   * Logitasemed:
-    * `0` - logitakse tekstisisestus ja -väljastus
-    * `1` - logitakse `keydown` ja `keypress` sündmused 
+    * `0` - ei logita midagi
+    * `1` - logitakse tekstisisestus ja -väljastus
+    * `2` - lisaks eelmisele logitakse `keydown` ja `keypress` sündmused 
 
 ## Testimine
 * Funktsioonitestimise automatiseerimiseks on leht `SamasTest.html`; testid pannakse kirja failis `SamasTest.js`.
 
-## Tähtsamad funktsioonid
-* Kasutaja tegevused elemendis `Tekst` püütakse kinni sündmustega `keydown` ja `keypress`,
-* kust suunatakse tähtede ja punktuatsioonisümbolite töötlemisele (`lisaTahtVoiPunktuatsioon`) või eriklahvivajutuste töötlemisele (`tootleEriklahv`).
+## Redaktori tööpõhimõte
+
+### Kasutaja sisendi kinnipüüdmine
+* Kasutaja tegevused tekstisisestusväljas (elemendis `Tekst`) püütakse kinni sündmuste `keydown`,  `keypress` ja `paste` jälgimisega ja töötlemisega.
+
+```
+                           #Tekst
+                    (tekstisisestusväli)  
+                              ↓
+       keydown             keypress             paste
+                    (sündmusekäsitlejad) 
+          ↓                    ↓                
+ tootleEriklahv(keyCode)  lisaTahtVoiPunktuatsioon(charCode)
+          ↓                    ↓                
+    tootleBackspace()
+    tootleDelete()
+    kuvaKesktahtYhekordselt = true
+    kuvaKesktahtYhekordselt = false
+    suurtaheks()
+    vaiketaheks()
+          ↓                    ↓                
+    kuvaTekst()
+```
+
+Sündmuse `keydown` käsitleja püüab kinni eriklahvivajutused, mida redaktoris tavapärasest eriliselt töödeldakse: `8` (`Backspace`), `46` (`Delete`), `33` (`PgUp`), `34` (`PgDn`), `38` (`Up`), `40` (`Down`). Nende vaikimisi toiming tühistatakse ja vajutusi käsitletakse tavapärasest erinevalt. Suunab eriklahvivajutuste töötlemiseks funktsiooni `tootleEriklahv`.
+
+Sündmuse `keypress` käsitleja suunab kasutaja sisestatud tärgi töötlemiseks funktsiooni `lisaTahtVoiPunktuatsioon`.
+
+Sündmuse `paste` käsitleja puhastab asetatava teksti kõrvalistest tärkidest ja kontrollib, kas asetamise tulemusena tekkinud tekst on samatekst. Kui ei ole, siis annab veateate ja sisendit ei aktsepteeri.
+
+Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioon. Seda teeb funktsioon `tuvastaCaretJaSeaSisekursor`.
+
+### Teksti kuvamine
+
 * HTML kujule teisendavad `markeeriTekst` ja `markeeriTekstikoguTekst`.
-* Tekstisisestusala _caret_ positsiooni tuvastavad ja seavad `tuvastaCaretJaSeaSisekursor` ja `seaCaret`.
+* Tekstisisestusala _caret_ positsiooni seab funktsioon `seaCaret`.
 
 ## Töövahendid
 * Javascripti süntaksikontrollija: [http://esprima.org/demo/validate.html](http://esprima.org/demo/validate.html)
 * HTML validaator: [https://validator.w3.org/nu/#file](https://validator.w3.org/nu/#file) (Firefox-i kontekstimenüüst )
 
-## Teave
+## Märkmed
+
+### Teave
 * Kõigi HTML veebi-API-de nimekiri: [https://developer.mozilla.org/en-US/docs/Web/](https://developer.mozilla.org/en-US/docs/Web/)
 * HTML sündmuste kohta: [https://www.w3schools.com/tags/ref_eventattributes.asp](https://www.w3schools.com/tags/ref_eventattributes.asp)
 * JQuery sündmusekäsitlejate seadmine: [https://www.w3schools.com/jquery/jquery_events.asp](https://www.w3schools.com/jquery/jquery_events.asp)
 * DOM `Node` objekt: [https://www.w3schools.com/xml/dom_node.asp](https://www.w3schools.com/xml/dom_node.asp)
 * jQuery-ga tippudele ligipääsemine: [https://api.jquery.com/get/](https://api.jquery.com/get/)
 
-## Sündmused
+### Sündmused
 * Tähesisestuse töötlemiseks on `keypress` parem kui `keydown`, sest `keypress` näitab, milline tärk sisestati (eristab suur- ja väiketähti). `keydown` näitab millist klahvi vajutati.
 * Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net](http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net)
 
-## Nuppude töötlus
+### Nuppude töötlus
 * Kasutajaliidese alade peitmiseks `style='display: none;'`; nähtavale toomine ja peitmine vastavalt JQuery `show`, `hide` ja `toggle`.
 * Nuppude mitteaktiivseks tegemine klassiga `disabled`.
 
-## Miks ei kasuta input elementi
+### Miks ei kasuta input elementi
 * `Input` elemendis vt: setSelectionRange() HTML veebi-APIs HTMLInputElement - https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
 * JQuery-s ei ole `oninput` võimalust, vt
    http://stackoverflow.com/questions/11189136/fire-oninput-event-with-jquery 
 * Vt ka http://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event 
 
-## Mitmesugust
+### Mitmesugust
 * Arvesta ka Mac-i `metakey`-ga: http://stackoverflow.com/questions/2903991/how-to-detect-ctrlv-ctrlc-using-javascript
 * `break` lause ei tööta Javascript `forEach`-ga.
 * Tärgi asetamine stringi - vt http://stackoverflow.com/questions/4313841/javascript-how-can-i-insert-a-string-at-a-specific-index
 
-## Ctrl+V (Paste) käsitlemine
-* Praegu ei tööta
+### Ctrl+V (Paste) käsitlemine
 * Vt https://www.w3.org/TR/clipboard-apis/
 * Vt `onpaste` sündmus https://www.w3schools.com/jsref/event_onpaste.asp
 * Kasutatud on: http://stackoverflow.com/questions/6902455/how-do-i-capture-the-input-value-on-a-paste-event
 
-## Caret (kursori) paigutamine contenteditable div elemendis
+### Caret (kursori) paigutamine contenteditable div elemendis
 * `Range` - The Range interface represents a fragment of a document that can contain nodes and parts of text nodes. Vt https://developer.mozilla.org/en-US/docs/Web/API/Range
 * Vt: http://stackoverflow.com/questions/6249095/how-to-set-caretcursor-position-in-contenteditable-element-div
 * `document.createRange()` vt: https://developer.mozilla.org/en-US/docs/Web/API/Document/createRange

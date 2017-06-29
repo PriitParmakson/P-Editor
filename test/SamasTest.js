@@ -3,9 +3,9 @@ var mitteedukaidTeste = 0;
 
 function jooksutaTestid() {
   /* Testide käivitaja
-
   */
-  // SalvestuseEksperiment();
+  suurtaheksTestid();
+  vaiketaheksTestid();
   tuvastaSuheTestid();
   kanoonilineKujuTestid();
   puhastaTekstTestid();
@@ -18,6 +18,20 @@ function jooksutaTestid() {
   samatekstTestid();
 
   kuvaStatistika();
+}
+
+function suurtaheksTestid() {
+  kuvaFunktsiooniNimetus('suurtaheks');
+  test(suurtaheks('ab|cd'), 'ab|Cd', 'lihtne test');
+  test(suurtaheks('|ab'), '|Ab', 'piirjuhutest 1');
+  test(suurtaheks('ab|'), 'ab|', 'piirjuhutest 2');
+}
+
+function vaiketaheksTestid() {
+  kuvaFunktsiooniNimetus('vaiketaheks');
+  test(vaiketaheks('ab|CD'), 'ab|cD', 'lihtne test');
+  test(vaiketaheks('|AB'), '|aB', 'piirjuhutest 1');
+  test(vaiketaheks('AB|'), 'AB|', 'piirjuhutest 2');
 }
 
 function tuvastaSuheTestid() {

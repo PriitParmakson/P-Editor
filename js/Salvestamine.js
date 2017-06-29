@@ -4,7 +4,7 @@ function tekstSalvestuskujule(t) {
   /* Vii tekst salvestuskujule
      Koosta puhas tekst - eemalda kursorijoon ja kesktähe peegeltäht.
      Eeldab, et sisend t sisekujul tekst.
-     Tagastab objekti kujul: { Tekst: c, Draft: draft }
+     Tagastab objekti kujul: { Tekst: <string>, Draft: <boolean> }
   */
   var peegeltaheNr = tahti(t) / 2 + 1;
   var taheloendur = 0;

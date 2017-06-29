@@ -59,6 +59,8 @@ Teretame, etsakae!
 
 ## Elu, tule!
 
+Elu, tule elutule!
+
 Elavad? Äh, hädavale!
 
 Hädavaled elavad, äh!
@@ -223,15 +225,13 @@ Stilistilist: otsi litsi, lits!
 
 Aga harib alet sopaapostel abirahaga.
 
-## Sugulus su lugu s
+## Su sugulus, su lugu sus
 
 Su lugu - sugulus.
 
 Su lugu. Su sugulus.
 
 Su lugusus - usu, su sugulus.
-
-Su sugulus. Su lugu sus.
 
 Su sugus lugu - su sugul sugusus.
 
@@ -252,6 +252,8 @@ Ema, tere! Teretame.
 "Tere ka!" Tereta keret.
 
 "Tere ka teie", teieta keret.
+
+Ema, tere! Tere, Kallavere! Tere, vallakere! Teretame.
 
 ## Uju
 

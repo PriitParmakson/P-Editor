@@ -45,7 +45,9 @@ function tootleEriklahv(keyCode) {
 
   var teade = tuvastaCaretJaSeaSisekursor();
   // Standardne logimine
-  console.log('Kasutaja: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
+  if (logimistase > 1) {
+    console.log('Kasutaja: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
+  }
 
   var osad = t.split("|");
   var tekstEnne = osad[0]; // Tekst enne joont
@@ -145,10 +147,12 @@ function tootleEriklahv(keyCode) {
       kuvaTekst();
       return
     case 38: // Up
-      suurtaheks();
+      t = suurtaheks(t);
+      kuvaTekst();
       return
     case 40: // Down
-      vaiketaheks();
+      t = vaiketaheks(t);
+      kuvaTekst();
       return
   }
 }
@@ -169,7 +173,9 @@ function lisaTahtVoiPunktuatsioon(charCode) {
   var charTyped = charCode == 13 ? '⏎' : String.fromCharCode(charCode);
 
   // Standardne logimine
-  console.log('Kasutaja: ' + charTyped + ' ' + teade);
+  if (logimistase > 1) {
+    console.log('Kasutaja: ' + charTyped + ' ' + teade);
+  }
 
   // Sisestatud tärgi lisamine siseesitusse
   var osad = t.split("|");
@@ -196,7 +202,6 @@ function lisaTahtVoiPunktuatsioon(charCode) {
   else if (tE < tP) {
     // Lisa peegeltäht tekstParast-sse
     // tähe tP - tE järele
-    // console.log('tE, tP: ', tE, tP);
     for (var i = 0; i < tekstParast.length; i++) {
       acc = acc + tekstParast[i];
       // Kui on täht..
@@ -227,19 +232,17 @@ function lisaTahtVoiPunktuatsioon(charCode) {
   }
 
   aktiveeriTekstinupud();
-  // console.log('Tekst: ', t);
   t = eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
   kuvaTekst();
 }
 function seaRedaktoriKasitlejad() {
   /*
-    Teksti muutvaid klahvivajutusi käsitletakse sündmuste 'keydown'
-    ja  'keypress' kaudu. (Hiljem võib lisada sündmuse 'paste').
+    Teksti muutvaid klahvivajutusi käsitletakse sündmuste 'keydown', 'keypress' ja 'paste' kaudu.
     Sündmus 'keydown' tekib klahvi vajutamisel esimesena.
     Seejärel tekib 'keypress'.
     Teksti navigeerivaid (caret-d muutvaid) sündmusi (vasakule,
-    paremale) otseselt ei töötle. Caret positsioon selgitatakse 
-    välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
+    paremale) otseselt ei töötle, välja arvatud see, et nende toime blokeeritakse veateaterežiimis.
+    Caret positsioon selgitatakse välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
   */
 
   $('#Tekst').on('keydown', function (e) {
@@ -254,13 +257,16 @@ function seaRedaktoriKasitlejad() {
     var keyCode = e.keyCode;
     var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
 
+    /*
+    Kui veateade on kuvatud (kasutaja ei ole seda sulgenud), siis klahvivajutused väljas #Tekst ei oma mõju.
+    */
     if (!$('#Teatepaan').hasClass('peidetud')) {
       e.preventDefault();
       return
     }
 
     // Logimine
-    if (logimistase == 1) {
+    if (logimistase > 1) {
       console.log('KEYDOWN:' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
     }
 
@@ -296,7 +302,7 @@ function seaRedaktoriKasitlejad() {
     }
 
     // Logimine
-    if (logimistase == 1) {
+    if (logimistase > 1) {
       if (ctrlDown) {
         console.log('KEYPRESS: Ctrl'); 
       }
