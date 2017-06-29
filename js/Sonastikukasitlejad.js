@@ -2,8 +2,12 @@
 */
 function seaSonastikuKasitlejad() {
   $('#Sonastik').click(function () {
+    /*
+    Sõnastikudialoogi avamine
+    */
     $('#Sonastikudialoog').removeClass('peidetud');
     $('#Sonastik').addClass('disabled');
+    $('#Otsistring').focus();
   });
 
   $('#SonastikSulge').click(function () {

@@ -54,8 +54,8 @@
           <!-- Viited peamistele artefaktidele -->
           <p class='mb-5'>
             <a href='/Samatekst/MisOnSamatekst'>Mis on samatekst?</a> | 
-            Samatekstiredaktor <span id='Valmistekste'></span> tekstiga |
-            <a href='/Samatekst/Valik'>Valitud tekste</a> | 
+            Samatekstiredaktor <span id='Valmistekste'>&nbsp;&nbsp;&nbsp;</span> tekstiga |
+            <a href='/Samatekst/Valik'>Antoloogia</a> | 
             <a href='/Samatekst/Arendajale'>Arendajale</a> 
           </p>
 
@@ -200,31 +200,35 @@
 
           <!-- Sõnastiku dialoog -->
           <div id='Sonastikudialoog'
-            class='paan dialoog d-flex align-items-center justify-content-start peidetud'>
-            <div id='Otsistringiblokk'>
-              <label class='active'>
-              Otsi sõnastikust: <input id='Otsistring' type='text' class='form-control' autocomplete='off'>
-              </label>
-              <div class='vihje'>Otsistring võib alata või lõppeda *-ga</div>
+              class='paan dialoog peidetud'>
+            <div id='OtsinguJuhtimiseRida'
+                class='d-flex align-items-center justify-content-start'>
+              <div id='Otsistringiblokk' class='m-3'>
+                <label class='active'>
+                Otsi sõnastikust: <input id='Otsistring' type='text' class='form-control' autocomplete='off'>
+                </label>
+                <div class='vihje'>Otsistring võib alata või lõppeda *-ga</div>
+              </div>
+              <!-- Kuva pöördkuju -->
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'
+                  data-toggle='tooltip' title='Kuva pöördkuju'>
+                  <input type='checkbox' class='form-check-input'
+                    id='KuvaPoordkuju' autocomplete="off">
+                  kuva pöördkuju
+                </label>
+              </span>
+              <div id='OtsiSonastikust' class='nupp' data-toggle='tooltip' title='Soorita otsing'>
+                <i class='ikoon material-icons' style='color: #C5E1A5;'>language</i>
+              </div>
+              <!-- Sulgemisnupp -->
+              <div id='SonastikSulge' class='align-self-start ml-auto sulgemisnupuke'>
+                <span>&times;</span>
+              </div>
             </div>
-            <!-- Kuva pöördkuju -->
-            <span class='form-check form-check-inline'>
-              <label class='form-check-label'
-                data-toggle='tooltip' title='Kuva pöördkuju'>
-                <input type='checkbox' class='form-check-input'
-                  id='KuvaPoordkuju' autocomplete="off">
-                kuva pöördkuju
-              </label>
-            </span>
-            <div id='OtsiSonastikust' class='nupp'>
-              <i class='ikoon material-icons' style='color: #C5E1A5;'>language</i>
-            </div>
-            <div id='OtsinguTulemus'>
+
+            <div id='OtsinguTulemus' class='m-3'>
               &nbsp;
-            </div>
-            <!-- Sulgemisnupp -->
-            <div id='SonastikSulge' class='align-self-start ml-auto sulgemisnupuke'>
-              <span>&times;</span>
             </div>
           </div>
 
@@ -236,7 +240,7 @@
               Kontrollitav tekst: <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
               </label>
             </div>
-            <div id='OigekiriKontrolli' class='nupp'>
+            <div id='OigekiriKontrolli' class='nupp'data-toggle='tooltip' title='Kontrolli'>
               <i class='ikoon material-icons' style='color: #C5E1A5;'>spellcheck</i>
             </div>
             <div id='KontrolliTulemus'>
@@ -260,7 +264,7 @@
                 </label>
               </div>
               <!-- Otsingu käivitamise nupp -->
-              <div id='SamatekstidTekstistOtsi' class='nupp'>
+              <div id='SamatekstidTekstistOtsi' class='nupp' data-toggle='tooltip' title='Soorita otsing'>
                 <i class='ikoon material-icons' style='color: #C5E1A5;'>help_outline</i>
               </div>
               <!-- Sulgemisnupp -->

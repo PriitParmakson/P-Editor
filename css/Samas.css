@@ -211,11 +211,6 @@ Värviskeem
     outline: 0 none;      
   }
 
-  /* Sõnastikudialoog */
-  #Otsistringiblokk {
-    margin: 1rem;
-  }
-
   /* Õigekirjakontrolli dialoog */
   #KontrTekstiblokk {
     margin: 1rem;
