@@ -51,15 +51,19 @@ Näiteks: `samas`
 
 *Samaväärsed samatekstid* &mdash; samatekstid on samaväärsed, kui nende kanooniline kuju on sama.
 
+`Elav elu, tule elutule - vale?` (samaväärne)
+
+`Elav elutule: "Elu tulevale".` (samaväärne)
+
 *Pooltekst* &mdash; pool samateksti kanoonilisest kujust. Kui kesktäht on ühekordselt, siis ilma kesktäheta.
 
 `sukis` (pooltekst)
 
 *Eellane* &mdash; `s1` ja `s2` on suhtes eeltekst-järeltekst siis ja ainult siis, kui `s1` pooltekst (ilma kesktäheta) sisaldub `s2`-s. Seda suhet tähistame `s1 < s2`.
 
-`iba abi` (eellane)
+`Uks usku.` (eellane)
 
-`Abitut iba.` (järglane)
+`Uks uude eduusku.` (järglane)
 
 ## Samatekstide ühendamine
 
