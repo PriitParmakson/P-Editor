@@ -4,6 +4,11 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samas</title>
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="554561859935-1ojca8mj94fa41mebnjnhqvt83t4gdfj.apps.googleusercontent.com">
+
+  <!-- Google Identity Platform -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery.min.js"></script>
@@ -25,6 +30,7 @@
   <link rel='stylesheet' href='css/Samas.css'>
 
   <!-- Skriptid -->
+  <script src="js/autentimine.js"></script>
   <script src="js/base64Teisendused.js"></script>
   <script src='js/Targifunktsioonid.js'></script>
   <script src='js/SamatekstiPrimitiivid.js'></script>
@@ -58,6 +64,9 @@
             <a href='/Samatekst/Valik'>Antoloogia</a> | 
             <a href='/Samatekst/Arendajale'>Arendajale</a> 
           </p>
+
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          <div id='Kasutaja'></div>
 
           <!-- Infopaan -->
           <div id='Infopaan'

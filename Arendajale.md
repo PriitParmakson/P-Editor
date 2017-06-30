@@ -276,3 +276,7 @@ Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioo
 ## Visuaalne hierarhia
 
 ![](resource/VisuaalneHierarhia.PNG)
+
+## Autentimine
+
+* Google Sign-In for Websites: https://developers.google.com/identity/sign-in/web/

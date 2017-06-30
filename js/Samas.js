@@ -28,6 +28,9 @@ var tekstid;
 var jLk = 1; // Jooksva lehekülje nr
 var tLk = 20; // Tekste leheküljel
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
+var autenditud = false; // Kas kasutaja on Google Sign-In teenuse abil autenditud
+var kasutajaProfiil; // Autenditud Google kasutaja profiil
+var id_token; // OAuth pääsuvolitus
 
 // Peaprogramm
 function alusta() {
