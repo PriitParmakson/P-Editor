@@ -1,7 +1,7 @@
 // Teksti eritoimingute modaalsusega seotud käsitlejad
 function aktiveeriTekstinupud() {
-  // Aktiveeri tekstitöötlusnupud, kuid mitte neid, mis
-  // tühiteksti puhul ei oma mõtet
+  /* Aktiveeri tekstitöötlusnupud, kuid mitte neid, mis     tühiteksti puhul ei oma mõtet
+  */
   if (t.length == 1) {
     $('#Poolednupp').addClass('disabled');
     $('#Uusnupp').addClass('disabled');

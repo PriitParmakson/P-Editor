@@ -13,7 +13,8 @@ var logimistase = 1;
     - redaktoris kuvamiseks moodustatatud tekst
   2 
     - kasutaja klahvivajutus (KEYDOWN)
-    - kasutaja sisestatud tark (KEYPRESS) 
+    - kasutaja sisestatud tärk (KEYPRESS)
+    - tuvastatud kursori (caret) positsioon 
 */
 
 // Globaalsed muutujad

@@ -220,6 +220,7 @@ function pikimYhineAlamsone(s1, s2) {
 function tuvastaSuhe(s1, s2) {
   /*
     1) Viib mõlemad tekstid kanoonilisele kujule.
+    1a) Kui emb-kumb kanooniline kuju on tühi, siis tagastab väärtuse null.
     2) Kui s1 ja s2 kanoonilised kujud ühtivad, siis ütleme, et s1 ja s2 on võrdväärsed ja tähistame seda s1 = s2. Funktsioon tagastab sellisel juhul väärtuse '='.
     3) s1 ja s2 on suhtes eeltekst-järeltekst <=> s1 pooltekst (ilma kesktäheta) sisaldub s2-s. Sedapidi suhet tähistame s1 < s2 ja funktsioon tagastab väärtuse '<'.
     4) Vastupidist suhet tähistame s1 > s2. Funktsioon tagastab sellisel juhul väärtuse '>'.
@@ -228,6 +229,9 @@ function tuvastaSuhe(s1, s2) {
   */
   var k1 = kanoonilineKuju(s1);
   var k2 = kanoonilineKuju(s2);
+  if (k1.length == 0 || k2.length == 0) {
+    return null
+  }
   if (k1 == k2) {
     return '=' // Võrdväärsed
   }

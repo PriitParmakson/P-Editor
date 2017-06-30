@@ -1,10 +1,11 @@
 
 // Teksti redigeerimisega seotud funktsioonid
 function tuvastaCaretJaSeaSisekursor() {
-  // Selgita välja caret positsioon, sest kasutaja võib olnud seda muutnud, sea vastavalt sisemine kursor ja tagasta vastav teade.
-
-  // Tühja teksti puhul ei oma mõtet.
-  // Arvesta ka, et tühja teksti puhul on esimeses span-elemendis 0-pikkusega tühik (et hoida div-elemendi mõõtmeid).
+  /*
+   Selgita välja caret positsioon, sest kasutaja võib olnud seda muutnud, sea vastavalt sisemine kursor ja tagasta vastav teade.
+   Tühja teksti puhul ei oma mõtet.
+   Arvesta ka, et tühja teksti puhul on esimeses span-elemendis 0-pikkusega tühik (et hoida div-elemendi mõõtmeid).
+  */
   if (t.length == 1) {
     return '(tühitekst)'
   }
@@ -12,10 +13,12 @@ function tuvastaCaretJaSeaSisekursor() {
   // Leia span element, kus valik algab ja valiku alguspositsioon selles elemendis
   var r = document.getSelection().getRangeAt(0);
   var algusSpan = r.startContainer.parentNode.id;
-  var algusPos = r.startOffset;
-  console.log(algusSpan.toString() + ':' + algusPos.toString());
+  var algusPos = r.startOffset;  
+  if (logimistase > 1) {
+    console.log(algusSpan.toString() + ':' + algusPos.toString());
+  }
 
-  // Leia positsioon, kuhu sisemine kursor (|) liigutada.
+  // Leia siseesituses positsioon, kuhu sisemine kursor (|) liigutada.
   var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B'];
   var kum = 0; // Kumulatiivne positsioon
   for (var i = 0; i < tipuIDd.length; i++) {
@@ -30,6 +33,7 @@ function tuvastaCaretJaSeaSisekursor() {
   if (algusSpan == 'B' && kuvaKesktahtYhekordselt) {
     kum += 1; // Sest siseesituses on kesktäht alati kahekordselt
   }
+
   // Aseta sisemine kursor positsioonile kum
   t = t.replace('|', '');
   if (kum == 0) {
@@ -38,123 +42,141 @@ function tuvastaCaretJaSeaSisekursor() {
   else {
     t = t.replace(new RegExp('.{' + kum + '}'), '$&' + '|');
   }
+
+  // Tagasta teade logimise tarbeks
   var teade = 'Tuvastatud caret (' + algusSpan + ',' + algusPos + '), seatud sisekursor: ' + t;
   return teade
 }
+
+function tootleBackspace(t) {
+  /*
+    Eemaldab siseesituses kursori ees oleva tärgi.
+    Kui eemaldamise tulemus tekkis korduv tühik, siis eemaldab ka selle.
+  */
+  var uusTekst;
+
+  // Teksti alguses mõju ei ole
+  if (t[0] == '|') {
+    uusTekst = t;
+    return
+  }
+
+  // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
+  if (kirjavm(t[t.indexOf('|') - 1])) {
+    uusTekst = t.substring(0, t.indexOf('|') - 1) + t.substring(t.indexOf('|'));
+  }
+  else if (taht(t.charCodeAt(t.indexOf('|') - 1))) {
+    var eemaldatavTaht = tahti(t.split('|')[0]); // Numeratsioon 1-st
+    var eemaldatavPeegeltaht = tahti(t) - eemaldatavTaht + 1;
+    var acc = ""; // Akumulaator
+    var taheloendur = 0;
+    
+    // Läbides teksti, eemaldan tähe koos selle peegeltähega
+    for (var i = 0; i < t.length; i++) {
+      if (taht(t.charCodeAt(i))) {
+        taheloendur++;
+        if (taheloendur == eemaldatavTaht ||
+          taheloendur == eemaldatavPeegeltaht) {
+          // Jätta vahele
+        }
+        else {
+          acc += t[i];
+        }
+      }
+      else {
+        acc += t[i];
+      }
+    }
+
+    uusTekst = acc;
+  }
+  else { // Ei täht ega kirjavahemärk
+    console.log('Backspace: Tekst sisaldab tärki, mis pole lubatud täht ega kirjavahemärk.')
+  }
+
+  uusTekst = eemaldaLiigsedTyhikud(uusTekst, kuvaKesktahtYhekordselt);
+  return uusTekst;
+}
+
+function tootleDelete(t) {
+  /*
+    Eemaldab siseesituses kursori järel oleva tärgi.
+    Kui eemaldamise tulemus tekkis korduv tühik, siis eemaldab ka selle.
+  */
+  var uusTekst;
+
+  // Teksti lopus mõju ei ole
+  if (t.indexOf('|') == t.length) {
+    uusTekst = t;
+    return
+  }
+
+  // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
+  if (kirjavm(t[t.indexOf('|') + 1])) {
+    uusTekst = t.substring(0, t.indexOf('|') + 1) + t.substring(t.indexOf('|') + 2);
+  }
+  else if (taht(t.charCodeAt(t.indexOf('|') + 1))) {
+    var eemaldatavTaht = tahti(t.split('|')[0] + 1); // Numeratsioon 1-st
+    var eemaldatavPeegeltaht = tahti(t) - eemaldatavTaht + 1;
+    var acc = ""; // Akumulaator
+    var taheloendur = 0;
+    
+    // Läbides teksti, eemaldan tähe koos selle peegeltähega
+    for (var i = 0; i < t.length; i++) {
+      if (taht(t.charCodeAt(i))) {
+        taheloendur++;
+        if (taheloendur == eemaldatavTaht ||
+          taheloendur == eemaldatavPeegeltaht) {
+          // Jätta vahele
+        }
+        else {
+          acc += t[i];
+        }
+      }
+      else {
+        acc += t[i];
+      }
+    }
+
+    uusTekst = acc;
+  }
+  else { // Ei täht ega kirjavahemärk
+    console.log('Backspace: Tekst sisaldab tärki, mis pole lubatud täht ega kirjavahemärk.')
+  }
+
+  uusTekst = eemaldaLiigsedTyhikud(uusTekst, kuvaKesktahtYhekordselt);
+  return uusTekst;
+}
+
 function tootleEriklahv(keyCode) {
 
   var teade = tuvastaCaretJaSeaSisekursor();
-  // Standardne logimine
   if (logimistase > 1) {
     console.log('Kasutaja: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
   }
 
-  var osad = t.split("|");
-  var tekstEnne = osad[0]; // Tekst enne joont
-  var tekstParast = osad[1]; // Tekst pärast joont
-  var tE = tahti(tekstEnne); // Tähti enne osas
-  var tP = tahti(tekstParast); // Tähti pärast osas
-  var acc = ""; // Akumulaator
-  var taheloendur = 0;
-
-  function tootleBackspace() {
-
-    // Teksti alguses mõju ei ole
-    if (tE == 0) {
-      return
-    }
-    // Eemaldatav täht või punktuatsioon
-    var e = tekstEnne.substring(tekstEnne.length - 1, tekstEnne.length);
-    // Punktuatsioon lihtsalt eemaldada
-    if (kirjavm(e)) {
-      t = tekstEnne.substring(0, tekstEnne.length - 1) + "|" + tekstParast;
-    }
-    // Eemaldan tähe tE koos selle peegeltähega
-    else {
-      // Läbin kogu teksti
-      for (var i = 0; i < t.length; i++) {
-        if (kirjavm(t[i]) || t[i] == "|") {
-          acc = acc + t[i];
-        }
-        else {
-          taheloendur++;
-          if (taheloendur == tE ||
-            taheloendur == tP + 1) {
-            // Jätta vahele
-          }
-          else {
-            acc = acc + t[i];
-          }
-        }
-      }
-      t = acc;
-    }
-    aktiveeriTekstinupud(); // Kas see on vajalik? Ja kui tekkis tühitekst?
-    t = eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
-    kuvaTekst();
-  }
-
-  function tootleDelete() {
-
-    // Teksti lõpus mõju ei ole
-    if (tP == 0) {
-      return
-    }
-    // Eemaldatav täht või punktuatsioon
-    var e = tekstParast[0];
-    // Punktuatsioon lihtsalt eemaldada
-    if (kirjavm(e)) {
-      t = tekstEnne + "|" + tekstParast.substring(1, tekstParast.length);
-    }
-    // Eemaldan tähe tE + 1 koos selle peegeltähega
-    else {
-      // Läbin kogu teksti
-      for (var i = 0; i < t.length; i++) {
-        if (kirjavm(t[i]) || t[i] == "|") {
-          acc = acc + t[i];
-        }
-        else {
-          taheloendur++;
-          if (taheloendur == tE + 1 ||
-            taheloendur == tP) {
-            // Jätta vahele
-          }
-          else {
-            acc = acc + t[i];
-          }
-        }
-      }
-      t = acc;
-    }
-    aktiveeriTekstinupud();
-    t = eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
-    kuvaTekst();
-  }
-
   switch (keyCode) {
     case 8: // Backspace
-      tootleBackspace();
-      return
+      t = tootleBackspace(t);
+      break;
     case 46: // Delete
-      tootleDelete();
-      return
+      t = tootleDelete(t);
+      break;
     case 33: // PgUp
       kuvaKesktahtYhekordselt = true;
-      kuvaTekst();
-      return
+      break;
     case 34: // PgDn
       kuvaKesktahtYhekordselt = false;
-      kuvaTekst();
-      return
+      break;
     case 38: // Up
       t = suurtaheks(t);
-      kuvaTekst();
-      return
+      break;
     case 40: // Down
       t = vaiketaheks(t);
-      kuvaTekst();
-      return
+      break;
   }
+  aktiveeriTekstinupud(); // Kontrollib, kas tekkis tühitekst ja seab vastavalt nupud 
+  kuvaTekst();
 }
 function lisaTahtVoiPunktuatsioon(charCode) {
   // Lisa kasutaja sisestatud täht või kirjavahemärk
