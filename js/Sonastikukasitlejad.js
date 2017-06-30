@@ -7,6 +7,7 @@ function seaSonastikuKasitlejad() {
     */
     $('#Sonastikudialoog').removeClass('peidetud');
     $('#Sonastik').addClass('disabled');
+    $('#SonuSonastikus').text(sonastik.length.toString());
     $('#Otsistring').focus();
   });
 

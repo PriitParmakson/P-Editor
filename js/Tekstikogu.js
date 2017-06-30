@@ -7,7 +7,7 @@ function laeTekstid() {
       $('#Tekstikogu').empty();
       tekstid = data.Tekstid;
       // Kuva tekstide arv
-      $('#Valmistekste').text(tekstid.length.toString());
+      $('#TeksteTekstikogus').text(tekstid.length.toString());
       // Kuva saadud tekstid
       kuvaLehekylg(1);
       // Samatekstilisuse kontroll

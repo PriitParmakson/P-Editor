@@ -238,7 +238,7 @@ Värviskeem
     text-decoration-color: DarkBlue;
   }
 
-  #Valmistekste {
+  .Loendur {
     border: 1px dotted Tomato;
     color: Tomato;
     border-radius: 2px;

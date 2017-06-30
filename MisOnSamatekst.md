@@ -4,6 +4,10 @@ permalink: MisOnSamatekst
 ---
               
 # Mis on samatekst?
+{: .no_toc}
+
+- TOC
+{:toc}
 
 ## Määratlused
 
@@ -23,23 +27,39 @@ Näiteks: `samas`
 
 *Potentsiaalne samatekst* - tekst, mis muidu oleks samatekst, kuid mille alguses või lõpus on üks (erandjuhul ka kaks või kolm) üleliigne täht (üleliigset tähte). Sellist teksti võib nimetada ka *liiaseks*. Tekst võib olla *vasak-* või *paremliiane* (üleliigne täht on vastavalt teksti alguses või lõpus).
 
-Paremliiane tekst: `auru a`
+`auru a` (paremliiane tekst) 
 
-Vasakliiane tekst: `al loll auru all olla`
+`al loll auru all olla` (vasakliiane tekst)
 
 *Kesktäht* - samateksti keskel asuv täht. Kesktäht võib olla *ühe-* või *kahekordne*. Kesktäht (või -tähed) on iseendi peegelduseks.
 
-Ühekordne kesktäht: `saatanAna taas`
+`saatanAna taas` (ühekordne kesktäht)
 
-Kahekordne kesktäht: `tegi õNN õiget`
+`tegi õNN õiget` (kahekordne kesktäht)
 
 *Parempoolse kesktähega samatekst* on samatekst, mille kesktäht on ühekordne ja asub sõna alguses.
 
-Näiteks: `Sukis esikus.`
+`Sukis esikus.` (parempoolse kesktähega tekst)
 
 *Vasakpoolse kesktähega samatekst* on samatekst, mille kesktäht on ühekordne ja asub sõna lõpus.
 
-Näiteks: `viskel eksiv`
+`viskel eksiv` (vasakpoolse kesktähega tekst)
+
+*Kanooniline kuju* &mdash; samatekst, millest on kõrvaldatud kirjavahemärgid ja tähed on teisendatud väiketähtedeks.
+
+`sukisesikus` (kanoonilisel kujul samatekst)
+
+*Samaväärsed samatekstid* &mdash; samatekstid on samaväärsed, kui nende kanooniline kuju on sama.
+
+*Pooltekst* &mdash; pool samateksti kanoonilisest kujust. Kui kesktäht on ühekordselt, siis ilma kesktäheta.
+
+`sukis` (pooltekst)
+
+*Eellane* &mdash; `s1` ja `s2` on suhtes eeltekst-järeltekst siis ja ainult siis, kui `s1` pooltekst (ilma kesktäheta) sisaldub `s2`-s. Seda suhet tähistame `s1 < s2`.
+
+`iba abi` (eellane)
+
+`Abitut iba.` (järglane)
 
 ## Samatekstide ühendamine
 

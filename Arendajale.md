@@ -15,7 +15,7 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
 
 ## Koodistatistika
 
-|  komponent                                 |  |
+| komponent                                 |  |
 |----------------------------------------|---------------|
 | Javascript (klient) | 77 funktsiooni 16 failis, 1600 rida |
 | HTML | 400  rida |
@@ -29,30 +29,39 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
  
 ## Funktsionaalsed omadused (Mida tarkvara teeb?)
 
-- Samateksti sisestamine
-  - Programm kontrollib jooksvalt teksti õigsust...
-  - ... ja lisab ise peegeltähed.
-  - Tekst võib sisaldada kirjavahemärke.
-  - Teksti saab kustutada.
-  - Tekstis saab liikuda ja kursorit seada.
-  - Tekstisisestusalasse saab teksti asetada (Ctrl+V).
-  - Kesktäht (-tähed) kuvatakse rõhutatult.
-  - Samateksti pooled saab vahetada.
-  - Saab alustada uut samateksti.
-  - Teksti saab salvestada pilvemällu.
-    - salvestamisel saab märkida, kas tekst on kavand.
-- Samatekstilisuse kontroll
-  - Eraldi saab kontrollida, kas tekst on samatekst
-- Tekstikogu
-  - Saab lehitseda salvestatud tekste.
-  - Salvestatud tekste saab otsida.
-    - tähekombinatsiooni sisaldumise järgi
-    - kesktähe kaudu.
-- Infopaanil pakutakse väikest abiteksti.
-- "Kool"
-  - Kasutaja saab tutvuda samateksti "teooriaga"
-    - määratlused
-    - samatekstide kombineerimise meetodid.
+- 1 Samatekstide mõiste ja terminite tutvustus, koos näidetega ("Mis on samatekst?"
+- 2 Samatekstiredaktor
+  - 2.1 Samateksti sisestamisel programm hoiab teksti kogu aeg samatekstina
+    - 2.1.1 Lisab või kustutab ise peegeltähe
+  - 2.2 Tekst võib sisaldada kirjavahemärke.
+  - 2.3 Teksti saab kustutada (`Backspace` ja `Delete` ühe tärgi kaupa).
+  - 2.4 Tekstis saab liikuda ja kursorit seada.
+  - 2.5 Tekstisisestusalasse saab teksti asetada (Ctrl+V).
+    - 2.5.2 Teksti asetamisel kontrollib teksti vastavust samateksti reeglitele
+  - 2.6 Kesktäht (-tähed) kuvatakse rõhutatult.
+  - 2.7 Samateksti pooled saab vahetada.
+  - 2.8 Saab alustada uut samateksti.
+  - 2.9 Teksti saab salvestada pilvemällu.
+    - 2.9.1 Salvestamisel saab märkida, kas tekst on kavand.
+- 3 Samatekstilisuse kontroll
+  - 3.1 Eraldi saab kontrollida, kas tekst on samatekst
+- 4 Tekstikogu
+  - 4.1 Saab lehitseda salvestatud tekste.
+  - 4.2 Salvestatud tekste saab otsida.
+    - 4.2.1 Tähekombinatsiooni sisaldumise järgi
+    - 4.2.2 Kesktähe kaudu.
+- 5 Infopaanil pakutakse väikest abiteksti
+- 6 Sõnastik ligi 47 000 sõnaga
+  - 6.1 Sõnastikust saab otsida
+    - 6.1.1 Otsistringi ja *-i abil
+    - 6.1.2 Võimalus kuvada otsitulemused ka pöördkujul
+- 7 Seotud tekstide kuvamine
+  - 7.1 Samaväärsed tekstid (`=`)
+  - 7.2 Eellased (`>`) ja järglased (`<`)
+  - 7.3 Ühise alamsõne järgi (pikkusega vähemalt 4) 
+- 8 Teksti samatekstilisuse kontroll
+  - 8.1 Saab asetada või sisestada teksti ja kontrollida selle vastavust samateksti reeglitele
+- 9 nn Antoloogia - valik samatekste  
 
 ## Teksti esitusvormingud
 

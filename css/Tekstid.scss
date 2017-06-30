@@ -59,7 +59,7 @@ table { table-layout: fixed;
     width: 100%; margin: 0 4em 2em 0; }
 table { border-collapse: collapse; }
 table, th, td { border: 1px solid black; }
-td { padding: 0.5rem; }
+th, td { padding: 0.5rem; }
 
 /* Tekst */
 .disabled { color:#000000; opacity:0.38; }
