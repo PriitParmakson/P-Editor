@@ -273,7 +273,9 @@ Seksinud unis kes? Eksinud unis kes?
 
 Ust "uks" kutsu.
 
-## Usu
+## Uks usku
+
+Usu!
 
 Usutavat usu!
 
@@ -282,6 +284,8 @@ Usud? Usu!
 Usuta vat usu!
 
 Avatus - usutava?
+
+Uus usu ausus, uu!
 
 Tavatus usutavat?
 
