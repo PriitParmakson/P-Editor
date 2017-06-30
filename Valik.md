@@ -281,6 +281,12 @@ Usud? Usu!
 
 Usuta vat usu!
 
+Avatus - usutava?
+
+Tavatus usutavat?
+
+Usu avatavat tava - tava usu!
+
 ## Öötöö
 
 Ajatööta ajatöötaja ja tööta, jaa, töötaja.
