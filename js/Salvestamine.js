@@ -100,7 +100,7 @@ function seaSalvestuseKasitlejad() {
       // Lisada tekst
       tekstid.unshift(s);
       // Uuendada tekstide arvu
-      $('#Valmistekste').text(tekstid.length.toString());
+      $('#TeksteTekstikogus').text(tekstid.length.toString());
 
       // Uuenda filtrit, kui see on avatud
       if ($('#Filtridialoog').is(':visible')) {

@@ -273,7 +273,7 @@ Seksinud unis kes? Eksinud unis kes?
 
 Ust "uks" kutsu.
 
-## Uks usku
+## Uks uude eduusku
 
 Usu!
 
