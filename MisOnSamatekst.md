@@ -2,7 +2,13 @@
 title: Mis on samatekst?
 permalink: MisOnSamatekst
 ---
-              
+
+<!-- Viited peamistele artefaktidele -->
+<p style='margin-bottom: 3rem;'>
+  <a href='{{ site.baseurl }}'>Samatekstiredaktor</a> |
+  <a href='{{ site.baseurl }}/Valik'>Antoloogia</a> 
+</p>
+
 # Mis on samatekst?
 
 ***Samatekst***  on tekst, mis pahupidi lugedes annab sama teksti. Sealjuures: 1) kirjavahemärgid ei tule arvesse*; 2) suur- ja väiketäht on samaväärsed; 3) tekstil on ka mingi mõte.
@@ -15,7 +21,7 @@ Lubatud kirjavahemärgid on: reavahetus, tühik, koma, punkt, miinus, hüüu- ja
 
 `samas` (samasõna)
 
-***Peegeltäht** on tähele vastav, sama täht, mis asub samateksti teisest otsast lugedes samas positsioonis. Samatekstis vastab igale tähele täpselt üks peegeltäht. Ühekordne kesktäh (vt allpool) on ise enda peegeltäht.
+***Peegeltäht*** on tähele vastav, sama täht, mis asub samateksti teisest otsast lugedes samas positsioonis. Samatekstis vastab igale tähele täpselt üks peegeltäht. Ühekordne kesktäh (vt allpool) on ise enda peegeltäht.
 
 `rOtaatOr` (peegeltähed)
 
