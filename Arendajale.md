@@ -61,7 +61,10 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
   - 7.3 Ühise alamsõne järgi (pikkusega vähemalt 4) 
 - 8 Teksti samatekstilisuse kontroll
   - 8.1 Saab asetada või sisestada teksti ja kontrollida selle vastavust samateksti reeglitele
-- 9 nn Antoloogia - valik samatekste  
+- 9 nn Antoloogia - valik samatekste
+- 10 Google kontoga sisselogimine
+  - salvestamisõigus ainult autenditud kasutajal
+  - salvestatakse autori nimi ja e-posti aadress  
 
 ## Teksti esitusvormingud
 
