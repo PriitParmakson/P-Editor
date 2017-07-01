@@ -237,6 +237,8 @@ Stilistilist: otsi litsi, lits!
 
 Aga harib alet sopaapostel abirahaga.
 
+Abirahana nahariba!
+
 ## Soos
 
 Oo, soos oos!
