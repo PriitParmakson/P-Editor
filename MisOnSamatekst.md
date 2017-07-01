@@ -11,7 +11,7 @@ permalink: MisOnSamatekst
 
 # Mis on samatekst?
 
-***Samatekst***  on tekst, mis pahupidi lugedes annab sama teksti. Sealjuures: 1) kirjavahemärgid ei tule arvesse*; 2) suur- ja väiketäht on samaväärsed; 3) tekstil on ka mingi mõte.
+***Samatekst***  on tekst, mis pahupidi lugedes annab sama teksti. Sealjuures: 1) kirjavahemärgid ei tule arvesse; 2) suur- ja väiketäht on samaväärsed; 3) tekstil peab olema ka mingi mõte.
 
 `No suu saiaseks, kes aias uus on.` (samatekst)
 
