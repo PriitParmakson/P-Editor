@@ -30,6 +30,10 @@ Ajatu luukerekuulutaja.
 
 Aja tusakasutaja.
 
+Aja ree keeraja.
+
+Aja rööpa pööraja.
+
 Ajatu kekutaja.
 
 Ajataja-sajataja.
@@ -88,6 +92,8 @@ Tere, Pirita, Iisaku, Puka! Siia tiri peret!
 Emme: "Issi!"
 
 Issi: "Emme!"
+
+Noo, issi, meie-teie missioon?
 
 ## IT
 
