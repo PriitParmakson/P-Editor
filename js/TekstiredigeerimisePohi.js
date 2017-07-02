@@ -181,11 +181,7 @@ function tootleEriklahv(keyCode) {
 function lisaTahtVoiPunktuatsioon(charCode) {
   // Lisa kasutaja sisestatud täht või kirjavahemärk
   // Kontrollib, kas märgikood on lubatute hulgas
-  if (!
-    (ladinaTaht(charCode) || tapiTaht(charCode) ||
-      veneTaht(charCode) || kirjavmKood(charCode)
-    )
-  ) {
+  if (!(taht(charCode) || kirjavmKood(charCode))) {
     return
   }
 
