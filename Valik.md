@@ -16,7 +16,7 @@ Agul - ei! Eluga!
 
 Agul ei paki. Peletist otsite? Lepi kapieluga.
 
-## Ajaja
+## Ajale elaja
 
 Ajata suusataja.
 
