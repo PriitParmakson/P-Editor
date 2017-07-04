@@ -16,7 +16,7 @@ Agul - ei! Eluga!
 
 Agul ei paki. Peletist otsite? Lepi kapieluga.
 
-## Ajaja
+## Ajale elaja
 
 Ajata suusataja.
 
@@ -30,13 +30,13 @@ Ajatu luukerekuulutaja.
 
 Aja tusakasutaja.
 
+Aja ree keeraja.
+
+Aja rööpa pööraja.
+
 Ajatu kekutaja.
 
 Ajataja-sajataja.
-
-## Ajate luulu...
-
-Ajate luulu, luuletaja!
 
 ## Ata! - jalaga lajata
 
@@ -86,6 +86,14 @@ Enimat, sibavat, ulatavat - tavatalutav abistamine.
 ## Iisaku...
 
 Tere, Pirita, Iisaku, Puka! Siia tiri peret!
+
+## Issi
+
+Emme: "Issi!"
+
+Issi: "Emme!"
+
+Noo, issi, meie-teie missioon?
 
 ## IT
 
@@ -151,6 +159,10 @@ Kipute lavale? Tupik!
 
 Loo kool, lahe! Halloo, kool!
 
+## Luul
+
+Ajate luulu, luuletaja!
+
 ## Maamats
 
 Kivi osta, maamats-oivik!
@@ -203,19 +215,25 @@ No suu saiaseks, kes aias uus on.
 
 No suu saiaseks. Eemal üks külamees, kes aias uus on.
 
-## Samusesse sumas
+## Samasust susamas
+
+Samusesse sumas
 
 Seesamusesse sumas ees.
 
 Seesamuses ise suma sees!
 
-## Samasust susamas
+Sama seest, seesama seest susamas samasust - seesama seest, seesamas...
+
+Niisama? Sama siin.
 
 Niisama jamas. Sama jama siin.
 
-Sama seest, seesama seest susamas samasust - seesama seest, seesamas...
-
 Niisama saama? Nii, Hiinamaa? Sama siin.
+
+## Sees
+
+See selles, selle sees.
 
 ## Stilistilist
 
@@ -224,6 +242,12 @@ Stilistilist: otsi litsi, lits!
 ## Sopaapostel
 
 Aga harib alet sopaapostel abirahaga.
+
+Abirahana nahariba!
+
+## Soos
+
+Oo, soos oos!
 
 ## Su sugulus, su lugu sus
 
@@ -255,13 +279,19 @@ Ema, tere! Teretame.
 
 Ema, tere! Tere, Kallavere! Tere, vallakere! Teretame.
 
+## Trt
+
+Тарту дорог как город утрат.
+
 ## Uju
 
-Ujuks ees - eeskuju.
+Upu?
+
+Uju!
+
+Ujuks ees eeskuju.
 
 Uju, kivikuju!
-
-Ujukil oli kuju.
 
 ## Unis kes eksinu
 
@@ -273,7 +303,7 @@ Seksinud unis kes? Eksinud unis kes?
 
 Ust "uks" kutsu.
 
-## Uks usku
+## Uks uude eduusku
 
 Usu!
 

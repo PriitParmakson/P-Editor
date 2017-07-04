@@ -186,7 +186,7 @@ function vahetaPooled(t) {
   // Leia keskkoht
   for (var i = 0; i < t.length; i++) {
     // Punktuatsioon kanna üle
-    if (! (kirjavm(t[i]) && t[i] != "|") ) {
+    if (taht(t.charCodeAt(i))) {
       taheloendur++;
       if (taheloendur == p) {
         esimesePooleLopp = i;

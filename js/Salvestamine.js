@@ -4,7 +4,13 @@ function tekstSalvestuskujule(t) {
   /* Vii tekst salvestuskujule
      Koosta puhas tekst - eemalda kursorijoon ja kesktähe peegeltäht.
      Eeldab, et sisend t sisekujul tekst.
-     Tagastab objekti kujul: { Tekst: <string>, Draft: <boolean> }
+     Tagastab objekti kujul:
+      { Tekst: <string>,
+        Draft: <boolean>,
+        Nimi: <string>,
+        EPost: <string>,
+        IDToken: <string>
+      }
   */
   var peegeltaheNr = tahti(t) / 2 + 1;
   var taheloendur = 0;
@@ -41,7 +47,11 @@ function tekstSalvestuskujule(t) {
   // Kas on Draft?
   var draft = $('#draftNupp').prop('checked') ? true : false;
 
-  return { Tekst: c, Draft: draft };
+  // Autori nimi ja e-post
+  var nimi = kasutajaProfiil.getName();
+  var ePost = kasutajaProfiil.getEmail();
+
+  return { Tekst: c, Draft: draft, Nimi: nimi, EPost: ePost, IDToken: id_token };
 }
 
 function salvestaTekst(s) {
@@ -100,7 +110,7 @@ function seaSalvestuseKasitlejad() {
       // Lisada tekst
       tekstid.unshift(s);
       // Uuendada tekstide arvu
-      $('#Valmistekste').text(tekstid.length.toString());
+      $('#TeksteTekstikogus').text(tekstid.length.toString());
 
       // Uuenda filtrit, kui see on avatud
       if ($('#Filtridialoog').is(':visible')) {
