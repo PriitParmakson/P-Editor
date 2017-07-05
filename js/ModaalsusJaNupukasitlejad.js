@@ -61,8 +61,12 @@ function seaTekstinupukasitlejad() {
 }
 
 function seaTeatepaaniKasitlejad() {
+  // Teatepaani sulgemine
   $('#TeatepaanSulge').click(function() {
     $('#Teatepaan').addClass('peidetud');
+    /* Kui salvestusdialoog on avatud, siis sulge see */
+    $('#Salvestusdialoog').addClass('peidetud');
+    dialoogiseisund = 'N';
     kuvaTekst();
     aktiveeriTekstinupud();
     $('#Tekst').focus();
