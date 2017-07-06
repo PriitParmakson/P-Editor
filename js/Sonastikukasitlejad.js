@@ -44,7 +44,8 @@ function seaSonastikuKasitlejad() {
       switch (otsireziim) {
         case 1:
           if (s.endsWith(otsistring)) {
-            v += s + ' ';
+            /* Otsistring kuvada väljatoodult */
+            v += s.substr(0, s.length - otsistring.length) + '<span class="kesk">' + otsistring + '</span> ';
             if (kuvaPoordkuju) {
               var ymberpooratav = s.slice(0, s.length - otsistring.length);
               v += '<span class="poord">' + pooraYmber(ymberpooratav) + '</span> ';
@@ -53,7 +54,7 @@ function seaSonastikuKasitlejad() {
           break;
         case 2:
           if (s.startsWith(otsistring)) {
-            v += s + ' ';
+            v += '<span class="kesk">' + otsistring + '</span>' + s.substr(otsistring.length) + ' ';
             if (kuvaPoordkuju) {
               var ymberpooratav = s.slice(otsistring.length);
               v += '<span class="poord">' + pooraYmber(ymberpooratav) + '</span> ';

@@ -10,6 +10,10 @@ layout: Publitseeri
 - TOC
 {:toc}
 
+## Ajatöötaja
+
+Ajatööta ajatöötaja ja tööta, jaa, töötaja.
+
 ## Agul! Eluga!
 
 Agul - ei! Eluga!
@@ -321,9 +325,13 @@ Tavatus usutavat?
 
 Usu avatavat tava - tava usu!
 
-## Öötöö
+## Öö
 
-Ajatööta ajatöötaja ja tööta, jaa, töötaja.
+Ööti IT. Öö!
+
+Öösiti söö!
+
+Öötöö
 
 
 

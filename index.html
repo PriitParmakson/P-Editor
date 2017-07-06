@@ -128,11 +128,6 @@
               <i class="ikoon material-icons">view_headline</i>
             </span>
 
-            <span id='Otsi' class='nupp disabled'
-              data-toggle='tooltip' title='Otsi tekstikogust'>
-              <i class="ikoon material-icons">search</i>
-            </span>
-
             <span id='SeotudTekstid' class='nupp disabled'
               data-toggle='tooltip' title='Seotud tekstid'>
               <i class="ikoon material-icons">call_split</i>
@@ -145,7 +140,7 @@
 
             <span id='Sonastik' class='nupp'
               data-toggle='tooltip' title='Sonastik'>
-              <i class="ikoon material-icons">language</i>
+              <i class="ikoon material-icons">search</i>
             </span>
 
             <span id='Oigekirjakontroll' class='nupp'
@@ -164,24 +159,13 @@
             </span -->
           </p>
 
-          <!-- Kool 
-          <div id='Koolitekst'
-            class='paan teabepaan d-flex align-items-start peidetud'>
-            <div id='KoolitekstSisemine'>
-            </div>
-            <!-- Sulgemisnupp >
-            <div id='KoolSulge' class='justify-content-end sulgemisnupuke'>
-              <span>&times;</span>
-            </div>
-          </div -->
-
           <!-- Salvestusdialoog -->
           <div id='Salvestusdialoog'
             class='paan dialoog d-flex align-items-center
             justify-content-center peidetud'>
             <span class='form-check form-check-inline'>
               <label class='form-check-label active'>
-                <input type='checkbox' class='form-check-input' autocomplete="off" id='draftNupp'>
+                <input type='checkbox' class='form-check-input' id='draftNupp'>
                 Kavand
               </label>
             </span>
@@ -225,12 +209,12 @@
                 <label class='form-check-label'
                   data-toggle='tooltip' title='Kuva pöördkuju'>
                   <input type='checkbox' class='form-check-input'
-                    id='KuvaPoordkuju' autocomplete="off">
+                    id='KuvaPoordkuju'>
                   kuva pöördkuju
                 </label>
               </span>
               <div id='OtsiSonastikust' class='nupp' data-toggle='tooltip' title='Soorita otsing'>
-                <i class='ikoon material-icons' style='color: #C5E1A5;'>language</i>
+                <i class='ikoon material-icons' style='color: #C5E1A5;'>search</i>
               </div>
               <!-- Sulgemisnupp -->
               <div id='SonastikSulge' class='align-self-start ml-auto sulgemisnupuke'>
@@ -251,7 +235,7 @@
               Kontrollitav tekst: <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
               </label>
             </div>
-            <div id='OigekiriKontrolli' class='nupp'data-toggle='tooltip' title='Kontrolli'>
+            <div id='OigekiriKontrolli' class='nupp' data-toggle='tooltip' title='Kontrolli'>
               <i class='ikoon material-icons' style='color: #C5E1A5;'>spellcheck</i>
             </div>
             <div id='KontrolliTulemus'>
@@ -292,100 +276,82 @@
 
           </div>
 
-          <!-- Filtridialoog -->
-          <div id='Filtridialoog'
-            class='paan dialoog peidetud'>
-
-            <div id='FDRida1'
-              class='d-flex flex-wrap align-items-center justify-content-between'>
-              <!-- Filtritekst -->
-              <span>
-                <label class='active'>
-                  <input id='Filtritekst' type='text'
-                    class='form-control' autocomplete="off" 
-                   >
-                </label>
-              </span>
-              <!-- Sulge filtridialoog -->
-              <div id='FilterTyhista'
-                class='align-self-start sulgemisnupuke'
-                <span>&times;</span>
-              </div>
-            </div>
-
-            <div id='FDRida2'
-              class='d-flex flex-wrap align-items-center justify-content-around'>
-              <!-- Teksti alguses -->
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'
-                  data-toggle='tooltip' title='Teksti alguses'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='RippuvTahtTekstiAlguses'>
-                  <span class='kesk'>B</span> aa
-                </label>
-              </span>
-              <!-- Teksti lõpus -->
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'
-                  data-toggle='tooltip' title='Teksti lõpus'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='RippuvTahtTekstiLopus'>
-                  aa <span class='kesk'>B</span>
-                </label>
-              </span>
-              <!-- Keskel kahes sõnas -->
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'
-                 data-toggle='tooltip' title='Keskel, kahes sõnas'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='KeskelKahesSonas'>
-                  aa<span class='kesk'>B</span> <span class='kesk'>B</span>aa
-                </label>
-              </span>
-              <!-- Keskel, ühekordselt, sõna alguses -->
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'
-                 data-toggle='tooltip' title='Keskel, ühekordselt, sõna alguses'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='YhekordseltAlguses'>
-                  aa <span class='kesk'>B</span>aa
-                </label>
-              </span>
-              <!-- Keskel, ühekordselt, sõna lõpus -->
-              <span class='form-check form-check-inline'>
-                <label class='form-check-label'
-                  data-toggle='tooltip' title='Keskel, ühekordselt, sõna lõpus'>
-                  <input type='checkbox' class='form-check-input filtrivalik'
-                    id='YhekordseltLopus'>
-                  aa<span class='kesk'>B</span> aa
-                </label>
-              </span>            
-            </div>
-
-          </div>
-
           <!-- Tekstikogu -->
           <div id='Tekstikogu'
             class='peidetud'>
-          </div>
 
-          <!-- Tekstikogu sirvimine -->
-          <p id='Sirvimine'
-            class='peidetud'>
-            <span id='FirstPage' class='nupp disabled'>
-              <i class="ikoon material-icons">first_page</i>
-            </span>
-            <span id='PrevPage' class='nupp disabled'>
-              <i class="ikoon material-icons">chevron_left</i>
-            </span>
-            <span id='PageNo'></span>  
-            <span id='NextPage' class='nupp disabled'>
-              <i class="ikoon material-icons">chevron_right</i>
-            </span>
-            <span id='LastPage' class='nupp disabled'>
-              <i class="ikoon material-icons">last_page</i>
-            </span>
-          </p>
+            <!-- Filtridialoog -->
+            <div id='Filtridialoog'
+              class='paan dialoog d-flex align-items-center justify-content-between'>
+
+                <!-- Filtritekst -->
+                <span>
+                  <label class='active'>
+                    <input id='Filtritekst' type='text'
+                      class='form-control' autocomplete="off" 
+                    >
+                  </label>
+                </span>
+                <!-- Piirajate rühm -->
+                <div class='d-inline-flex flex-wrap'>
+                  <!-- Teksti alguses -->
+                  <span class='form-check form-check-inline'>
+                    <label class='form-check-label'
+                      data-toggle='tooltip' title='Teksti alguses'>
+                      <input type='checkbox' class='form-check-input filtrivalik'
+                        id='RippuvTahtTekstiAlguses'>
+                      <span class='kesk'>B</span> aa
+                    </label>
+                  </span>
+                  <!-- Teksti lõpus -->
+                  <span class='form-check form-check-inline'>
+                    <label class='form-check-label'
+                      data-toggle='tooltip' title='Teksti lõpus'>
+                      <input type='checkbox' class='form-check-input filtrivalik'
+                        id='RippuvTahtTekstiLopus'>
+                      aa <span class='kesk'>B</span>
+                    </label>
+                  </span>
+                  <!-- Keskel kahes sõnas -->
+                  <span class='form-check form-check-inline'>
+                    <label class='form-check-label'
+                    data-toggle='tooltip' title='Keskel, kahes sõnas'>
+                      <input type='checkbox' class='form-check-input filtrivalik'
+                        id='KeskelKahesSonas'>
+                      aa<span class='kesk'>B</span> <span class='kesk'>B</span>aa
+                    </label>
+                  </span>
+                  <!-- Keskel, ühekordselt, sõna alguses -->
+                  <span class='form-check form-check-inline'>
+                    <label class='form-check-label'
+                    data-toggle='tooltip' title='Keskel, ühekordselt, sõna alguses'>
+                      <input type='checkbox' class='form-check-input filtrivalik'
+                        id='YhekordseltAlguses'>
+                      aa <span class='kesk'>B</span>aa
+                    </label>
+                  </span>
+                  <!-- Keskel, ühekordselt, sõna lõpus -->
+                  <span class='form-check form-check-inline'>
+                    <label class='form-check-label'
+                      data-toggle='tooltip' title='Keskel, ühekordselt, sõna lõpus'>
+                      <input type='checkbox' class='form-check-input filtrivalik'
+                        id='YhekordseltLopus'>
+                      aa<span class='kesk'>B</span> aa
+                    </label>
+                  </span>            
+                </div>
+                <!-- Sulge filtridialoog -->
+                <div id='FilterTyhista'
+                  class='align-self-start sulgemisnupuke'>
+                  <span>&times;</span>
+                </div>
+
+            </div>
+
+            <div id='TekstikoguTekstid'>
+            </div>
+
+          </div>
 
         </div>  
       </div>
