@@ -1,6 +1,7 @@
 ---
 title: Arendajale
 permalink: Arendajale
+layout: Tekstid
 ---
 
 # Arendajale 
@@ -12,6 +13,29 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
 
 - TOC
 {:toc}
+
+## Arhitektuur
+
+Klient:
+- Javascript/Bootstrap4
+  - koodihoidla: GitHub
+  - arendusvahend: Visual Studio Code
+
+Server:
+- Google Apps
+  - programmeerimiskeel: Google Apps Script
+  - arendusvahend: Google Apps Script Editor
+
+Andmebaas:
+- Google Sheet
+
+Autentimine:
+- Google Sign-In (OAuth 2.0)
+
+Dokumentatsioon:
+- GitHub Pages (github.io, Jekyll)
+
+<a target href='resource/ARHITEKTUUR.png'>Arhitektuurijoonis</a>
 
 ## Koodistatistika
 
@@ -278,7 +302,7 @@ Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioo
 
 ## Visuaalne hierarhia
 
-![](resource/VisuaalneHierarhia.PNG)
+<a target href='resource/VisuaalneHierarhia.PNG'>Visuaalne hierarhia (joonis)</a>
 
 ## Autentimine
 

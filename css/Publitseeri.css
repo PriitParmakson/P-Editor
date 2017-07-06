@@ -1,6 +1,9 @@
 /* 
 
 Minimalistlik kujundus samatekstide valikkogule
+* vasaktaane 8rem
+* ei sisalda tabeleid
+* ainult h1 ja h2
 * Bootstrap 4 alusel.
 
 #464a4c (tume hall) - tekst
@@ -34,6 +37,8 @@ h1 {
 
 /* Tekstiparagrahv */
 p { margin: 0 0 1em 6rem; }
+
+/* Jaluse jaoks */
 .nihketa { margin-left: 0 !important;}
 
 /* Loetelud - Sisukord */
