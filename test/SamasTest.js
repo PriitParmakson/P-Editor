@@ -149,18 +149,20 @@ function leiaTahtTestid() {
 
 function samatekstTestid() {
   kuvaFunktsiooniNimetus('samatekst');
-  test(samatekst(), false, 'str puudu');
-  test(samatekst(''), false, 'Tühitekst');
-  test(samatekst('a'), true, 'Ühetähetekst');
-  test(samatekst(' '), false, 'Ühe kirjavahemärgi tekst');
-  test(samatekst('aa'), true, 'Kahetäheline samatekst');
-  test(samatekst('ab'), false, 'Kahetäheline mittesamatekst');
-  test(samatekst('a a.'), true, 'Kahetäheline samatekst kirjavahemärkidega');
-  test(samatekst('aba'), true, 'Ühekordse keskelemendiga lühike samatekst');
-  test(samatekst('Ajate luulu, luuletaja!'), true, 'Pikem ühekordse keskelemendiga samatekst kirjavahemärkidega');
-  test(samatekst('Kiiremini.. inim-e-riik?'), true, 'Pikem kahekordse keskelemendiga samatekst kirjavahemärkidega');
-  test(samatekst('Kiireminx.. inim-e-riik?'), false, 'Pikem mittesamatekst kirjavahemärkidega');
-  test(samatekst('Eakas teema.⏎Teretame.⏎Etsakae!'), true, 'Reavahetusega tekst');
+  test(samatekst().on, false, 'str puudu');
+  test(samatekst('').on, false, 'Tühitekst');
+  test(samatekst('a').on, true, 'Ühetähetekst');
+  test(samatekst(' ').on, false, 'Ühe kirjavahemärgi tekst');
+  test(samatekst('aa').on, true, 'Kahetäheline samatekst');
+  test(samatekst('ab').on, false, 'Kahetäheline mittesamatekst');
+  test(samatekst('a a.').on, true, 'Kahetäheline samatekst kirjavahemärkidega');
+  test(samatekst('aba').on, true, 'Ühekordse keskelemendiga lühike samatekst');
+  test(samatekst('Ajate luulu, luuletaja!').on, true, 'Pikem ühekordse keskelemendiga samatekst kirjavahemärkidega');
+  test(samatekst('Kiiremini.. inim-e-riik?').on, true, 'Pikem kahekordse keskelemendiga samatekst kirjavahemärkidega');
+  test(samatekst('Kiireminx.. inim-e-riik?').on, false, 'Pikem mittesamatekst kirjavahemärkidega');
+  test(samatekst('Kiireminx.. inim-e-riik?').mittepeegelpaar[0], 8, 'Pikem mittesamatekst kirjavahemärkidega');
+  test(samatekst('Kiireminx.. inim-e-riik?').mittepeegelpaar[1], 12, 'Pikem mittesamatekst kirjavahemärkidega');
+  test(samatekst('Eakas teema.⏎Teretame.⏎Etsakae!').on, true, 'Reavahetusega tekst');
 }
 
 function kuvaFunktsiooniNimetus(fN) {

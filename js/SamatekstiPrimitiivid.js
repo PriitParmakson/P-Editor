@@ -58,12 +58,14 @@ function kanoonilineKuju(str) {
 }
 function samatekst(str) {
   /* Kontrollib, kas str on samatekst.
-    - undefined, null, tühiteksti või ainult kirjavahemärkidest koosneva teksti puhul tagastab false
+    - undefined, null, tühiteksti või ainult kirjavahemärkidest koosneva teksti puhul tagastab false.
+    Tagastab objekti:
+    { on: <boolean> [, mittepeegelpaar: [ <nr>, <nr> ] ] }
   */
   if (typeof str === 'undefined' || str === null) {
-    return false
+    return { on: false }
   }
-  if (str.length == 0) { return false }
+  if (str.length == 0) { return { on: false } }
   var tahti = 0;
   var algusest = 0;
   var lopust = str.length - 1;
@@ -75,7 +77,7 @@ function samatekst(str) {
       lopust -= 1;
     }
     else if (str[algusest].toLowerCase() != str[lopust].toLowerCase()) {
-      return false
+      return { on: false, mittepeegelpaar: [algusest, lopust] }
     }
     else {
       algusest += 1;
@@ -90,10 +92,10 @@ function samatekst(str) {
   }
   while (algusest < lopust)
   if (tahti > 0) {
-    return true
+    return { on: true }
   }
   else {
-    return false
+    return { on: false }
   }
 }
 function tuvastaKesktaht(str) {

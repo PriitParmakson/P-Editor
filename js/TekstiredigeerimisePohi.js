@@ -358,12 +358,14 @@ function seaRedaktoriKasitlejad() {
        4) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
        5) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
        Taastada siseesituse põhjal toimingueelne tekst.
+       Mittesamateksti puhul kuvada rõhutatult otstest vaadates esimene tähepaar, mis rikub peegeldust.
     */
     setTimeout(function() {
       var asetatudTekst = $('#Tekst').text();
       console.log('Asetatud tekst: ' + asetatudTekst);
       var puhastatudTekst = puhastaTekst(asetatudTekst);
-      if (samatekst(puhastatudTekst)) {
+      var samasuseKontrolliTulemus = samatekst(puhastatudTekst);
+      if (samasuseKontrolliTulemus.on) {
         /* Moodusta siseesitus.  samuti lisa sisekursor (algusesse)
         */
         var siseEsituses = tekstistSiseesitusse(puhastatudTekst);
@@ -373,7 +375,20 @@ function seaRedaktoriKasitlejad() {
         aktiveeriTekstinupud();
       }
       else {
-        $('#Teatetekst').text('Asetatud tekst ei ole samatekst.');
+        var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
+        var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
+        var t = 'Asetatud tekst ei ole samatekst.<br><br>';
+        t = t + 
+          puhastatudTekst.substring(0, p1) +
+          '<span class="kesk">' + 
+          puhastatudTekst.substring(p1, p1 + 1) +
+          '</span>' +
+          puhastatudTekst.substring(p1 + 1, p2) +
+          '<span class="kesk">' + 
+          puhastatudTekst.substring(p2, p2 + 1) +
+          '</span>' + 
+          puhastatudTekst.substring(p2 + 1);
+        $('#Teatetekst').html(t);
         $('#Teatepaan')
           .removeClass('peidetud');
         deaktiveeriTekstinupud();

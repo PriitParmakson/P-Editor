@@ -57,7 +57,7 @@ function laeTekstid() {
       filtreeriJaKuvaTekstid();
       // Samatekstilisuse kontroll
       for (var i = 0; i < tekstid.length; i++) {
-        if (!samatekst(tekstid[i].Tekst)) {
+        if (!samatekst(tekstid[i].Tekst).on) {
           $('#Teatepaan').removeClass('peidetud');
           $('#Teatetekst').html($('#Teatetekst').html() + 'Ei ole samatekst: ' + tekstid[i].Tekst);
         }

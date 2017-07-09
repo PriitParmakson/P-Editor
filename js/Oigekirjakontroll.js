@@ -11,9 +11,15 @@ function seaOigekirjakasitlejad() {
     $('#Oigekirjakontroll').removeClass('disabled');
   });
 
-  $('#OigekiriKontrolli').click(function() {
+  $('#OigekiriKontrolli').click(function () {
+    var t;
     var k = $('#KontrollitavTekst').val();
-    var t = samatekst(k) ? 'on samatekst' : 'ei ole samatekst';
+    if (samatekst(k).on) {
+      t = 'on samatekst';
+    }
+    else {
+      t = 'ei ole samatekst';
+    }
     $('#KontrolliTulemus').text(t);
   });
 }

@@ -7,6 +7,16 @@ function kuvaTekst() {
   var caretSeadmiseTeade = seaCaret(t.indexOf('|'));
   // Standardne logimine
   console.log('Programm: ' + moodustaTekstiStruktuurKonsoolile() + caretSeadmiseTeade);
+  /* Uuenda täheloendurit */
+  var tahti = kanoonilineKuju(t).length;
+  var loenduritekst;
+  if (tahti == 0) {
+    loenduritekst = '&nbsp;&nbsp;&nbsp;'
+  }
+  else {
+    loenduritekst = tahti.toString();
+  }
+  $('#Taheloendur').html(loenduritekst);
 }
 function seaCaret(pos) {
   /* Seab kursori (caret) kuvatud tekstis. Tagastab vastava logiteate.
