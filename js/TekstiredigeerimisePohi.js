@@ -377,8 +377,8 @@ function seaRedaktoriKasitlejad() {
       else {
         var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
         var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
-        var t = 'Asetatud tekst ei ole samatekst.<br><br>';
-        t = t + 
+        var teatetekst = 'Asetatud tekst ei ole samatekst.<br><br>';
+        tteatetekst = teatetekst + 
           puhastatudTekst.substring(0, p1) +
           '<span class="kesk">' + 
           puhastatudTekst.substring(p1, p1 + 1) +
@@ -388,7 +388,7 @@ function seaRedaktoriKasitlejad() {
           puhastatudTekst.substring(p2, p2 + 1) +
           '</span>' + 
           puhastatudTekst.substring(p2 + 1);
-        $('#Teatetekst').html(t);
+        $('#Teatetekst').html(teatetekst);
         $('#Teatepaan')
           .removeClass('peidetud');
         deaktiveeriTekstinupud();

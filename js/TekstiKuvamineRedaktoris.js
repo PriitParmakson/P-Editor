@@ -2,7 +2,7 @@
 // Teksti kuvamise funktsioonid
 function kuvaTekst() {
   // Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
-  var mTekst = markeeriTekst();
+  var mTekst = markeeriTekst(t);
   $('#Tekst').html(mTekst);
   var caretSeadmiseTeade = seaCaret(t.indexOf('|'));
   // Standardne logimine
