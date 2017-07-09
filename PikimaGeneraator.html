@@ -68,17 +68,20 @@
         'Vilivere'
       ];
 
-      t = 'Eakas teema Tere! T';
+      t = 'Su tere T';
 
       for (var i = 0; i < jarjestus.length; i++) {
         console.log(jarjestus[i] + ' ' + vs[jarjestus[i]][1]);
         t += vs[jarjestus[i]][1] + '! T';
       }
+
+      t += 'ere, pere! T';
+
       for (var i = jarjestus.length - 1; i >= 0; i--) {
         t += vs[jarjestus[i]][1] + '! T';
       }
 
-      t += 'eretame, etsakae!'
+      t += 'eretus!'
 
       $('#Tulemus').text(t);
     }
