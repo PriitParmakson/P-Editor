@@ -25,7 +25,7 @@ Mu tere, Vagivere - tereviga veretum.
 
 ## Eakas teema
 
-Tere, vana kere! Tere! Kuule, ma teretan! Ätt, tere pole EV-s veel operett. Täna teretame, luukere. Tere, Kanavere! Teretame, etsakae!
+Tere, tere, vana kere! Tere! Kuule, ma teretan! Ätt, tere pole EV-s veel operett. Täna teretame, luukere. Tere, Kanavere! Teretame, etsakae!
 
 ## Su tere
 

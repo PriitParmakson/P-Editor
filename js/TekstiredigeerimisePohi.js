@@ -378,7 +378,7 @@ function seaRedaktoriKasitlejad() {
         var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
         var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
         var teatetekst = 'Asetatud tekst ei ole samatekst.<br><br>';
-        tteatetekst = teatetekst + 
+        teatetekst = teatetekst + 
           puhastatudTekst.substring(0, p1) +
           '<span class="kesk">' + 
           puhastatudTekst.substring(p1, p1 + 1) +
