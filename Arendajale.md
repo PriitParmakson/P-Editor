@@ -44,7 +44,7 @@ Dokumentatsioon:
 | Javascript (klient) | 77 funktsiooni 16 failis, 1600 rida |
 | HTML | 400  rida |
 | CSS (rakendus) | 242 rida |
-| CSS (dokumentatsioon, antoloogia) | 65 rida |
+| CSS (dokumentatsioon, arhiivkogu) | 65 rida |
 | server (Google Apps Script) | 70 rida  |
 | dokumentatsioon (Markdown) | 210  |
 | dokumentatsioonikeskkond (Jekyll) | 160  |
@@ -85,7 +85,7 @@ Dokumentatsioon:
   - 7.3 Ühise alamsõne järgi (pikkusega vähemalt 4) 
 - 8 Teksti samatekstilisuse kontroll
   - 8.1 Saab asetada või sisestada teksti ja kontrollida selle vastavust samateksti reeglitele
-- 9 nn Antoloogia - valik samatekste
+- 9 nn Arhiivkogu - valik samatekste
 - 10 Google kontoga sisselogimine
   - salvestamisõigus ainult autenditud kasutajal
   - salvestatakse autori nimi ja e-posti aadress  
@@ -98,7 +98,7 @@ Suur osa funktsionaalsusest on seotud samatekstide teisendamisega ühest esituse
 2. siseesitus
 3. HTML-esitus kuvamiseks tekstisisestusalal
 4. pilveesitus (salvestatud kuju)
-5. esitus tekstikogus ja antoloogias
+5. esitus tekstikogus ja arhiivkogus
 6. HTML-esitus kuvamiseks tekstikogus
 7. esitus sirvija konsoolil (logimine silumise eesmärgil). 
 
@@ -184,11 +184,11 @@ Säh, hästi!
 `IT⏎⏎Säh, hästi! `
  
 ## Tekstikogu
-* Tekstid kuvatakse nummerdatult.
 * Salvestamine
     * Toimub väikeses dialoogis, kus kontrollitakse, kas ikka tahetakse salvestada ja soovi korral määratakse, kas tekst on kavand. Salvestusdialoog on modaalse olemusega.
     * Salvestatakse Google Sheet-le, kasutades Google Sheets REST API-t.
     * Pilve salvestatakse puhta tekstina (rõhutusteta, kesktäht ühekordselt, kui nii on määratud).
+    * Kontrollitakse, kas sama tekst on juba olemas.
 * Filtri- e otsidialoog
   * Võib olla avatud samaaegselt teksti sisestuse alaga, kuna tekstisisestussündmusi püütakse tekstisisestusalas.
   * Filtreerimisel ei jagata väljundit lehekülgedeks.
@@ -254,8 +254,10 @@ Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioo
 
 * HTML kujule teisendavad `markeeriTekst` ja `markeeriTekstikoguTekst`.
 * Tekstisisestusala _caret_ positsiooni seab funktsioon `seaCaret`.
+* Kuvatakse ka tähtede arv tekstis.
 
 ## Töövahendid
+* Javascripti parimad praktikad: [https://github.com/wearehive/project-guidelines](https://github.com/wearehive/project-guidelines)
 * Javascripti süntaksikontrollija: [http://esprima.org/demo/validate.html](http://esprima.org/demo/validate.html)
 * HTML validaator: [https://validator.w3.org/nu/#file](https://validator.w3.org/nu/#file) (Firefox-i kontekstimenüüst )
 
