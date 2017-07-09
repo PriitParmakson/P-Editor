@@ -4,7 +4,7 @@ permalink: Arhiivkogu
 layout: Publitseeri
 ---
 
-# Antoloogia
+# Arhiivkogu
 {: .no_toc}
 
 - TOC
