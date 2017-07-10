@@ -39,7 +39,8 @@ function doPost(e) {
         EPost: <string>,
         IDToken: <string>
       }
-  Salvestatakse neli esimest.    
+  Salvestatakse neli esimest.
+  Murdskriptimise vältimiseks saadetud tekst puhastatakse.
   */
   try {
     Logger.log(e.toString());
@@ -47,9 +48,15 @@ function doPost(e) {
     var sheet = SpreadsheetApp.getActiveSheet();
     sheet.insertRows(1); // Lisa algusse uus rida
     // var nextRow = sheet.getLastRow()+1; // get next row
-    // Asenda <>, injection ründe vältimiseks
-    var s = e.parameter['Tekst'].replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    sheet.getRange(1, 1).setValue(s);
+    // Puhasta saadetud tekst
+    var s = e.parameter['Tekst'];
+    var p = ''; // Puhastatud tekst
+    for (var i = 0; i < s.length; i++) {
+      if (taht(s.charCodeAt(i)) || kirjavmKood(s.charCodeAt(i))) {
+        p += s[i];
+      }
+    }
+    sheet.getRange(1, 1).setValue(p);
     if (e.parameter['Draft']) {
       sheet.getRange(1, 2).setValue(e.parameter['Draft']);
     }
@@ -66,4 +73,37 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
-  
+
+// Tärgi või klahvi kindlakstegemise abifunktsioonid
+function ladinaTaht(charCode) {
+  // 97..122 (a..z) 65..90 (A..Z)
+  return (
+    (charCode >= 97 && charCode <= 122) || 
+    (charCode >= 65 && charCode <= 90)
+  )
+}
+function tapiTaht(charCode) {
+  // õ ö ä ü 245 246 228 252
+  // Õ Ö Ä Ü 213 214 196 220
+  // š 353, Š 352
+  // ž 382, Ž 381 
+  return ([245, 246, 228, 252, 213, 214, 196,
+    220, 353, 352, 382, 381].indexOf(charCode)
+    != -1)
+}
+function veneTaht(charCode) {
+  // 1024-1279
+  return (charCode >= 1024 && charCode <= 1279)
+}
+function taht(charCode) {
+  return ladinaTaht(charCode) || tapiTaht(charCode) || veneTaht(charCode)
+}
+function kirjavmKood(charCode) {
+  // Kontrollib, kas charCode esitab lubatud 
+  // kirjavahemärki
+  // kaldkriips (reavahetuse tähis) 47, tühik 32  , 44  . 46  - 45  ! 33  ? 63
+  // ( 40  ) 41  : 58  ; 59  " 34
+  var p = [47, 32, 46, 44, 45, 33, 63, 40, 41, 58, 59, 34];
+  var r = p.indexOf(charCode);
+  return (r >= 0)
+}
