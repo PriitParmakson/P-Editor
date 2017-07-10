@@ -27,7 +27,7 @@ function markeeriTekstikoguTekst(t) {
     // Punktuatsioon
     if (kirjavm(t[i])) {
       // Asenda reavahetuse siseesituse sümbol <br> elemendiga
-      if (t[i] == '⏎') {
+      if (t[i] == '/') {
         acc = acc + '<br>';
       }
       else {
@@ -89,7 +89,7 @@ function markeeriTekst(markeeritavTekst) {
       }
       // Kirjavahemärk
       else if (kirjavm(markeeritavTekst[i])) {
-        if (markeeritavTekst[i] == '⏎') {
+        if (markeeritavTekst[i] == '/') {
           // koguja[mode] = '<br>'; ei sobi, sest caret positsioneerimine läheb keerukaks
           koguja[mode] = koguja[mode] + markeeritavTekst[i];
         }

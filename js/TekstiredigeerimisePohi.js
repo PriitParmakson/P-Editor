@@ -187,8 +187,8 @@ function lisaTahtVoiPunktuatsioon(charCode) {
 
   var teade = tuvastaCaretJaSeaSisekursor();
 
-  // Enter vajutus asenda siseesituses tärgiga ⏎.
-  var charTyped = charCode == 13 ? '⏎' : String.fromCharCode(charCode);
+  // Enter vajutus asenda siseesituses tärgiga '/'.
+  var charTyped = charCode == 13 ? '/' : String.fromCharCode(charCode);
 
   // Standardne logimine
   if (logimistase > 1) {

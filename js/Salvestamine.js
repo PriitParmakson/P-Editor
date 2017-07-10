@@ -41,9 +41,6 @@ function tekstSalvestuskujule(t) {
   // Eemalda algus- ja lõputühikud
   c = c.trim();
 
-  // Kontrolli duplikaati
-  // Vaja mõelda, kuidas see efektiivselt teostada.
-
   // Kas on Draft?
   var draft = $('#draftNupp').prop('checked') ? true : false;
 

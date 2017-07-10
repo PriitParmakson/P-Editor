@@ -135,9 +135,9 @@ Tähtsamad teisendused:
 ### Siseesitus  
 * Sisemiselt hoitakse kesktähte alati kahekordselt. Teavet kesktähe kordsuse kohta hoiab globaalne muutuja `kuvaKeskelementYhekordselt`.
 * Samuti hoitakse siseesituses kursori positsiooni (sümbol `|`).
-* Reavahetus hoitakse sümboliga `⏎`.
+* Reavahetus hoitakse sümboliga `/`.
 
-Näiteks: `IT⏎⏎|Säh, hästi! `
+Näiteks: `IT//|Säh, hästi! `
 
 `Samma|s` tähendab `Samas`, kui `kuvaKeskelementYhekordselt` = `true`
 
@@ -145,19 +145,19 @@ Näiteks: `IT⏎⏎|Säh, hästi! `
 
 Nähtav:
 
-`IT⏎⏎|Säh, hästi! `
+`IT//|Säh, hästi! `
 
 `|` - tühitekst
 
 * Kesktäht (või -tähed) esitatakse rõhutatult.
-* Reavahetus esitatakse sümboliga `⏎`.
+* Reavahetus esitatakse sümboliga `/`.
 * Kuvatakse HTML-esituse abil.
   * Kuval esitatav tekst on jagatud viie `span`-elemendi vahel (võivad olla tühjad): `A`, `K1`, `Kt`, `K2`, `B`.
   * Tühiteksti puhul pannakse esimesse `span`-elementi (`A`) 0-pikkusega tühik (`&#8203;`), seda selleks, et tekstisisestusala `div`-element ei kollapseeruks.
 
 Näited:
 
-`<span id='A'>IT⏎⏎Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
+`<span id='A'>IT//Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
 
 `<span id='A'>&#8203;</span><span id='K1'></span><span id='Kt'></span><span id='K2'></span><span id='B'></span>` - tühiteksti esitamine 0-pikkusega tühiku abil
 
@@ -179,9 +179,9 @@ Säh, hästi!
 
 ### Esitus pilvemälus
 * Ühekordne kesktäht esitatakse ühekordselt
-* Reavahetus hoitakse sümboliga `⏎`. Näide:
+* Reavahetus hoitakse sümboliga `/`. Näide:
 
-`IT⏎⏎Säh, hästi! `
+`IT//Säh, hästi! `
  
 ## Tekstikogu
 * Salvestamine
