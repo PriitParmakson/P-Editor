@@ -336,8 +336,9 @@ Usu avatavat tava - tava usu!
 
 Öösiti söö!
 
-Öötöö
+Öötöö.
 
+Ööbib. Öö.
 
 
 
