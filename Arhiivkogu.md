@@ -14,6 +14,16 @@ layout: Publitseeri
 
 Ajatööta ajatöötaja ja tööta, jaa, töötaja.
 
+## Aga
+
+Agatajat aja taga!
+
+Aga Kalamajas aja malakaga.
+
+Aga kiru kurikaga!
+
+Aga mana paganaga, aganaga, panamaga.
+
 ## Agul! Eluga!
 
 Agul - ei! Eluga!
