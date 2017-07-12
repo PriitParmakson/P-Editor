@@ -27,7 +27,7 @@ function markeeriTekstikoguTekst(t) {
     // Punktuatsioon
     if (kirjavm(t[i])) {
       // Asenda reavahetuse siseesituse sümbol <br> elemendiga
-      if (t[i] == '⏎') {
+      if (t[i] == '/') {
         acc = acc + '<br>';
       }
       else {
@@ -55,8 +55,9 @@ function markeeriTekstikoguTekst(t) {
   }
   return acc
 }
-function markeeriTekst() {
-  /* Tagastab HTML-i viidud, markeeritud kesktähtedega teksti.
+function markeeriTekst(markeeritavTekst) {
+  /* Sisendiks on sisekujul tekst.
+  Tagastab HTML-i viidud, markeeritud kesktähtedega teksti.
   Kesktähed jagavad teksti 5 ossa. Tagastatava HTML-i struktuur:
     <p>
       tähed enne esimest kesktähte
@@ -73,27 +74,27 @@ function markeeriTekst() {
   // Koguja tekstiosadele A, K1, Kt, K2, B
   var mode = '0'; // Kogutava tekstiosa indeks (0-põhine)
 
-  var p = tahti(t) / 2; // Alati täisarv, sest tekstis on mõlemad kesktähed, ka siis, kui kuvatakse ainult ühte.
+  var p = tahti(markeeritavTekst) / 2; // Alati täisarv, sest tekstis on mõlemad kesktähed, ka siis, kui kuvatakse ainult ühte.
   var taheloendur = 0;
 
-  if (t.length == 1) {
+  if (markeeritavTekst.length == 1) {
     // Tühja teksti puhul lisa  0-pikkusega tühik. See on vajalik caret positsioneerimiseks.
     koguja[0] = '&#8203;'; 
   }
   else {
     // Kogu tekstiosad
-    for (var i = 0; i < t.length; i++) {
+    for (var i = 0; i < markeeritavTekst.length; i++) {
       // Kursorijoon, ei esita markeeritud tekstis
-      if (t[i] == '|') {
+      if (markeeritavTekst[i] == '|') {
       }
       // Kirjavahemärk
-      else if (kirjavm(t[i])) {
-        if (t[i] == '⏎') {
+      else if (kirjavm(markeeritavTekst[i])) {
+        if (markeeritavTekst[i] == '/') {
           // koguja[mode] = '<br>'; ei sobi, sest caret positsioneerimine läheb keerukaks
-          koguja[mode] = koguja[mode] + t[i];
+          koguja[mode] = koguja[mode] + markeeritavTekst[i];
         }
         else {
-          koguja[mode] = koguja[mode] + t[i];
+          koguja[mode] = koguja[mode] + markeeritavTekst[i];
         }
       }
       // Täht
@@ -101,7 +102,7 @@ function markeeriTekst() {
         taheloendur++;
         // Esimene kesktäht markeerida
         if (taheloendur == p) {
-          koguja[1] = t[i];
+          koguja[1] = markeeritavTekst[i];
           mode = 2;  
         }
         // Teine kesktäht...
@@ -111,13 +112,13 @@ function markeeriTekst() {
           }
           else {
             // ...kuvada ja markeerida
-            koguja[3] = t[i];
+            koguja[3] = markeeritavTekst[i];
           }
           mode = 4;
         }
         // Kuvada tavaliselt
         else {
-          koguja[mode] = koguja[mode] + t[i];
+          koguja[mode] = koguja[mode] + markeeritavTekst[i];
         }
       }
     }    

@@ -24,9 +24,7 @@ var kuvaKesktahtYhekordselt = false;
 /* Hoiab kõiki allalaetud tekste
   Struktuur: { Tekst: <string>, Draft: <boolean> }
 */
-var tekstid;
-var jLk = 1; // Jooksva lehekülje nr
-var tLk = 20; // Tekste leheküljel
+var tekstid; // Sisseloetud tekstid
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
 var autenditud = false; // Kas kasutaja on Google Sign-In teenuse abil autenditud
 var kasutajaProfiil; // Autenditud Google kasutaja profiil
@@ -43,11 +41,7 @@ function alusta() {
   seaInfopaaniKasitlejad();
   seaTeatepaaniKasitlejad();
   seaTekstikoguKasitlejad();
-  seaFiltriKasitlejad();
   seaOigekirjakasitlejad();
-  /* loeTutvustustekst();
-  seaTutvustustekstiKasitlejad();
-  */
   seaSamatekstidTekstistKasitlejad();
   seaSonastikuKasitlejad();
   seaSeotudTekstiKasitlejad();

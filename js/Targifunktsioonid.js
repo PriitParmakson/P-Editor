@@ -24,15 +24,15 @@ function taht(charCode) {
 }
 function kirjavm(char) {
   // Kontrollib, kas tärk on kirjavahemärk.
-  // Kirjavahemärgiks loetakse ka reavahetusmärki (⏎).
-  return (kirjavmKood(char.charCodeAt(0)) || char == '⏎')
+  // Kirjavahemärgiks loetakse ka reavahetusmärki '/'.
+  return (kirjavmKood(char.charCodeAt(0)) || char == '/')
 }
 function kirjavmKood(charCode) {
   // Kontrollib, kas charCode esitab lubatud 
   // kirjavahemärki
-  // reavahetus 13, tühik 32  , 44  . 46  - 45  ! 33  ? 63
+  // reavahetus 47, tühik 32  , 44  . 46  - 45  ! 33  ? 63
   // ( 40  ) 41  : 58  ; 59  " 34
-  var p = [13, 32, 46, 44, 45, 33, 63, 40, 41, 58, 59, 34];
+  var p = [47, 32, 46, 44, 45, 33, 63, 40, 41, 58, 59, 34];
   var r = p.indexOf(charCode);
   return (r >= 0)
 }

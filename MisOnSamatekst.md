@@ -6,7 +6,7 @@ permalink: MisOnSamatekst
 <!-- Viited peamistele artefaktidele -->
 <p style='margin-bottom: 3rem;'>
   <a href='{{ site.baseurl }}'>Samatekstiredaktor</a> |
-  <a href='{{ site.baseurl }}/Valik'>Antoloogia</a> 
+  <a href='{{ site.baseurl }}/Arhiivkogu'>Arhiivkogu</a> 
 </p>
 
 # Mis on samatekst?

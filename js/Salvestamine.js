@@ -41,9 +41,6 @@ function tekstSalvestuskujule(t) {
   // Eemalda algus- ja lõputühikud
   c = c.trim();
 
-  // Kontrolli duplikaati
-  // Vaja mõelda, kuidas see efektiivselt teostada.
-
   // Kas on Draft?
   var draft = $('#draftNupp').prop('checked') ? true : false;
 
@@ -112,12 +109,9 @@ function seaSalvestuseKasitlejad() {
       // Uuendada tekstide arvu
       $('#TeksteTekstikogus').text(tekstid.length.toString());
 
-      // Uuenda filtrit, kui see on avatud
-      if ($('#Filtridialoog').is(':visible')) {
-        seaFilter('Salvestati');
-      }
-      else if ($('#Tekstikogu').is(':visible')) {
-        kuvaLehekylg(1);
+      // Uuenda tekstikogu, kui see on avatud
+      if ($('#Tekstikogu').is(':visible')) {
+        filtreeriJaKuvaTekstid();
       } 
       
     });
