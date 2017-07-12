@@ -37,20 +37,6 @@ Dokumentatsioon:
 
 <a target href='resource/ARHITEKTUUR.png'>Arhitektuurijoonis</a>
 
-## Koodistatistika
-
-| komponent                                 |  |
-|----------------------------------------|---------------|
-| Javascript (klient) | 77 funktsiooni 16 failis, 1600 rida |
-| HTML | 400  rida |
-| CSS (rakendus) | 242 rida |
-| CSS (dokumentatsioon, antoloogia) | 65 rida |
-| server (Google Apps Script) | 70 rida  |
-| dokumentatsioon (Markdown) | 210  |
-| dokumentatsioonikeskkond (Jekyll) | 160  |
-| ühikteste | 92 |
-| ühiktestide kood (HTML, CSS, Javascript) | 300 rida  |
- 
 ## Funktsionaalsed omadused (Mida tarkvara teeb?)
 
 - 1 Samatekstide mõiste ja terminite tutvustus, koos näidetega ("Mis on samatekst?"

@@ -1,0 +1,39 @@
+{
+  "Meetrikad": {
+    "Äri": {},
+  
+    "Kasutamine": {
+      "Kasutajaid": 1,
+      "Tekste": 460
+    },
+
+    "Tarkvara": {
+      "Kood": {
+        "Javascript (klient)": {
+          "funktsioone": 77,
+          "faile": 16,
+          "ridu": 1600
+        },
+        "HTML": {
+          "ridu": 400
+        },
+        "CSS rakendus": {
+          "ridu": 300
+        },
+        "Jekyll": {
+          "ridu": 160
+        }
+      },
+      "Dokumentatsioon": {
+        "ridu": 200
+      },
+      "Teste": {
+        "ühikteste": 92,
+        "ühiktestide kood": {
+          "ridu": 300
+        }
+      }
+    }
+  }
+}
+
