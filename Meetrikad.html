@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meetrikud</title>
+  <title>Meetrikad</title>
   <meta name="google-signin-scope" content="profile email">
   <meta name="google-signin-client_id" content="554561859935-1ojca8mj94fa41mebnjnhqvt83t4gdfj.apps.googleusercontent.com">
 
@@ -25,9 +25,38 @@
 
   <!-- Stiilid -->
   <link rel='stylesheet' href='css/Samas.css'>
+  <style>
+    .meetrikarida { }
+    .nimetus { }
+    .väärtus { }
+  </style>
 
   <!-- Skriptid -->
-  <script src="js/Meetrikud.js"></script>
+  <script src="js/Meetrikad.js"></script>
+  <script>
+  /* 
+    Kuva meetrikad
+  */
+  function alusta() {
+    /* Laeb Google töölehelt meetrikad ja kuvab need. */
+    var url = 'https://script.google.com/macros/s/AKfycbxBYUF0hfwyUBXfqmS4uDxbsQtNPq2FtqoyKBvcJWvWIr9kV1gC/exec';
+    $.getJSON(url,
+      function(data, status, xhr) {
+        // Kuva meetrikad
+        for (var i = 0; i < data.Meetrikad.length; i++) {
+          var r = $('<p></p>')
+            .addClass('meetrikarida')
+            .addClass('d-flex')
+            .addClass('justify-content-between')
+            .appendTo('#Meetrikad');
+          $('<span></span').addClass('nimetus').text(data.Meetrikad[i].Meetrika).appendTo(r);
+          $('<span></span').addClass('väärtus').text(data.Meetrikad[i].Väärtus).appendTo(r);
+        }
+      }); 
+  }
+
+
+  </script>
 
   </head>
 
@@ -36,6 +65,9 @@
     <div class='container-fluid'>
       <div class='row'>
         <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <ul id='Meetrikad'>
+          </ul>
 
         </div>  
       </div>
