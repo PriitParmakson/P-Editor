@@ -102,7 +102,9 @@ function seaSalvestuseKasitlejad() {
     */
     salvestaTekst(s).done(function() {
       suleSalvestusdialoog();
-      console.log('Salvestatud tekst: ' + s.Tekst);
+      if (logimistase > 0) {
+        console.log('#Salvesta2: salvestatud tekst: ' + s.Tekst);
+      }
       // Uuenda tekstikogu
       // Lisada tekst
       tekstid.unshift(s);

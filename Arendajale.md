@@ -188,18 +188,14 @@ Säh, hästi!
       * nii kasutaja klahvivajutusi
       * kui ka programmi poolt väljastatud teksti
     * filtri seadmist (otsistring + piiravad tingimused)
-* Tekstisisestuse logimine
-    * Logiteade moodustatakse ühes kahest funktsioonist:
-      * `lisaTahtVoiPunktuatsioon`
-      * `tootleEriklahv`
-    * Logiteade 1: `Kasutaja: ` + klahvinimetus või tärk + caret tuvastatud positsioon tekstisisestusalas + tuvastatud caret positsiooni järgi seatud sisekursor.
-  * Tekstiväljastuse logimine
-    * Logiteade 2: `Programm: ` + väljastatud tekst + seatud caret positsioon.
-    * Logiteade koostatakse funktsioonis `kuvaTekst`
-  * Logitasemed:
-    * `0` - ei logita midagi
-    * `1` - logitakse tekstisisestus ja -väljastus
-    * `2` - lisaks eelmisele logitakse `keydown` ja `keypress` sündmused 
+* Logitasemed:
+  * `0` - ei logita midagi
+  * `1` - logitakse tekstisisestus ja -väljastus
+  * `2` - lisaks eelmisele logitakse `keydown` ja `keypress` sündmused jm
+* Logimise sisselülitamine:
+  * `logimistase = 2;` sirvija konsoolil 
+  * vaikimisi on logimistase 1 
+* Logikirje algab funktsiooni nimega  
 
 ## Testimine
 * Funktsioonitestimise automatiseerimiseks on leht `SamasTest.html`; testid pannakse kirja failis `SamasTest.js`.

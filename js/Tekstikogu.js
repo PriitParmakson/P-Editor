@@ -78,7 +78,7 @@ function filtreeriJaKuvaTekstid() {
     var keskelKahesSonas = $('#KeskelKahesSonas').prop('checked');
     // Logi
     if (logimistase >= 1) {
-      console.log('Filter: ' +
+      console.log('filtreeriJaKuvaTekstid: rakendan filtrit: ' +
         fL +
         (vasakul ? ': (Baa) ' : '') +
         (paremal ? ': (aaB) ' : '') +

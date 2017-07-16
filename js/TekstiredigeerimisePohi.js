@@ -1,159 +1,155 @@
 
-// Teksti redigeerimisega seotud funktsioonid
-function tuvastaCaretJaSeaSisekursor() {
+/* Teksti redigeerimisega seotud funktsioonid
+*/
+
+function seaRedaktoriKasitlejad() {
   /*
-   Selgita välja caret positsioon, sest kasutaja võib olnud seda muutnud, sea vastavalt sisemine kursor ja tagasta vastav teade.
-   Tühja teksti puhul ei oma mõtet.
-   Arvesta ka, et tühja teksti puhul on esimeses span-elemendis 0-pikkusega tühik (et hoida div-elemendi mõõtmeid).
+    Teksti muutvaid klahvivajutusi käsitletakse sündmuste 'keydown', 'keypress' ja 'paste' kaudu.
+    Sündmus 'keydown' tekib klahvi vajutamisel esimesena.
+    Seejärel tekib 'keypress'.
+    Teksti navigeerivaid (caret-d muutvaid) sündmusi (vasakule,
+    paremale) otseselt ei töötle, välja arvatud see, et nende toime blokeeritakse veateaterežiimis.
+    Caret positsioon selgitatakse välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
   */
-  if (t.length == 1) {
-    return '(tühitekst)'
-  }
 
-  // Leia span element, kus valik algab ja valiku alguspositsioon selles elemendis
-  var r = document.getSelection().getRangeAt(0);
-  var algusSpan = r.startContainer.parentNode.id;
-  var algusPos = r.startOffset;  
-  if (logimistase > 1) {
-    console.log(algusSpan.toString() + ':' + algusPos.toString());
-  }
+  $('#Tekst').on('keydown', function (e) {
+    /* 
+    Sündmuse KEYDOWN käsitleja. Püüame kinni eriklahvide 
+     vajutused, mida tahame töödelda: 8 (Backspace), 46 (Delete), 
+     33 (PgUp), 34 (PgDn), 38 (Up), 40 (Down). Nende vaikimisi 
+     toiming tühistatakse ja vajutusi käsitletakse spetsiifiliselt.
 
-  // Leia siseesituses positsioon, kuhu sisemine kursor (|) liigutada.
-  var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B'];
-  var kum = 0; // Kumulatiivne positsioon
-  for (var i = 0; i < tipuIDd.length; i++) {
-    if (tipuIDd[i] == algusSpan) {
-      kum += algusPos;
-      break
+     Märkus. Ctrl + klahv vajutustest tekib kaks KEYDOWN sündmust - esimene keyCode = 17 (Ctrl), seejärel keyCode = klahvi kood (tõeväärtus ctrlDown on mõlemal juhul tõene).
+    */
+    var keyCode = e.keyCode;
+    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+
+    /*
+    Kui veateade on kuvatud (kasutaja ei ole seda sulgenud), siis klahvivajutused väljas #Tekst ei oma mõju.
+    */
+    if (!$('#Teatepaan').hasClass('peidetud')) {
+      e.preventDefault();
+      return
     }
-    else {
-      kum += $('#' + tipuIDd[i]).text().length;
+
+    // Logimine
+    if (logimistase > 1) {
+      console.log('keydown käsitleja: püüdsin kasutaja klahvivajutuse: ' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
     }
-  }
-  if (algusSpan == 'B' && kuvaKesktahtYhekordselt) {
-    kum += 1; // Sest siseesituses on kesktäht alati kahekordselt
-  }
 
-  // Aseta sisemine kursor positsioonile kum
-  t = t.replace('|', '');
-  if (kum == 0) {
-    t = '|' + t;
-  }
-  else {
-    t = t.replace(new RegExp('.{' + kum + '}'), '$&' + '|');
-  }
+    // Kui Ctrl+c (keyCode 67) või Ctrl+v (keyCode 86), siis lase seda käsitleda vastavatel süsteemsetel sündmusekäsitlejatel
+    if (ctrlDown && [67, 86].includes(keyCode)) { return }
 
-  // Tagasta teade logimise tarbeks
-  var teade = 'Tuvastatud caret (' + algusSpan + ',' + algusPos + '), seatud sisekursor: ' + t;
-  return teade
-}
+    if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
+      e.preventDefault();
+      tootleEriklahv(keyCode);
+    }
+  });
 
-function tootleBackspace(t) {
-  /*
-    Eemaldab siseesituses kursori ees oleva tärgi.
-    Kui eemaldamise tulemus tekkis korduv tühik, siis eemaldab ka selle.
-  */
-  var uusTekst;
+  $('#Tekst').on('keypress', function (e) {
+    /* 
+      Sündmuse KEYPRESS käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
 
-  // Teksti alguses mõju ei ole
-  if (t[0] == '|') {
-    uusTekst = t;
-    return
-  }
-
-  // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
-  if (kirjavm(t[t.indexOf('|') - 1])) {
-    uusTekst = t.substring(0, t.indexOf('|') - 1) + t.substring(t.indexOf('|'));
-  }
-  else if (taht(t.charCodeAt(t.indexOf('|') - 1))) {
-    var eemaldatavTaht = tahti(t.split('|')[0]); // Numeratsioon 1-st
-    var eemaldatavPeegeltaht = tahti(t) - eemaldatavTaht + 1;
-    var acc = ""; // Akumulaator
-    var taheloendur = 0;
+      Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel.
     
-    // Läbides teksti, eemaldan tähe koos selle peegeltähega
-    for (var i = 0; i < t.length; i++) {
-      if (taht(t.charCodeAt(i))) {
-        taheloendur++;
-        if (taheloendur == eemaldatavTaht ||
-          taheloendur == eemaldatavPeegeltaht) {
-          // Jätta vahele
-        }
-        else {
-          acc += t[i];
-        }
+      Kui Teatepaan on avatud (asetamise viga), siis ignoreeritakse.
+    */
+    var charCode = e.charCode;
+    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+
+    if (!$('#Teatepaan').hasClass('peidetud')) {
+      // Asetamise veateade tuleb enne sulgeda
+      e.preventDefault();
+      return
+    }
+
+    // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
+    if (e.keyCode == 13) {
+      charCode = 13;
+    }
+
+    // Logimine
+    if (logimistase > 1) {
+      if (ctrlDown) {
+        console.log('keypress käsitleja: püüdsin kasutaja klahvivajutuse Ctrl'); 
       }
       else {
-        acc += t[i];
+        console.log('keypress käsitleja: püüdsin kasutaja klahvivajutuse ' + String.fromCharCode(charCode) + ' (tärgikood: ' + charCode + ')');
       }
     }
 
-    uusTekst = acc;
-  }
-  else { // Ei täht ega kirjavahemärk
-    console.log('Backspace: Tekst sisaldab tärki, mis pole lubatud täht ega kirjavahemärk.')
-  }
+    // Ctrl-kombinatsioone tähesisestuseks ei loe
+    if (!ctrlDown && charCode != null && charCode != 0) {
+      e.preventDefault();
+      lisaTahtVoiPunktuatsioon(charCode);
+    }
+  });
 
-  uusTekst = eemaldaLiigsedTyhikud(uusTekst, kuvaKesktahtYhekordselt);
-  return uusTekst;
-}
+  $('#Tekst').on('paste', function (e) {
+    /* Ctrl-V (Paste) töötleja
+       Tavaline sirvija -> e.originalEvent.clipboardData
+       Ebatavaline sirvija -> window.clipboardData
+    */
 
-function tootleDelete(t) {
-  /*
-    Eemaldab siseesituses kursori järel oleva tärgi.
-    Kui eemaldamise tulemus tekkis korduv tühik, siis eemaldab ka selle.
-  */
-  var uusTekst;
+    if (!$('#Teatepaan').hasClass('peidetud')) {
+      // Asetamise veateade tuleb enne sulgeda
+      e.preventDefault();
+      return
+    }    
 
-  // Teksti lopus mõju ei ole
-  if (t.indexOf('|') == t.length) {
-    uusTekst = t;
-    return
-  }
-
-  // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
-  if (kirjavm(t[t.indexOf('|') + 1])) {
-    uusTekst = t.substring(0, t.indexOf('|') + 1) + t.substring(t.indexOf('|') + 2);
-  }
-  else if (taht(t.charCodeAt(t.indexOf('|') + 1))) {
-    var eemaldatavTaht = tahti(t.split('|')[0] + 1); // Numeratsioon 1-st
-    var eemaldatavPeegeltaht = tahti(t) - eemaldatavTaht + 1;
-    var acc = ""; // Akumulaator
-    var taheloendur = 0;
-    
-    // Läbides teksti, eemaldan tähe koos selle peegeltähega
-    for (var i = 0; i < t.length; i++) {
-      if (taht(t.charCodeAt(i))) {
-        taheloendur++;
-        if (taheloendur == eemaldatavTaht ||
-          taheloendur == eemaldatavPeegeltaht) {
-          // Jätta vahele
-        }
-        else {
-          acc += t[i];
-        }
+    var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
+    var LisatavTekst = clipboardData.getData('text');
+    /* Lasta vaikereaktsioonil toimuda. 
+       Selleks:
+       1) seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
+       2) puhastada sisend kõrvalistest tärkidest. Eriti on vaja kõrvaldada &#8203; (Zero-Width Space)
+       3) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
+       4) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
+       5) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
+       Taastada siseesituse põhjal toimingueelne tekst.
+       Mittesamateksti puhul kuvada rõhutatult otstest vaadates esimene tähepaar, mis rikub peegeldust.
+    */
+    setTimeout(function() {
+      var asetatudTekst = $('#Tekst').text();
+      console.log('paste käsitleja: asetatud tekst: ' + asetatudTekst);
+      var puhastatudTekst = puhastaTekst(asetatudTekst);
+      var samasuseKontrolliTulemus = samatekst(puhastatudTekst);
+      if (samasuseKontrolliTulemus.on) {
+        /* Moodusta siseesitus.  samuti lisa sisekursor (algusesse)
+        */
+        var siseEsituses = tekstistSiseesitusse(puhastatudTekst);
+        t = siseEsituses.tekst;
+        kuvaKesktahtYhekordselt = siseEsituses.kuvaKesktahtYhekordselt;
+        kuvaTekst();
+        aktiveeriTekstinupud();
       }
       else {
-        acc += t[i];
+        var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
+        var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
+        var teatetekst = 'Asetatud tekst ei ole samatekst.<br><br>';
+        teatetekst = teatetekst + 
+          puhastatudTekst.substring(0, p1) +
+          '<span class="kesk">' + 
+          puhastatudTekst.substring(p1, p1 + 1) +
+          '</span>' +
+          puhastatudTekst.substring(p1 + 1, p2) +
+          '<span class="kesk">' + 
+          puhastatudTekst.substring(p2, p2 + 1) +
+          '</span>' + 
+          puhastatudTekst.substring(p2 + 1);
+        $('#Teatetekst').html(teatetekst);
+        $('#Teatepaan')
+          .removeClass('peidetud');
+        deaktiveeriTekstinupud();
       }
-    }
+    }, 50);
+  });
 
-    uusTekst = acc;
-  }
-  else { // Ei täht ega kirjavahemärk
-    console.log('Backspace: Tekst sisaldab tärki, mis pole lubatud täht ega kirjavahemärk.')
-  }
-
-  uusTekst = eemaldaLiigsedTyhikud(uusTekst, kuvaKesktahtYhekordselt);
-  return uusTekst;
 }
 
 function tootleEriklahv(keyCode) {
 
-  var teade = tuvastaCaretJaSeaSisekursor();
-  if (logimistase > 1) {
-    console.log('Kasutaja: ' + keyCodeToHumanReadable(keyCode) + ' - ' + teade);
-  }
+  tuvastaCaretJaSeaSisekursor();
 
   switch (keyCode) {
     case 8: // Backspace
@@ -178,6 +174,7 @@ function tootleEriklahv(keyCode) {
   aktiveeriTekstinupud(); // Kontrollib, kas tekkis tühitekst ja seab vastavalt nupud 
   kuvaTekst();
 }
+
 function lisaTahtVoiPunktuatsioon(charCode) {
   // Lisa kasutaja sisestatud täht või kirjavahemärk
   // Kontrollib, kas märgikood on lubatute hulgas
@@ -185,14 +182,14 @@ function lisaTahtVoiPunktuatsioon(charCode) {
     return
   }
 
-  var teade = tuvastaCaretJaSeaSisekursor();
+  tuvastaCaretJaSeaSisekursor();
 
   // Enter vajutus asenda siseesituses tärgiga '/'.
   var charTyped = charCode == 13 ? '/' : String.fromCharCode(charCode);
 
   // Standardne logimine
   if (logimistase > 1) {
-    console.log('Kasutaja: ' + charTyped + ' ' + teade);
+    console.log('tootleEriklahv: töötlen eriklahvi: ' + charTyped);
   }
 
   // Sisestatud tärgi lisamine siseesitusse
@@ -253,147 +250,153 @@ function lisaTahtVoiPunktuatsioon(charCode) {
   t = eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
   kuvaTekst();
 }
-function seaRedaktoriKasitlejad() {
+
+function tuvastaCaretJaSeaSisekursor() {
   /*
-    Teksti muutvaid klahvivajutusi käsitletakse sündmuste 'keydown', 'keypress' ja 'paste' kaudu.
-    Sündmus 'keydown' tekib klahvi vajutamisel esimesena.
-    Seejärel tekib 'keypress'.
-    Teksti navigeerivaid (caret-d muutvaid) sündmusi (vasakule,
-    paremale) otseselt ei töötle, välja arvatud see, et nende toime blokeeritakse veateaterežiimis.
-    Caret positsioon selgitatakse välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
+   Selgita välja caret positsioon, sest kasutaja võib olnud seda muutnud ja sea vastavalt sisemine kursor.
+   Tühja teksti puhul NO OP.
+   Arvesta ka, et tühja teksti puhul on esimeses span-elemendis 0-pikkusega tühik (et hoida div-elemendi mõõtmeid).
   */
+  if (t.length == 1) {
+    return
+  }
 
-  $('#Tekst').on('keydown', function (e) {
-    /* 
-    Sündmuse KEYDOWN käsitleja. Püüame kinni eriklahvide 
-     vajutused, mida tahame töödelda: 8 (Backspace), 46 (Delete), 
-     33 (PgUp), 34 (PgDn), 38 (Up), 40 (Down). Nende vaikimisi 
-     toiming tühistatakse ja vajutusi käsitletakse spetsiifiliselt.
+  // Leia span element, kus valik algab ja valiku alguspositsioon selles elemendis
+  var r = document.getSelection().getRangeAt(0);
+  var algusSpan = r.startContainer.parentNode.id;
+  var algusPos = r.startOffset;  
+  if (logimistase > 1) {
+    console.log('tuvastaCaretJaSeaSisekursor:' + ' sirvija teatab, et caret on tipus ' + algusSpan.toString() + ', positsioonis ' + algusPos.toString());
+  }
 
-     Märkus. Ctrl + klahv vajutustest tekib kaks KEYDOWN sündmust - esimene keyCode = 17 (Ctrl), seejärel keyCode = klahvi kood (tõeväärtus ctrlDown on mõlemal juhul tõene).
-    */
-    var keyCode = e.keyCode;
-    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
-
-    /*
-    Kui veateade on kuvatud (kasutaja ei ole seda sulgenud), siis klahvivajutused väljas #Tekst ei oma mõju.
-    */
-    if (!$('#Teatepaan').hasClass('peidetud')) {
-      e.preventDefault();
-      return
+  // Leia siseesituses positsioon, kuhu sisemine kursor (|) liigutada.
+  var tipuIDd = ['A', 'K1', 'Kt', 'K2', 'B'];
+  var kum = 0; // Kumulatiivne positsioon
+  for (var i = 0; i < tipuIDd.length; i++) {
+    if (tipuIDd[i] == algusSpan) {
+      kum += algusPos;
+      break
     }
-
-    // Logimine
-    if (logimistase > 1) {
-      console.log('KEYDOWN:' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
+    else {
+      kum += $('#' + tipuIDd[i]).text().length;
     }
+  }
+  if (algusSpan == 'B' && kuvaKesktahtYhekordselt) {
+    kum += 1; // Sest siseesituses on kesktäht alati kahekordselt
+  }
 
-    // Kui Ctrl+c (keyCode 67) või Ctrl+v (keyCode 86), siis lase seda käsitleda vastavatel süsteemsetel sündmusekäsitlejatel
-    if (ctrlDown && [67, 86].includes(keyCode)) { return }
+  // Aseta sisemine kursor positsioonile kum
+  t = t.replace('|', '');
+  if (kum == 0) {
+    t = '|' + t;
+  }
+  else {
+    t = t.replace(new RegExp('.{' + kum + '}'), '$&' + '|');
+  }
 
-    if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
-      e.preventDefault();
-      tootleEriklahv(keyCode);
-    }
-  });
-
-  $('#Tekst').on('keypress', function (e) {
-    /* 
-      Sündmuse KEYPRESS käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
-
-      Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel.
-    
-      Kui Teatepaan on avatud (asetamise viga), siis ignoreeritakse.
-    */
-    var charCode = e.charCode;
-    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
-
-    if (!$('#Teatepaan').hasClass('peidetud')) {
-      // Asetamise veateade tuleb enne sulgeda
-      e.preventDefault();
-      return
-    }
-
-    // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
-    if (e.keyCode == 13) {
-      charCode = 13;
-    }
-
-    // Logimine
-    if (logimistase > 1) {
-      if (ctrlDown) {
-        console.log('KEYPRESS: Ctrl'); 
-      }
-      else {
-        console.log('KEYPRESS: ' + String.fromCharCode(charCode) + ' (' + charCode + ')');
-      }
-    }
-
-    // Ctrl-kombinatsioone tähesisestuseks ei loe
-    if (!ctrlDown && charCode != null && charCode != 0) {
-      e.preventDefault();
-      lisaTahtVoiPunktuatsioon(charCode);
-    }
-  });
-
-  $('#Tekst').on('paste', function (e) {
-    /* Ctrl-V (Paste) töötleja
-       Tavaline sirvija -> e.originalEvent.clipboardData
-       Ebatavaline sirvija -> window.clipboardData
-    */
-
-    if (!$('#Teatepaan').hasClass('peidetud')) {
-      // Asetamise veateade tuleb enne sulgeda
-      e.preventDefault();
-      return
-    }    
-
-    var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
-    var LisatavTekst = clipboardData.getData('text');
-    /* Lasta vaikereaktsioonil toimuda. 
-       Selleks:
-       1) seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
-       2) puhastada sisend kõrvalistest tärkidest. Eriti on vaja kõrvaldada &#8203; (Zero-Width Space)
-       3) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
-       4) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
-       5) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
-       Taastada siseesituse põhjal toimingueelne tekst.
-       Mittesamateksti puhul kuvada rõhutatult otstest vaadates esimene tähepaar, mis rikub peegeldust.
-    */
-    setTimeout(function() {
-      var asetatudTekst = $('#Tekst').text();
-      console.log('Asetatud tekst: ' + asetatudTekst);
-      var puhastatudTekst = puhastaTekst(asetatudTekst);
-      var samasuseKontrolliTulemus = samatekst(puhastatudTekst);
-      if (samasuseKontrolliTulemus.on) {
-        /* Moodusta siseesitus.  samuti lisa sisekursor (algusesse)
-        */
-        var siseEsituses = tekstistSiseesitusse(puhastatudTekst);
-        t = siseEsituses.tekst;
-        kuvaKesktahtYhekordselt = siseEsituses.kuvaKesktahtYhekordselt;
-        kuvaTekst();
-        aktiveeriTekstinupud();
-      }
-      else {
-        var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
-        var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
-        var teatetekst = 'Asetatud tekst ei ole samatekst.<br><br>';
-        teatetekst = teatetekst + 
-          puhastatudTekst.substring(0, p1) +
-          '<span class="kesk">' + 
-          puhastatudTekst.substring(p1, p1 + 1) +
-          '</span>' +
-          puhastatudTekst.substring(p1 + 1, p2) +
-          '<span class="kesk">' + 
-          puhastatudTekst.substring(p2, p2 + 1) +
-          '</span>' + 
-          puhastatudTekst.substring(p2 + 1);
-        $('#Teatetekst').html(teatetekst);
-        $('#Teatepaan')
-          .removeClass('peidetud');
-        deaktiveeriTekstinupud();
-      }
-    }, 50);
-  });
-
+  // Tagasta teade logimise tarbeks
+  if (logimistase > 1) {
+    console.log('tuvastaCaretJaSeaSisekursor: ' + ' seatud sisekursor: ' + t);
+  }
 }
+
+function tootleBackspace(t) {
+  /*
+    Eemaldab siseesituses kursori ees oleva tärgi.
+    Kui eemaldamise tulemus tekkis korduv tühik, siis eemaldab ka selle.
+  */
+  var uusTekst;
+
+  // Teksti alguses mõju ei ole
+  if (t[0] == '|') {
+    uusTekst = t;
+    return
+  }
+
+  // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
+  if (kirjavm(t[t.indexOf('|') - 1])) {
+    uusTekst = t.substring(0, t.indexOf('|') - 1) + t.substring(t.indexOf('|'));
+  }
+  else if (taht(t.charCodeAt(t.indexOf('|') - 1))) {
+    var eemaldatavTaht = tahti(t.split('|')[0]); // Numeratsioon 1-st
+    var eemaldatavPeegeltaht = tahti(t) - eemaldatavTaht + 1;
+    var acc = ""; // Akumulaator
+    var taheloendur = 0;
+    
+    // Läbides teksti, eemaldan tähe koos selle peegeltähega
+    for (var i = 0; i < t.length; i++) {
+      if (taht(t.charCodeAt(i))) {
+        taheloendur++;
+        if (taheloendur == eemaldatavTaht ||
+          taheloendur == eemaldatavPeegeltaht) {
+          // Jätta vahele
+        }
+        else {
+          acc += t[i];
+        }
+      }
+      else {
+        acc += t[i];
+      }
+    }
+
+    uusTekst = acc;
+  }
+  else { // Ei täht ega kirjavahemärk
+    console.log('tootleBackspace: tekst sisaldab tärki, mis pole lubatud täht ega kirjavahemärk.')
+  }
+
+  uusTekst = eemaldaLiigsedTyhikud(uusTekst, kuvaKesktahtYhekordselt);
+  return uusTekst;
+}
+
+function tootleDelete(t) {
+  /*
+    Eemaldab siseesituses kursori järel oleva tärgi.
+    Kui eemaldamise tulemus tekkis korduv tühik, siis eemaldab ka selle.
+  */
+  var uusTekst;
+
+  // Teksti lopus mõju ei ole
+  if (t.indexOf('|') == t.length) {
+    uusTekst = t;
+    return
+  }
+
+  // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
+  if (kirjavm(t[t.indexOf('|') + 1])) {
+    uusTekst = t.substring(0, t.indexOf('|') + 1) + t.substring(t.indexOf('|') + 2);
+  }
+  else if (taht(t.charCodeAt(t.indexOf('|') + 1))) {
+    var eemaldatavTaht = tahti(t.split('|')[0] + 1); // Numeratsioon 1-st
+    var eemaldatavPeegeltaht = tahti(t) - eemaldatavTaht + 1;
+    var acc = ""; // Akumulaator
+    var taheloendur = 0;
+    
+    // Läbides teksti, eemaldan tähe koos selle peegeltähega
+    for (var i = 0; i < t.length; i++) {
+      if (taht(t.charCodeAt(i))) {
+        taheloendur++;
+        if (taheloendur == eemaldatavTaht ||
+          taheloendur == eemaldatavPeegeltaht) {
+          // Jätta vahele
+        }
+        else {
+          acc += t[i];
+        }
+      }
+      else {
+        acc += t[i];
+      }
+    }
+
+    uusTekst = acc;
+  }
+  else { // Ei täht ega kirjavahemärk
+    console.log('tootleBackspace: tekst sisaldab tärki, mis pole lubatud täht ega kirjavahemärk.')
+  }
+
+  uusTekst = eemaldaLiigsedTyhikud(uusTekst, kuvaKesktahtYhekordselt);
+  return uusTekst;
+}
+
