@@ -1,5 +1,7 @@
-// Õigekirjakontroll
 function seaOigekirjakasitlejad() {
+/*
+  Õigekirjakontroll: ava dialoog, kontrolli, sulge dialoog
+*/  
   $('#Oigekirjakontroll').click(function() {
     $('#Oigekirjadialoog').removeClass('peidetud');
     $('#Oigekirjakontroll').addClass('disabled');

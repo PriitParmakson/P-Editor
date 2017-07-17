@@ -1,7 +1,9 @@
 function eelmineTaht(i, t) {
-  /* Leiab tekstis t positsioonist i eelmise tähe.
-     Kui eelmist ei ole, siis tagastab false.
-     Positsioonid 0-põhised. */
+  /*
+   Leiab tekstis t positsioonist i eelmise tähe.
+   Kui eelmist ei ole, siis tagastab false.
+   Positsioonid 0-põhised.
+  */
   var j = i - 1;
   while (j >= 0) {
     var c = t.charCodeAt(j);
@@ -14,9 +16,11 @@ function eelmineTaht(i, t) {
 }
 
 function jargmineTaht(i, t) {
-  /* Leiab tekstis t positsioonist i järgmise tähe.
-     Kui järgmist ei ole, siis tagastab false.
-     Positsioonid 0-põhised. */
+  /*
+    Leiab tekstis t positsioonist i järgmise tähe.
+    Kui järgmist ei ole, siis tagastab false.
+    Positsioonid 0-põhised.
+  */
   var j = i + 1;
   while (j < t.length) {
     var c = t.charCodeAt(j);
@@ -29,7 +33,9 @@ function jargmineTaht(i, t) {
 }
 
 function samatekstideOtsingTekstist(t) {
-  /* Samatekstide otsing tekstist. Tagastab leitud samatekstide massiivi. */
+  /*
+    Samatekstide otsing tekstist. Tagastab leitud samatekstide massiivi.
+  */
   var sAlgus;
   var sLopp;
   var sTahti; // Tähti samatekstis
@@ -100,6 +106,9 @@ function samatekstideOtsingTekstist(t) {
 }
 
 function seaSamatekstidTekstistKasitlejad() {
+  /*
+    Ava ja sulge dialoog, otsi
+  */
   $('#SamatekstideOtsing').click(function() {
     $('#SamatekstidTekstistDialoog').removeClass('peidetud');
     $('#SamatekstideOtsing').addClass('disabled');

@@ -1,6 +1,6 @@
-// Samatekstitöötluse primitiivid
 function leiaTaht(str, index) {
-  /* Tagastab objekti, mille struktuur on:
+  /*
+   Tagastab objekti, mille struktuur on:
    1) 'taht' - stringis str järjekorranumbriga index (1-põhine) tähe;
    2) 'indeks' - leitud tähe kui tärgi indeks stringis (0-põhine);
    3) 'sonaAlguses' - kas tähele eelnes kirjavahemärk (sh tühik või reavahetus) või täht on teksti alguses;
@@ -33,13 +33,17 @@ function leiaTaht(str, index) {
   }
   return { taht: '', indeks: false, sonaAlguses: false, sonaLopus: false }
 }
+
 function tahti(str) {
-  /* Tagastab tähtede arvu stringis. Ei arvesta kirjavahemärke ja kursorijoont. Ei arvesta, kas kesktähte kuvatakse ühekordselt. Tagastatav väärtus on alati paarisarv. */
+  /*
+   Tagastab tähtede arvu stringis. Ei arvesta kirjavahemärke ja kursorijoont. Ei arvesta, kas kesktähte kuvatakse ühekordselt. Tagastatav väärtus on alati paarisarv.
+  */
   return str
     .split("")
     .filter(s => (!kirjavm(s)) && (s != "|"))
     .length;
 }
+
 function kanoonilineKuju(str) {
   /* Eemaldab kõik kirjavahemärgid jm sümbolid, mis ei ole tähed,
      teisendab väiketähtedeks.
@@ -56,6 +60,7 @@ function kanoonilineKuju(str) {
   }
   return k;
 }
+
 function samatekst(str) {
   /* Kontrollib, kas str on samatekst.
     - undefined, null, tühiteksti või ainult kirjavahemärkidest koosneva teksti puhul tagastab false.
@@ -98,6 +103,7 @@ function samatekst(str) {
     return { on: false }
   }
 }
+
 function tuvastaKesktaht(str) {
   /* Tagastab objekti, mille struktuur on:
    1) 'taht' - samateksti str kesktäht,
@@ -136,8 +142,10 @@ function tuvastaKesktaht(str) {
     }
   }
 }
+
 function eemaldaLiigsedTyhikud(str, kuvaKesktahtYhekordselt) {
-  /* Liigsed tühikud võivad tekkida teksti mitme redigeerimisoperatsiooni tulemusena: poolte vahetus, kustutamine (Backspace ja Delete), kesktähe muutmine ühekordseks. eemaldaLiigsedTyhikud kutsutakse välja pärast neid operatsioone. Tekst käiakse läbi ja liigsed tühikud kõrvaldatakse. Liigsed tühikud on: 1) teksti alguses olev tühik; 2) tühik, millele vahetult eelneb tühik; 3) tühik, mille ees on tühik ja kursor; 4) tühik, mille ees on mittekuvatav kesktäht ja viimase ees tühik (arvestada ka kursorit).
+  /*
+   Liigsed tühikud võivad tekkida teksti mitme redigeerimisoperatsiooni tulemusena: poolte vahetus, kustutamine (Backspace ja Delete), kesktähe muutmine ühekordseks. eemaldaLiigsedTyhikud kutsutakse välja pärast neid operatsioone. Tekst käiakse läbi ja liigsed tühikud kõrvaldatakse. Liigsed tühikud on: 1) teksti alguses olev tühik; 2) tühik, millele vahetult eelneb tühik; 3) tühik, mille ees on tühik ja kursor; 4) tühik, mille ees on mittekuvatav kesktäht ja viimase ees tühik (arvestada ka kursorit).
 
   Sisendiks on: 1) sisekujul tekst; 2) tõeväärtus, kas kesktähte käsitleda ühekordsena. 
 
@@ -149,16 +157,20 @@ function eemaldaLiigsedTyhikud(str, kuvaKesktahtYhekordselt) {
     .replace(/ \| /, ' |');
   return res;
 }
+
 function puhastaTekst(str) {
-  /* Eemaldab tekstist kõik tärgid, mis ei kuulu defineeritud kirjavahemärkide ja tähtede hulka
+  /*
+   Eemaldab tekstist kõik tärgid, mis ei kuulu defineeritud kirjavahemärkide ja tähtede hulka
   */
   return str
     .split("")
     .filter(s => kirjavm(s) || taht(s.charCodeAt(0)))
     .join('');
 }
+
 function tekstistSiseesitusse(str) {
-  /* Eeldab samateksti. Lisab sisekursori (|) teksti algusesse.
+  /*
+    Eeldab samateksti. Lisab sisekursori (|) teksti algusesse.
     Arvestab, et siseesituses kesktäht esitatakse alati kahekordselt.
     Eemaldab liigsed tühikud.
     Tagastab objekti: { tekst: ..., kuvaKesktahtYhekordselt: boolean }
@@ -175,19 +187,27 @@ function tekstistSiseesitusse(str) {
   t = '|' + eemaldaLiigsedTyhikud(t, kuvaKesktahtYhekordselt);
   return { tekst: t, kuvaKesktahtYhekordselt: kuvaKesktahtYhekordselt };
 }
+
 function pooraYmber(str) {
+  /*
+    Tagastab pahupidi pööratud sõne.
+  */
   var r = '';
   for (var i = 0; i < str.length; i++) {
     r = str[i] + r;
   }
   return r
 }
+
 function pikimYhineAlamsone(s1, s2) {
   /*
-    After: https://github.com/mirkokiefer/longest-common-substring
     Tagastab objekti { startString1: .., startString2: .., length: .. }
+    After: https://github.com/mirkokiefer/longest-common-substring
   */
   function indexMap(list) {
+    /*
+      Koostab array-st map-i (hash-tabeli). Viimasest on otsimine kiirem.
+    */
     var map = {}
     list.forEach(function(each, i) {
       map[each] = map[each] || []

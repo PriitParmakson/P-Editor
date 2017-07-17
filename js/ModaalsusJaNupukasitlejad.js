@@ -1,8 +1,6 @@
-/* Tekstiga tehtavate eritoimingute (uue teksti alustamine, poolte vahetamine, salvestusdialoogi avamine, seotud tekstide kuvamine) nuppude aktiveerimine/deaktiveerimine
-*/
-
 function deaktiveeriTekstinupud() {
   /*
+    Tekstiga tehtavate eritoimingute (uue teksti alustamine, poolte vahetamine, salvestusdialoogi avamine, seotud tekstide kuvamine) nuppude deaktiveerimine.
     Nupud deaktiveeritakse kui:
     1) avatakse salvestusdialoog;
     2) asetatud tekst ei ole samatekst (edasiliikumiseks tuleb veateatepaan sulgeda);
@@ -35,7 +33,9 @@ function aktiveeriTekstinupud() {
 }
 
 function seaTekstinupukasitlejad() {
-  // Sea sisestatava teksti käsitlejad
+  /*
+    Sea sisestatava teksti käsitlejad ('Uus', 'Vaheta pooled')
+  */
 
   $('#Uusnupp').click(function () {
     if (dialoogiseisund == 'N') {
@@ -61,6 +61,9 @@ function seaTekstinupukasitlejad() {
 }
 
 function seaTeatepaaniKasitlejad() {
+  /*
+    Teatepaani avamine ja sulgemine
+  */
   // Teatepaani sulgemine
   $('#TeatepaanSulge').click(function() {
     $('#Teatepaan').addClass('peidetud');
@@ -73,9 +76,10 @@ function seaTeatepaaniKasitlejad() {
   });
 }
 
-// Teabepaani nupukäsitlejad
 function seaInfopaaniKasitlejad() {
-  // Infopaani käsitlejad
+  /*
+    Infopaani käsitlejad: avamine, sulgemine
+  */  
   $('#Info').click(function () {
     $('#Infopaan').removeClass('peidetud');
     $('#Info').addClass('disabled');

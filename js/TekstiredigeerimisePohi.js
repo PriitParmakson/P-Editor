@@ -148,6 +148,9 @@ function seaRedaktoriKasitlejad() {
 }
 
 function tootleEriklahv(keyCode) {
+  /*
+    Töötleb 'keydown' kaudu kinnipüütud huvipakkuvaid klahvivajutusi.
+  */
 
   tuvastaCaretJaSeaSisekursor();
 
@@ -176,7 +179,10 @@ function tootleEriklahv(keyCode) {
 }
 
 function lisaTahtVoiPunktuatsioon(charCode) {
-  // Lisa kasutaja sisestatud täht või kirjavahemärk
+  /*
+   Lisa kasutaja sisestatud täht või kirjavahemärk
+  */
+   
   // Kontrollib, kas märgikood on lubatute hulgas
   if (!(taht(charCode) || kirjavmKood(charCode))) {
     return

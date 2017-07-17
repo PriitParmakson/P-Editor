@@ -1,7 +1,6 @@
-// Uue teksti salvestamise funktsioonid
-
 function tekstSalvestuskujule(t) {
-  /* Vii tekst salvestuskujule
+  /*
+     Vii tekst salvestuskujule
      Koosta puhas tekst - eemalda kursorijoon ja kesktähe peegeltäht.
      Eeldab, et sisend t sisekujul tekst.
      Tagastab objekti kujul:
@@ -52,7 +51,9 @@ function tekstSalvestuskujule(t) {
 }
 
 function salvestaTekst(s) {
-  // Salvesta Google töölehele
+  /*
+   Salvesta Google töölehele
+  */ 
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
 
   // Tagastame jQuery deferred objekti
@@ -62,7 +63,9 @@ function salvestaTekst(s) {
 }
 
 function suleSalvestusdialoog() {
-  // Sule salvestusdialoog
+  /*
+    Sule salvestusdialoog
+  */
   $('#Salvestusdialoog').addClass('peidetud');
   aktiveeriTekstinupud();
   dialoogiseisund = 'N';
@@ -70,6 +73,9 @@ function suleSalvestusdialoog() {
 }
 
 function seaSalvestuseKasitlejad() {
+  /*
+   Salvestusdialoogi avamine, salvestamine, dialoogi sulgemine
+  */ 
 
   $('#Salvesta1').click(function() {
     // Salvestusdialoogi avamine

@@ -1,7 +1,9 @@
-// Tekstikogu funktsioonid: laadimine, filteerimine, kuvamine
 
 function seaTekstikoguKasitlejad() {
-  /* Ava tekstikogu */
+  /*
+    Tekstikogu funktsioonid: ava, sule, filtreeri
+  */  
+
   $('#AvaTekstikogu').click(function () {
     if (!$('#AvaTekstikogu').hasClass('disabled')) {
       $('#Tekstikogu').removeClass('peidetud');
@@ -34,6 +36,9 @@ function seaTekstikoguKasitlejad() {
 }
 
 function puhastaFilter() {
+  /*
+    Lähtesta filter
+  */
   $('#Filtritekst').val('');
   // Sea filtrivalikute algväärtused
   $('#RippuvTahtTekstiAlguses').prop('checked', false);
@@ -46,7 +51,9 @@ function puhastaFilter() {
 }
 
 function laeTekstid() {
-  /* Laeb Google töölehelt "Samatekstid" kõik tekstid ja kuvab need. */
+  /*
+    Laeb Google töölehelt "Samatekstid" kõik tekstid ja suunab kuvamisele.
+  */
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
   $.get(url,
     function(data, status, xhr) {
@@ -66,6 +73,9 @@ function laeTekstid() {
 }
 
 function filtreeriJaKuvaTekstid() {
+  /*
+    Filtreeri vastavalt seatud filtrile ja kuva tekstikogu tekstid.
+  */
   var filtritPole;
   if ($('#Filtritekst').val().length > 0) {
     filtritPole = false;

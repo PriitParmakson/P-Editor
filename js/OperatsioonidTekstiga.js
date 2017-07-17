@@ -1,5 +1,6 @@
 function markeeriTekstikoguTekst(t) {
-  /* Tagastab markeeritud keskkohaga teksti
+  /*
+   Tagastab markeeritud keskkohaga teksti
    Eeldatakse salvestamiseks puhastatud teksti (ei sisalda kursorit).
   */
   var acc = ''; // Tagastatav tekst, lisatud markeering
@@ -57,7 +58,9 @@ function markeeriTekstikoguTekst(t) {
 }
 
 function moodustaTekstiStruktuurKonsoolile() {
-  // Silumise abivahend
+  /*
+   Silumise abivahend
+  */ 
   var h = $('#Tekst').html();
   var tagasta = h
     .replace(/<span id="\w{1,2}" class="kesk">/gi, '¦')
@@ -101,7 +104,9 @@ function vaiketaheks(t) {
 }
 
 function vahetaPooled(t) {
-  // Eeldab parameetris t sisekujul teksti (kesktäht kahekordselt). Tagastab teksti, milles pooled on vahetatud. Kui pooltevahetusega sattus esimeseks sümboliks tühik, siis see eemaldatakse.
+  /*
+   Eeldab parameetris t sisekujul teksti (kesktäht kahekordselt). Tagastab teksti, milles pooled on vahetatud. Kui pooltevahetusega sattus esimeseks sümboliks tühik, siis see eemaldatakse.
+  */
   var p = tahti(t) / 2;
   if (p < 2) {
     return t

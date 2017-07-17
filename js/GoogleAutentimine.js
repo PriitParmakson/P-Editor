@@ -1,4 +1,7 @@
 function onSignIn(googleUser) {
+  /*
+    Google Sign-In
+  */
   kasutajaProfiil = googleUser.getBasicProfile();
   id_token = googleUser.getAuthResponse().id_token;
   autenditud = true;

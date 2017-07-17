@@ -1,42 +1,65 @@
-// Tärgi või klahvi kindlakstegemise abifunktsioonid
 function ladinaTaht(charCode) {
-  // 97..122 (a..z) 65..90 (A..Z)
+  /*
+    Kontrollib, kas charCode on vahemikus 97..122 (a..z) või 65..90 (A..Z).
+  */
   return (
     (charCode >= 97 && charCode <= 122) || 
     (charCode >= 65 && charCode <= 90)
   )
 }
+
 function tapiTaht(charCode) {
-  // õ ö ä ü 245 246 228 252
-  // Õ Ö Ä Ü 213 214 196 220
-  // š 353, Š 352
-  // ž 382, Ž 381 
+  /*
+   Kontrollib, kas charCode on vahemikus
+   õ ö ä ü 245 246 228 252
+   Õ Ö Ä Ü 213 214 196 220
+   š 353, Š 352
+   ž 382, Ž 381 
+  */
   return ([245, 246, 228, 252, 213, 214, 196,
     220, 353, 352, 382, 381].indexOf(charCode)
     != -1)
 }
+
 function veneTaht(charCode) {
-  // 1024-1279
+  /* Kontrollib, kas charCode on vahemikus
+   1024-1279
+  */
   return (charCode >= 1024 && charCode <= 1279)
 }
+
 function taht(charCode) {
+  /*
+    Kontrollib, kas argument on ladina täht, täpitäht või vene täht.
+  */
   return ladinaTaht(charCode) || tapiTaht(charCode) || veneTaht(charCode)
 }
+
 function kirjavm(char) {
-  // Kontrollib, kas tärk on kirjavahemärk.
-  // Kirjavahemärgiks loetakse ka reavahetusmärki '/'.
+  /*
+   Kontrollib, kas tärk on kirjavahemärk.
+   Kirjavahemärgiks loetakse ka reavahetusmärki '/'.
+  */ 
   return (kirjavmKood(char.charCodeAt(0)) || char == '/')
 }
+
 function kirjavmKood(charCode) {
-  // Kontrollib, kas charCode esitab lubatud 
-  // kirjavahemärki
-  // reavahetus 47, tühik 32  , 44  . 46  - 45  ! 33  ? 63
-  // ( 40  ) 41  : 58  ; 59  " 34
+  /*
+    Kontrollib, kas charCode esitab lubatud 
+    kirjavahemärki:
+    reavahetus 47, tühik 32  , 44  . 46  - 45  ! 33  ? 63
+    ( 40  ) 41  : 58  ; 59  " 34
+  */
   var p = [47, 32, 46, 44, 45, 33, 63, 40, 41, 58, 59, 34];
   var r = p.indexOf(charCode);
   return (r >= 0)
 }
+
 function keyCodeToHumanReadable(keyCode) {
+  /*
+    Tagastab reale erisümbolitele inimloetava tekstikuju.
+    Kui erisümbolit ei leia, siis tagastab tühisõne.
+  */
   var keycodes = {
     8: 'backspace',
     9: 'tab',

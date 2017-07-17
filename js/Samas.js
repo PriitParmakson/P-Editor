@@ -30,9 +30,12 @@ var autenditud = false; // Kas kasutaja on Google Sign-In teenuse abil autenditu
 var kasutajaProfiil; // Autenditud Google kasutaja profiil
 var id_token; // OAuth pääsuvolitus
 
-// Peaprogramm
 function alusta() {
-  // Initsialiseeri tooltip-id
+  /*
+    Peaprogramm. Mitmesugused algväärtustamised
+  */
+
+   Initsialiseeri tooltip-id
   $('[data-toggle="tooltip"]').tooltip();
 
   seaRedaktoriKasitlejad();

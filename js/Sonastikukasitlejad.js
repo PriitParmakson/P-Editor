@@ -1,10 +1,9 @@
-/*
-*/
 function seaSonastikuKasitlejad() {
+  /*
+    Sõnastikudialoogi avamine ja sulgemine, otsing
+  */
+
   $('#Sonastik').click(function () {
-    /*
-    Sõnastikudialoogi avamine
-    */
     $('#Sonastikudialoog').removeClass('peidetud');
     $('#Sonastik').addClass('disabled');
     $('#SonuSonastikus').text(sonastik.length.toString());
@@ -18,11 +17,12 @@ function seaSonastikuKasitlejad() {
     $('#Otsistring').val('');
   });
 
-  /* Otsistringis lubatud kujud: <string>, <string>*, *<string>.
-    Otsimise käivitamiseks on kaks moodust: vajutada Enter otsistringi väljas või vajutada nuppu 'OtsiSonastikust'
-  */
-
   function teeOtsing() {
+    /*
+      Otsin sõnastikust.
+      Otsistringis lubatud kujud: <string>, <string>*, *<string>.
+      Otsimise käivitamiseks on kaks moodust: vajutada Enter otsistringi väljas või vajutada nuppu 'OtsiSonastikust'
+    */
     var v = ''; // Vastuste koguja
     var otsireziim;
     var otsistring = $('#Otsistring').val();

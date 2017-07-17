@@ -1,6 +1,8 @@
 function seaSeotudTekstiKasitlejad() {
+  /*
+    Dialoogi avamine, sulgemine, seotud tekstide otsimine
+  */
 
-  // Sea sisestatava teksti käsitlejad
   $('#SeotudTekstid').click(function () {
     $('#SeotudTekstideDialoog').removeClass('peidetud');
     $('#SeotudTekstid').addClass('disabled');

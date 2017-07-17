@@ -6,7 +6,9 @@
 */
 
 function kuvaTekst() {
-  // Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
+  /*
+   Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
+  */ 
   var mTekst = markeeriTekst(t);
   $('#Tekst').html(mTekst);
   seaCaret(t.indexOf('|'));
