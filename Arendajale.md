@@ -17,6 +17,7 @@ Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.githu
 ## Meetrikad
 
 Meetrikaid hoitakse Google Sheet-l: https://docs.google.com/spreadsheets/d/1NpfIfh1jSoiBjUBaqaFpOcFGWshvx1L5OsR8-BGsoCY/edit#gid=0 ja neid saab vaadata rakendusega: https://priitparmakson.github.io/Samatekst/Meetrikad.html. 
+Google Sheet pakub oma andmeid REST API kaudu, JSON-vormingus.
 
 ## Arhitektuur
 

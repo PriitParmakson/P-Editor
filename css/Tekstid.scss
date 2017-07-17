@@ -18,12 +18,10 @@ $bluegrey100: #CFD8DC;
 body {
   padding: 2rem 2rem 8rem 2rem;
   line-height: 1.5 !important;
-  font-family: 'Lora', serif; 
+  font-family: 'Times New Roman', serif; 
   font-size: 12pt !important; 
   color: Black !important;
   }
-
-
 
 /* ---- Paigutus ---- */
 
@@ -87,9 +85,9 @@ blockquote {
 /* Kood; asciiflow joonised */
 pre, code, samp {
   font-family: 'Anonymous Pro', monospace;
-  font-size: 18px;
-  color: Red !important;
-  background-color: white !important;
+  font-size: 16px;
+  color: IndianRed !important;
+  background-color: LightCyan !important;
   padding: 0 !important;
 }
 pre { margin-top: 1em; margin-bottom: 1em; }
