@@ -15,8 +15,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
   <!-- Tether on vaja tooltip-de jaoks -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -25,91 +24,156 @@
   <link rel='stylesheet' href='css/Samas.css'>
 
   <style>
-    .failinimiFkataloogis { margin: 1rem 0 0 0; }
-    .funktsioonFkataloogis { margin: 0 0 0 1rem; color: IndianRed; background-color: lightcyan; font-family: 'Inconsolata'; }
-    .kommentaarFkataloogis { margin-left: 2rem; font-size: 10pt; }
+    body { line-height: 1.15 !important; }
+
+    .fnKirjeldus {
+      margin: 1rem 0 0 0;
+    }
+    .fnSignatuur {
+      margin: 0;
+      color: IndianRed; background-color: lightcyan;
+      font-family: 'Inconsolata';
+      cursor: pointer;
+    }
+    .fnKommentaar {
+      font-size: 12pt;
+      display: none;
+    }
   </style>
 
   <!-- Skriptid -->
   <script>
+    function lubadusteKatsetus() {
 
-  function alusta() {
+      var faile = 0;
+      var lubadused = [];
+      var sisulubadused = [];
+      var funktsioonikirjeldused = [];
 
-    var faile = 0;
-    var funktsioonikirjeldused = [];
+      function sorteeriJaKuva() {
+        // Sorteeri funktsioonikirjeldused
+        // Vt: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript 
 
-    var u = 'https://api.github.com/repos/PriitParmakson/Samatekst/contents/js';
-    $.getJSON(u, function(jsFailid) {
-      faile =jsFailid.length;
-      jsFailid.forEach(function(fail) {
-        var d = fail.download_url;
-        var failiNimi = fail.name;
-        $.get(d, function(failiSisu) {
-          // var funktsiooneOtsivRegex = /function\s+(\S.+\(.*\))[\s\S]*?\/\*([\s\S]*?)\*\//g;
-          var funktsiooneOtsivRegex = /function\s+(\S+?)\(/g;
-          // \/\*[\s\S]*?\*\/
-          var match;
+        function compare(a, b) {
+          if (a.nimi < b.nimi)
+            return -1;
+          if (a.nimi > b.nimi)
+            return 1;
+          return 0;
+        }
 
-          do {
-            match = funktsiooneOtsivRegex.exec(failiSisu);
-            if (match) {
-              funktsioonikirjeldused.push(
-                {
-                  nimi: match[1],
-                  fail: failiNimi
-                  // ,
-                  // kommentaar: match[2]
-                 });
-            }
-          } while (match);
-          
+        console.log('Sorteeri ja kuva');
+        funktsioonikirjeldused.sort(compare);
+
+        // Kuva kataloog
+        funktsioonikirjeldused.forEach(function (funktsioonikirjeldus) {
+          // Funktsioonikirjelduse tipp
+          var fnKirjeldus = $('<div></div>')
+            .addClass('fnKirjeldus')
+            .appendTo('#Tulemus');
+          // Funktsiooni signatuur  
+          var fnSignatuur = $('<p></p>')
+            .addClass('fnSignatuur')
+            .text(funktsioonikirjeldus.nimi)
+            .appendTo(fnKirjeldus);
+          // Kommentaar
+          // Moodusta HTML
+          var kommentaariread = funktsioonikirjeldus.kommentaar.split(/\n/g);
+          var kHTML = '';
+          kommentaariread.forEach(function(r) {
+            kHTML += r + '<br>';
+          });  
+          var fnKommentaar = $('<p></p>')
+            .addClass('fnKommentaar')
+            .html(kHTML)
+            .appendTo(fnKirjeldus);
         });
+
+        /*
+          Signatuurile klõpsamine avab/sulgeb funktsioonikommentaari.
+          Lisa vastavad käsitlejad.
+        */ 
+        $('.fnSignatuur').click(function() {
+          $(this).next().toggle();
+        }); 
+
+        $('<p></p')
+          .text(faile.toString() + ' failist leitud ' + funktsioonikirjeldused.length.toString() + ' funktsiooni')
+          .appendTo('#Tulemus');
+
+      }
+
+      function eraldaFunktsioonikirjeldused(failiSisu) {
+        /*
+          Faili sisu sisselubamise lubadus on täidetud. Täitmise tulemusena tarnitavaks väärtuseks on faili sisu (stringina).
+          Eralda faili sisust funktsioonikirjeldused ja lisa massiivi funktsioonikirjeldused.
+        */
+        console.log(failiSisu.length);
+        var funktsiooneOtsivRegex = /function\s+(\S.+\(.*\))[\s\S]*?\/\*([\s\S]*?)\*\//g;
+        var match;
+
+        do {
+          match = funktsiooneOtsivRegex.exec(failiSisu);
+          if (match) {
+            funktsioonikirjeldused.push(
+              {
+                nimi: match[1],
+                kommentaar: match[2]
+              });
+          }
+        } while (match);
+      }
+
+      function loeFailJaEraldaKirjeldused(fDownloadURL, fNimi) {
+        return new Promise((resolve, reject) => {
+          fetch(fDownloadURL).then(
+            r => {
+              r.text().then(
+                s => {
+                  eraldaFunktsioonikirjeldused(s);
+                  resolve('Tehtud!');
+                },
+                () => {
+                  console.log('Faili sisu lugemine ebaõnnestus');
+                  reject('Faili sisu lugemine ebaõnnestus');
+                }
+              );           
+            },
+            () => {
+              console.log('Faili sisu lugemine ebaõnnestus');
+              reject('Faili sisu lugemine ebaõnnestus');
+            }
+          );
+        });
+      }
+
+      var u = 'https://api.github.com/repos/PriitParmakson/Samatekst/contents/js';
+      $.getJSON(u, function (jsFailid) {
+        faile = jsFailid.length;
+        /*
+          Iga faili kohta on vaja lubadust, mille täitmine kinnitab, et faililugemise fetch() päring on edukalt täidetud, faili sisu on puhvrist Javascripti loetud ja funktsioonikirjeldused on faili sisust eraldatud ja lisatud massiivi funktsioonikirjeldused. See tähendab, et massiiv on valmis sortimiseks ja kuvamiseks. Lubaduste koordineerimine Promise.all abil.
+        */
+        jsFailid.forEach(function (fail) {
+          var d = fail.download_url;
+          var failiNimi = fail.name;
+          lubadused.push(loeFailJaEraldaKirjeldused(d, failiNimi));
+        });
+        /*
+          Promise.all abil oota kõigi lubaduste täitumist.
+        */
+        Promise.all(lubadused).then(function () {
+          console.log('Lubadused täidetud');
+          sorteeriJaKuva();
+        });
+
       });
-    });
 
-    $('<p></p')
-      .text(faile.toString() + ' failist leitud ' + funktsioonikirjeldused.length.toString() + ' funktsiooni')
-      .appendTo('#Tulemus');
-
-    // Sorteeri funktsioonikirjeldused
-    // Vt: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript 
-
-    function compare(a,b) {
-      if (a.nimi < b.nimi)
-        return -1;
-      if (a.nimi > b.nimi)
-        return 1;
-      return 0;
     }
-
-    funktsioonikirjeldused.sort(compare);
-
-    // Kuva kataloog
-    funktsioonikirjeldused.forEach(function(funktsioonikirjeldus) {
-      var fnKirje = $('<p></p>')
-        .addClass('funktsioonFkataloogis')
-        .text(funktsioonikirjeldus.nimi)
-        .appendTo('#Tulemus');
-      /*
-      var kommentaariread = funktsioonikirjeldus.kommentaar.split(/\n/g);
-      var kk = '';
-      kommentaariread.forEach(function(r) {
-        kk += r + '<br>';
-      });  
-      $('<p></p>')
-        .addClass('kommentaarFkataloogis')
-        .html(kk)
-        .appendTo('#Tulemus');
-      */
-    });
-
-  }
-
   </script>
 
 </head>
 
-<body onload='alusta()'>
+<body onload='lubadusteKatsetus()'>
   <div class='container-fluid'>
     <div class='row'>
       <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
