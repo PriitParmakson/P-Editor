@@ -35,7 +35,7 @@ function alusta() {
     Peaprogramm. Mitmesugused algväärtustamised
   */
 
-   Initsialiseeri tooltip-id
+  // Initsialiseeri tooltip-id
   $('[data-toggle="tooltip"]').tooltip();
 
   seaRedaktoriKasitlejad();
