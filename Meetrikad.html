@@ -51,17 +51,14 @@
             var vtekste = s.match(otsivRegex).length;
             // Kuva valiktekstide arv
             $('#m' + i.toString()).text(vtekste.toString());
-            resolve('Tehtud!');
           },
           () => {
             console.log('Faili sisu lugemine ebaõnnestus');
-            reject('Faili sisu lugemine ebaõnnestus');
           }
         );
       },
       () => {
         console.log('Faili sisu lugemine ebaõnnestus');
-        reject('Faili sisu lugemine ebaõnnestus');
       }
     );
   }
