@@ -29,6 +29,7 @@
     .meetrikarida { }
     .nimetus { }
     .väärtus { }
+    .auto { margin-left: 1rem; color:indianred; }
   </style>
 
   <!-- Skriptid -->
@@ -39,6 +40,43 @@
   */
   var url = 'https://script.google.com/macros/s/AKfycbxBYUF0hfwyUBXfqmS4uDxbsQtNPq2FtqoyKBvcJWvWIr9kV1gC/exec';
   
+  function loeValitudTekstideArv(i) {
+    var fDownloadURL = 'https://raw.githubusercontent.com/PriitParmakson/Samatekst/master/Arhiivkogu.md';
+    fetch(fDownloadURL).then(
+      r => {
+        r.text().then(
+          s => {
+            // Töötle loetud failisisu s
+            var otsivRegex = /## /g;
+            var vtekste = s.match(otsivRegex).length;
+            // Kuva valiktekstide arv
+            $('#m' + i.toString()).text(vtekste.toString());
+            resolve('Tehtud!');
+          },
+          () => {
+            console.log('Faili sisu lugemine ebaõnnestus');
+            reject('Faili sisu lugemine ebaõnnestus');
+          }
+        );
+      },
+      () => {
+        console.log('Faili sisu lugemine ebaõnnestus');
+        reject('Faili sisu lugemine ebaõnnestus');
+      }
+    );
+  }
+
+  function loeTekstideArv(i) {
+    var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+    $.get(url,
+      function(data, status, xhr) {
+        tekstid = data.Tekstid;
+        // Kuva tekstide arv
+        $('#m' + i.toString()).text(tekstid.length.toString());
+       }
+    );   
+  }
+
   function loeJaKuvaMeetrikad() {
     /* Laeb Google töölehelt meetrikad ja kuvab need. */
     $('#Meetrikad').empty();
@@ -49,10 +87,26 @@
           var r = $('<p></p>')
             .addClass('meetrikarida')
             .addClass('d-flex')
-            .addClass('justify-content-between')
+            .addClass('justify-content-end')
             .appendTo('#Meetrikad');
-          $('<span></span').addClass('nimetus').text(data.Meetrikad[i].Meetrika).appendTo(r);
-          $('<span></span').addClass('väärtus').text(data.Meetrikad[i].Väärtus).appendTo(r);
+          $('<span></span')
+            .addClass('nimetus')
+            .addClass('mr-auto')
+            .text(data.Meetrikad[i].meetrika)
+            .appendTo(r);
+          $('<span></span')
+            .attr('id', 'm' + i.toString())
+            .addClass('väärtus')
+            .text(data.Meetrikad[i].väärtus)
+            .appendTo(r);
+          if(data.Meetrikad[i].arvutaja !== '') {
+            console.log(data.Meetrikad[i].arvutaja);
+            eval(data.Meetrikad[i].arvutaja + '(' + i + ')');
+            $('<span></span>')
+              .addClass('auto')
+              .text('*')
+              .appendTo(r);
+          }
         }
       }
     );
@@ -124,6 +178,8 @@
                 <i class='ikoon material-icons' >add_circle_outline</i>
               </div>
           </div>
+
+          <p><span class='auto'>*</span> - arvutatud automaatselt</p>
 
         </div>  
       </div>
