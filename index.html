@@ -201,7 +201,7 @@
           <div id='Sonastikudialoog'
               class='paan dialoog peidetud'>
             <div id='OtsinguJuhtimiseRida'
-                class='d-flex align-items-center justify-content-start'>
+                class='d-flex align-items-center justify-content-between'>
               <div id='Otsistringiblokk' class='m-3'>
                 <label class='active'>
                 Otsi sõnastikust (<span id='SonuSonastikus' class='Loendur'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> sõna): <input id='Otsistring' type='text' class='form-control' autocomplete='off'>
@@ -214,10 +214,19 @@
                   data-toggle='tooltip' title='Kuva pöördkuju'>
                   <input type='checkbox' class='form-check-input'
                     id='KuvaPoordkuju'>
-                  kuva pöördkuju
+                  pöördkuju
                 </label>
               </span>
-              <div id='OtsiSonastikust' class='nupp' data-toggle='tooltip' title='Soorita otsing'>
+              <!-- Regex -->
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'
+                  data-toggle='tooltip' title='Regulaaravaldis'>
+                  <input type='checkbox' class='form-check-input'
+                    id='Regulaaravaldis'>
+                  Regex
+                </label>
+              </span>
+              <div id='OtsiSonastikust' class='nupp ml-auto' data-toggle='tooltip' title='Soorita otsing'>
                 <i class='ikoon material-icons' style='color: #C5E1A5;'>search</i>
               </div>
               <!-- Sulgemisnupp -->

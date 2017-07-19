@@ -3,6 +3,9 @@
   Iga kirje tabeli eraldi reas, struktuuriga:
        (1)     (2)       (3)          (4)
      Tekst   Draft?  Autori nimi  Autori e-post
+     
+     Google Apps Script utiliidid vt:
+     https://developers.google.com/apps-script/reference/utilities/utilities   
 */
 
 function doGet(e) {
@@ -30,21 +33,47 @@ function doGet(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+function test() {
+  Logger.log('Test');
+  var IDToken = '...';
+  var payload = parseJwt(IDToken);
+  Logger.log(payload.name);  
+}
+
+function byteArrayToString(array) {
+  var result = "";
+  for (var i = 0; i < array.length; i++) {
+    result += String.fromCharCode(array[i]);
+  }
+  return result;
+}
+
+function parseJwt(token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace('-', '+').replace('_', '/');
+  var bA = Utilities.base64Decode(base64);
+  var s = byteArrayToString(bA);
+  return JSON.parse(s);
+};
+
 function doPost(e) {
   /*
   Saadetakse objekt kujul:
       { Tekst: <string>,
         Draft: <boolean>,
-        Nimi: <string>,
-        EPost: <string>,
         IDToken: <string>
       }
   Salvestatakse neli esimest.
   Murdskriptimise vältimiseks saadetud tekst puhastatakse.
   */
+
   try {
     Logger.log(e.toString());
     // Siia lisada ID tokeni kontroll
+    var IDToken = e.parameter['IDToken'];
+    var payload = parseJwt(IDToken);
+    var autoriNimi = payload.name;
+    var autoriEpost = payload.email;    
     var sheet = SpreadsheetApp.getActiveSheet();
     sheet.insertRows(1); // Lisa algusse uus rida
     // var nextRow = sheet.getLastRow()+1; // get next row
@@ -59,9 +88,9 @@ function doPost(e) {
     sheet.getRange(1, 1).setValue(p);
     if (e.parameter['Draft']) {
       sheet.getRange(1, 2).setValue(e.parameter['Draft']);
-    }
-    sheet.getRange(1, 3).setValue(e.parameter['Nimi']);    
-    sheet.getRange(1, 4).setValue(e.parameter['EPost']);    
+    }        
+    sheet.getRange(1, 3).setValue(autoriNimi);    
+    sheet.getRange(1, 4).setValue(autoriEpost);    
     return ContentService // Return json success results
       .createTextOutput(
       JSON.stringify({ "result":"success" }))
