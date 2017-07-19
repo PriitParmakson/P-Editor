@@ -9,14 +9,18 @@ layout: Tekstid
 
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
-Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
+- Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
+- Funktsioonikataloog: [Funktsioonikataloog.html](Funktsioonikataloog.html)
+- Koodimeetrikad: [Meetrikad.html](Meetrikad.html)
+- Taustatekste
+  - [Näppimisest, konfimisest ja tööriistade isetegemisest](docs/Nappimisest)
 
 - TOC
 {:toc}
 
 ## Meetrikad
 
-- Koodimeetrikad on esitatud mõõdikulauana: [https://priitparmakson.github.io/Samatekst/Meetrikad.html](https://priitparmakson.github.io/Samatekst/Meetrikad.html).
+- Koodimeetrikad on esitatud mõõdikulauana: [Meetrikad.html](Meetrikad.html).
 - Meetrikaid hoitakse [Google Sheet-l](https://docs.google.com/spreadsheets/d/1NpfIfh1jSoiBjUBaqaFpOcFGWshvx1L5OsR8-BGsoCY/edit#gid=0). Google Sheet pakub oma andmeid REST API kaudu, JSON-vormingus.
 
 ## Arhitektuur
