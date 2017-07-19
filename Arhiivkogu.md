@@ -229,6 +229,30 @@ No suu saiaseks, kes aias uus on.
 
 No suu saiaseks. Eemal üks külamees, kes aias uus on.
 
+## Sakas
+
+<p>Sakas sadas. Sakas!<br>
+Sakas udu - Sakas!<br>
+Sakas kallak - Sakas!<br>
+Sakas pover - ere vopsakas!<br>
+Sakas sära - rässakas!<br>
+Sakas rott - torsakas!<br>
+Sakas säng - nässakas!<br>
+Sakas pori - ropsakas!<br>
+Sakas parm - rapsakas!<br>
+Sakas iive - viisakas!<br>
+Sakas, oo, roosakas!<br>
+Sakas pole lopsakas!<br>
+Sakas tüma mütsakas!<br>
+Sakas räks - kärsakas!<br>
+Sakas tiik kiitsakas!<br>
+Sakas pekk - kepsakas!<br>
+Sakas pubi boss - sobib? - upsakas!<br>
+Sakas töö - köötsakas!<br>
+Sakas park, taat krapsakas.<br>
+Sakas paradoks - kodar apsakas.
+</p>
+
 ## Samasust susamas
 
 Samusesse sumas
