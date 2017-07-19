@@ -10,13 +10,16 @@ layout: Tekstid
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
 - Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
-- Funktsioonikataloog: [Funktsioonikataloog.html](Funktsioonikataloog.html)
-- Koodimeetrikad: [Meetrikad.html](Meetrikad.html)
+
+[Funktsioonikataloog](Funktsioonikataloog.html)
+
+[Koodimeetrikad](Meetrikad.html)
+
 - Taustatekste
   - [Näppimisest, konfimisest ja tööriistade isetegemisest](docs/Nappimisest)
 
-- TOC
-{:toc}
+<!-- - TOC
+{:toc}  -->
 
 ## Meetrikad
 
