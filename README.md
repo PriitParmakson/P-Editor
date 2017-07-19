@@ -64,4 +64,4 @@ Sama jama - "s".
 
 Redaktor pakub ka võimalust tekste salvestada Google pilves hoitavasse tekstikogusse.
 
-Tehniline kirjeldus: [https://priitparmakson.github.io/Samatekst/Arendusdokument](https://priitparmakson.github.io/Samatekst/Arendusdokument).
+Tehniline kirjeldus: [https://priitparmakson.github.io/Samatekst/Arendajale](https://priitparmakson.github.io/Samatekst/Arendajale).

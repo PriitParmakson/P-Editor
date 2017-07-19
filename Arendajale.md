@@ -25,24 +25,20 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
 ## Arhitektuur
 
-Klient:
-- Javascript/Bootstrap4
-  - koodihoidla: GitHub
-  - arendusvahend: Visual Studio Code
-
-Server:
-- Google Apps
-  - programmeerimiskeel: Google Apps Script
-  - arendusvahend: Google Apps Script Editor
-
-Andmebaas:
-- Google Sheet
-
-Autentimine:
-- Google Sign-In (OAuth 2.0)
-
-Dokumentatsioon:
-- GitHub Pages (github.io, Jekyll)
+- Klient:
+  - Javascript/Bootstrap4
+    - koodihoidla: GitHub
+    - arendusvahend: Visual Studio Code
+- Server:
+  - Google Apps
+    - programmeerimiskeel: Google Apps Script
+    - arendusvahend: Google Apps Script Editor
+- Andmebaas:
+  - Google Sheet
+- Autentimine:
+  - Google Sign-In (OAuth 2.0)
+- Dokumentatsioon:
+  - GitHub Pages (github.io, Jekyll)
 
 <a target href='resource/ARHITEKTUUR.png'>Arhitektuurijoonis</a>
 
