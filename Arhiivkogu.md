@@ -177,14 +177,6 @@ Loo kool, lahe! Halloo, kool!
 
 Ajate luulu, luuletaja!
 
-## Maamats
-
-Kivi osta, maamats-oivik!
-
-Sulas osta, maamats, osalus!
-
-Ajaks oma vagu, maamats? Osta maa, mugavam oskaja!
-
 ## Melu tulem
 
 Melu tuhinaga, aga nihu tulem.
