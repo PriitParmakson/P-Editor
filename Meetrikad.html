@@ -32,14 +32,16 @@
   </style>
 
   <!-- Skriptid -->
-  <script src="js/Meetrikad.js"></script>
+  <script src="js/GoogleAutentimine.js"></script>
   <script>
   /* 
     Kuva meetrikad
   */
-  function alusta() {
+  var url = 'https://script.google.com/macros/s/AKfycbxBYUF0hfwyUBXfqmS4uDxbsQtNPq2FtqoyKBvcJWvWIr9kV1gC/exec';
+  
+  function loeJaKuvaMeetrikad() {
     /* Laeb Google töölehelt meetrikad ja kuvab need. */
-    var url = 'https://script.google.com/macros/s/AKfycbxBYUF0hfwyUBXfqmS4uDxbsQtNPq2FtqoyKBvcJWvWIr9kV1gC/exec';
+    $('#Meetrikad').empty();
     $.getJSON(url,
       function(data, status, xhr) {
         // Kuva meetrikad
@@ -52,9 +54,26 @@
           $('<span></span').addClass('nimetus').text(data.Meetrikad[i].Meetrika).appendTo(r);
           $('<span></span').addClass('väärtus').text(data.Meetrikad[i].Väärtus).appendTo(r);
         }
-      }); 
+      }
+    );
   }
 
+  function alusta() {
+    loeJaKuvaMeetrikad();
+
+    /* Lisab käsitleja uue meetrika lisamise dialoogile. */  
+    $('#MeetrikaLisaNupp').click(function() {
+      var s = {
+        nimetus: $('#MeetrikaNimi').val(),
+        vaartus: $('#MeetrikaVaartus').val()
+      };
+      $.post(url, s,
+        function() {
+          loeJaKuvaMeetrikad();
+        }
+      );
+    });
+  }
 
   </script>
 
@@ -66,8 +85,45 @@
       <div class='row'>
         <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
 
+          <p>Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu</p>
+
+          <!-- Sisselogimine -->
+          <div class='d-flex mb-5'>
+            <div class='align-self-start ml-auto'> 
+              <div class="g-signin2" data-onsuccess="onSignIn" data-toggle='tooltip' title='Sisselogimine annab võimaluse tekste salvestada' data-placement="bottom"></div>
+              <div id='Kasutaja' class="text-center"></div>
+            </div>
+          </div>
+
+          <p><i class='ikoon material-icons' >trending_up</i></p>
+
+          <h1>Meetrikad</h1>
+
           <ul id='Meetrikad'>
           </ul>
+
+          <div id='Meetrikalisamisdialoog' class='paan dialoog d-flex align-items-center justify-content-between'>
+              <!-- Meetrikatekst -->
+              <div class='mx-3'>
+                <label class='active'>
+                  <input id='MeetrikaNimi' type='text'
+                    class='form-control' autocomplete="off"
+                    placeholder="Meetrika nimi"
+                  >
+                </label>
+              </div>
+              <div class='mx-3'>
+                <label class='active'>
+                  <input id='MeetrikaVaartus' type='text'
+                    class='form-control' autocomplete="off"
+                    placeholder="Meetrika väärtus"
+                  >
+                </label>
+              </div>
+              <div id='MeetrikaLisaNupp' class='nupp' data-toggle='tooltip' title='Lisa uus meetrika'>
+                <i class='ikoon material-icons' >add_circle_outline</i>
+              </div>
+          </div>
 
         </div>  
       </div>

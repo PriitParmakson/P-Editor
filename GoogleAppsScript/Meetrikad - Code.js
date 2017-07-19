@@ -23,32 +23,36 @@ function doGet(e) {
 function doPost(e) {
   /*
   Saadetakse objekt kujul:
-      { Meetrika: <string>,
-        Väärtus: <string>
-      }
+      { nimetus: <string>,
+        vaartus: <string> }
   Kui Meetrika esineb, siis väärtus kirjutatakse üle; kui 
   Meetrikat töölehel ei ole, siis lisatakse.
   */
   try {
     Logger.log(e.toString());
     // Siia lisada ID tokeni kontroll
+    var nimetus = e.parameter['nimetus'];
+    var vaartus = e.parameter['vaartus'];
     var sheet = SpreadsheetApp.getActiveSheet();
-    sheet.insertRows(1); // Lisa algusse uus rida
-    // var nextRow = sheet.getLastRow()+1; // get next row
-    // Puhasta saadetud tekst
-    var s = e.parameter['Tekst'];
-    var p = ''; // Puhastatud tekst
-    for (var i = 0; i < s.length; i++) {
-      if (taht(s.charCodeAt(i)) || kirjavmKood(s.charCodeAt(i))) {
-        p += s[i];
+    var andmetabel = sheet.getDataRange().getValues();  
+    var olemasolev = false;
+    var leitudMRida;
+    // Uus väärtus olemasolevale meetrikale?
+    for (var i = 0; i < sheet.getLastRow(); i++) {
+      if (andmetabel[i][0] == nimetus) {
+        olemasolev = true;
+        leitudMRida = i;
+        break;
       }
     }
-    sheet.getRange(1, 1).setValue(p);
-    if (e.parameter['Draft']) {
-      sheet.getRange(1, 2).setValue(e.parameter['Draft']);
-    }
-    sheet.getRange(1, 3).setValue(e.parameter['Nimi']);    
-    sheet.getRange(1, 4).setValue(e.parameter['EPost']);    
+    if (olemasolev) {
+      sheet.getRange(leitudMRida + 1, 2).setValue(vaartus);
+    } else {
+      var uusRida = sheet.getLastRow()+1; // get next row
+      sheet.getRange(uusRida, 1).setValue(nimetus);
+      sheet.getRange(uusRida, 2).setValue(vaartus);
+    }  
+      
     return ContentService // Return json success results
       .createTextOutput(
       JSON.stringify({ "result":"success" }))
@@ -60,6 +64,5 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
-
 
 
