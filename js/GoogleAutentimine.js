@@ -41,5 +41,4 @@ function kontrolliToken() {
 
   var payload = parseJwt(id_token);
   console.log(payload);
-
 }
