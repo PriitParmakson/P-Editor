@@ -6,8 +6,6 @@ function tekstSalvestuskujule(t) {
      Tagastab objekti kujul:
       { Tekst: <string>,
         Draft: <boolean>,
-        Nimi: <string>,
-        EPost: <string>,
         IDToken: <string>
       }
   */
@@ -47,7 +45,7 @@ function tekstSalvestuskujule(t) {
   var nimi = kasutajaProfiil.getName();
   var ePost = kasutajaProfiil.getEmail();
 
-  return { Tekst: c, Draft: draft, Nimi: nimi, EPost: ePost, IDToken: id_token };
+  return { Tekst: c, Draft: draft, IDToken: id_token };
 }
 
 function salvestaTekst(s) {

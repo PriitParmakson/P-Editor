@@ -1,9 +1,15 @@
 function onSignIn(googleUser) {
   /*
     Google Sign-In
+  
+    "A GoogleUser object represents one user account."
+    Arusaamatu, kuidas googleUser moodustatakse.
+    GoogleUser kirjeldus vt: https://developers.google.com/identity/sign-in/web/reference#users 
+
   */
   kasutajaProfiil = googleUser.getBasicProfile();
   id_token = googleUser.getAuthResponse().id_token;
+  kontrolliToken();
   autenditud = true;
   $('#Kasutaja').text(kasutajaProfiil.getGivenName());
   if (t.length > 1) {
@@ -21,3 +27,18 @@ function onSignIn(googleUser) {
 
   // console.log("ID Token: " + id_token);
 };
+
+function kontrolliToken() {
+  /*
+    ID token-i kontrollimine serveris vt: https://developers.google.com/identity/sign-in/web/backend-auth
+  */
+
+  function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+  };
+
+  var payload = parseJwt(id_token);
+  console.log(payload);
+}
