@@ -300,3 +300,6 @@ Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioo
 - Koodimeetrikad on esitatud mõõdikulauana: [Meetrikad.html](https://priitparmakson.github.io/Samatekst/Meetrikad.html).
 - Meetrikaid hoitakse [Google Sheet-l](https://docs.google.com/spreadsheets/d/1NpfIfh1jSoiBjUBaqaFpOcFGWshvx1L5OsR8-BGsoCY/edit#gid=0). Google Sheet pakub oma andmeid REST API kaudu, JSON-vormingus.
 
+## Pääsuhaldus
+
+[Pääsuhaldus](Paasuhaldus).

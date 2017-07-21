@@ -3,17 +3,13 @@ title: Pääsuhaldus
 permalink: Paasuhaldus
 ---
 
-Google Sign-In-i kasutamisel tuleb teenust kasutav rakendus Google identiteediplatvormil registreerida. Registreerimisel antakse rakendusele id - `Client ID` ja saladus (`client secret`). Registreerimiskoht on `Google API Console` [https://console.developers.google.com](https://console.developers.google.com)  > projekt Samatekst > `Credentials`. 
-Näiteks:
+Google Sign-In-i kasutamisel tuleb teenust kasutav rakendus Google identiteediplatvormil registreerida. Registreerimisel antakse rakendusele id - `Client ID` ja saladus (`client secret`). Registreerimiskoht on `Google API Console` [https://console.developers.google.com](https://console.developers.google.com)  > projekt Samatekst > `Credentials`. Näiteks:
 
 ```JSON
 {"web":{"client_id":"554561859935-1ojca8mj94fa41mebnjnhqvt83t4gdfj.apps.googleusercontent.com","project_id":"project-id-1972906309436068154","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"c7...","javascript_origins":["https://priitparmakson.github.io"]}}
 ```
 
-Registreeritakse Google "projekti" alla. Tähelepanu: ID-tokeni valideerimisel Google teenuse abil teenus ilmselt(?) kontrollib, et javascript-i allikas ja kliendi ID ühtivad. S.t ID-token on kasutatav ainult samas allikas. Kui tahta kasutada mujal, siis peab ise valideerima.
-
-Mida siis teha? 
-
+Registreeritakse Google "projekti" alla.
 
 - JWT standardsed parameetrid ja algoritmid vt: [https://www.iana.org/assignments/jose/jose.xhtml](https://www.iana.org/assignments/jose/jose.xhtml)
   - `kty` - key type, ``n` - modulus, `e` - exponent
@@ -74,7 +70,7 @@ Payload
 }
 ```
 
-Googlev API avalikud võtmed
+Google API avalikud võtmed
 
 - [JSON Web Key](https://tools.ietf.org/html/rfc7517) (JWK) vormingus: [https://www.googleapis.com/oauth2/v3/certs](https://www.googleapis.com/oauth2/v3/certs).
 - PEM vormingus: [https://www.googleapis.com/oauth2/v1/certs](https://www.googleapis.com/oauth2/v1/certs) 
