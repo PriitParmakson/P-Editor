@@ -10,33 +10,30 @@ layout: Tekstid
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
 - Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
-
 - [Funktsioonikataloog](https://priitparmakson.github.io/Samatekst/Funktsioonikataloog.html)
-
 - [Koodimeetrikad](https://priitparmakson.github.io/Samatekst/Meetrikad.html)
-
 - Taustatekste
   - [Näppimisest, konfimisest ja tööriistade isetegemisest](docs/Nappimisest)
 
-<!-- - TOC
-{:toc}  -->
+- TOC
+{:toc}
 
 ## Arhitektuur
 
 - Klient:
-  - Javascript/Bootstrap4
-    - koodihoidla: GitHub
-    - arendusvahend: Visual Studio Code
+  - `Javascript/Bootstrap4`
+    - koodihoidla: `GitHub`
+    - arendusvahend: `Visual Studio Code`
 - Server:
-  - Google Apps
-    - programmeerimiskeel: Google Apps Script
-    - arendusvahend: Google Apps Script Editor
+  - `Google Apps`
+    - programmeerimiskeel: `Google Apps Script`
+    - arendusvahend: `Google Apps Script Editor`
 - Andmebaas:
-  - Google Sheet
+  - `Google Sheet`
 - Autentimine:
-  - Google Sign-In (OAuth 2.0)
+  - `Google Sign-In` (`OpenID Connect`)
 - Dokumentatsioon:
-  - GitHub Pages (github.io, Jekyll)
+  - `GitHub Pages` (`github.io`, `Jekyll`)
 
 <a target href='resource/ARHITEKTUUR.png'>Arhitektuurijoonis</a>
 

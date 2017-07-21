@@ -17,7 +17,7 @@ $bluegrey100: #CFD8DC;
 /* ---- Keha -------- */
 body {
   padding: 2rem 2rem 8rem 2rem;
-  line-height: 1.5 !important;
+  line-height: 1.2 !important;
   font-family: 'Times New Roman', serif; 
   font-size: 12pt !important; 
   color: Black !important;
@@ -26,7 +26,7 @@ body {
 /* ---- Paigutus ---- */
 
 /* Pealkirjad */
-h1, h2, h3 {
+h1, h2 {
   font-size: 14pt !important;
   line-height: 1.25;
 }
@@ -48,10 +48,10 @@ h3 {
 p { margin: 0 0 1em 0; }
 
 /* Loetelud */
-ul { list-style: none;
+ul { list-style-type: circle;
     margin: 0 0 1em 0;
 }
-ul > ul { margin-left: 2rem; }
+ul > ul { margin-left: 1rem; }
 /* ul > li:before { display: inline-block;
     content: "-"; width: 1em; margin-left: -1em; } */
 
