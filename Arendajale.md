@@ -288,15 +288,13 @@ Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioo
 
 <a target href='resource/VisuaalneHierarhia.PNG'>Visuaalne hierarhia (joonis)</a>
 
-## Autentimine
+## Autentimine ja pääsuhaldus
 
 * Google Sign-In for Websites: [https://developers.google.com/identity/sign-in/web/](https://developers.google.com/identity/sign-in/web/)
+* vt lähemalt: [Pääsuhaldus](Paasuhaldus).
 
 ## Meetrikad
 
 - Koodimeetrikad on esitatud mõõdikulauana: [Meetrikad.html](https://priitparmakson.github.io/Samatekst/Meetrikad.html).
 - Meetrikaid hoitakse [Google Sheet-l](https://docs.google.com/spreadsheets/d/1NpfIfh1jSoiBjUBaqaFpOcFGWshvx1L5OsR8-BGsoCY/edit#gid=0). Google Sheet pakub oma andmeid REST API kaudu, JSON-vormingus.
 
-## Pääsuhaldus
-
-[Pääsuhaldus](Paasuhaldus).
