@@ -1,4 +1,3 @@
-
 /* Teksti kuvamise funktsioonid:
   kuvaTekst()
   markeeriTekst()
@@ -9,7 +8,7 @@ function kuvaTekst() {
   /*
    Markeerib ja kuvab teksti, seab caret ja väljastab silumiseks vastava teate konsoolile.
   */ 
-  var mTekst = markeeriTekst(t);
+  var mTekst = markeeriTekst(t, kuvaKesktahtYhekordselt);
   $('#Tekst').html(mTekst);
   seaCaret(t.indexOf('|'));
   // Logimine
@@ -28,10 +27,9 @@ function kuvaTekst() {
   $('#Taheloendur').html(loenduritekst);
 }
 
-function markeeriTekst(markeeritavTekst) {
-  /* Sisendiks on sisekujul tekst.
-  Tagastab HTML-i viidud, markeeritud kesktähtedega teksti.
-  Kesktähed jagavad teksti 5 ossa. Tagastatava HTML-i struktuur:
+function markeeriTekst(markeeritavTekst, kuvaKesktahtYhekordselt) {
+  /* Sisendiks on sisekujul tekst ja märge, kas kesktähte kuvatakse
+    ühekordselt. Tagastab HTML-i viidud, markeeritud kesktähtedega teksti. Kesktähed jagavad teksti 5 ossa. Tagastatava HTML-i struktuur:
     <p>
       <span id='A'>tähed enne esimest kesktähte</span>
       <span id='K1'> esimene kesktäht </span>
@@ -39,8 +37,8 @@ function markeeriTekst(markeeritavTekst) {
       <span id='K2'>(teine kesktäht)</span>
       <span id='B'>tähed pärast teist kesktähte</span>
     </p>
-  
-  Kursor jäetakse vahele. Tekstiosad võivad olla tühjad.
+    Kursor jäetakse vahele. Tekstiosad võivad olla tühjad.
+    Ei sõltu ega mõjuta globaalseid muutujaid.
   */
 
   var koguja = ['', '', '', '', ''];

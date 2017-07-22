@@ -45,6 +45,9 @@ function tekstSalvestuskujule(t) {
   var nimi = kasutajaProfiil.getName();
   var ePost = kasutajaProfiil.getEmail();
 
+  /* ID token on oluline võtta iga kord enne salvestamist, sest see aegub tunniga. */  
+  var id_token = googleUser.getAuthResponse().id_token;
+
   return { Tekst: c, Draft: draft, IDToken: id_token };
 }
 

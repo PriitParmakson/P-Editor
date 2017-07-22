@@ -21,14 +21,24 @@ var logimistase = 1;
 /* Väljas #Tekst oleva teksti mudel */
 var t = '|';
 var kuvaKesktahtYhekordselt = false;
+
 /* Hoiab kõiki allalaetud tekste
   Struktuur: { Tekst: <string>, Draft: <boolean> }
 */
 var tekstid; // Sisseloetud tekstid
+
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
+
 var autenditud = false; // Kas kasutaja on Google Sign-In teenuse abil autenditud
-var kasutajaProfiil; // Autenditud Google kasutaja profiil
-var id_token; // OAuth pääsuvolitus
+
+/* Puhver. Hoiab tekste, mida saab roteerida tekstisisestusalasse.
+  Massiiv, mille elementideks on kirjed
+   {
+     tekst: <siseesituses tekst>,
+     kuvaKesktahtYhekordselt: <boolean>  
+   }
+*/
+var puhver = [];
 
 function alusta() {
   /*
@@ -48,6 +58,7 @@ function alusta() {
   seaSamatekstidTekstistKasitlejad();
   seaSonastikuKasitlejad();
   seaSeotudTekstiKasitlejad();
+  seaPuhvriKasitlejad();
 
   // Algustekst (kursor)
   kuvaTekst();

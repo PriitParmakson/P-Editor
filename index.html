@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Samas</title>
-  <meta name="google-signin-scope" content="profile email">
-  <meta name="google-signin-client_id" content="554561859935-1ojca8mj94fa41mebnjnhqvt83t4gdfj.apps.googleusercontent.com">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samas</title>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="554561859935-1ojca8mj94fa41mebnjnhqvt83t4gdfj.apps.googleusercontent.com">
 
-  <!-- Google Identity Platform -->
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Google Identity Platform -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-  <!-- JQuery -->
-  <script src="https://code.jquery.com/jquery.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
 
-  <!-- Material Design icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <!-- Material Design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
-  <!-- Tether on vaja tooltip-de jaoks -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- Tether on vaja tooltip-de jaoks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-	<!-- Remarkable https://github.com/jonschlinkert/remarkable -->
-	<script src="https://cdn.jsdelivr.net/remarkable/1.6.0/remarkable.min.js"></script>
+    <!-- Remarkable https://github.com/jonschlinkert/remarkable -->
+    <script src="https://cdn.jsdelivr.net/remarkable/1.6.0/remarkable.min.js"></script>
 
-  <!-- Stiilid -->
-  <link rel='stylesheet' href='css/Samas.css'>
+    <!-- Stiilid -->
+    <link rel='stylesheet' href='css/Samas.css'>
 
-  <!-- Skriptid -->
-  <script src="js/GoogleAutentimine.js"></script>
-  <script src="js/base64Teisendused.js"></script>
-  <script src='js/FilterJaOtsing.js'></script>
-  <script src='js/ModaalsusJaNupukasitlejad.js'></script>
-  <script src='js/Oigekirjakontroll.js'></script>
-  <script src='js/OperatsioonidTekstiga.js'></script>
-  <script src='js/Salvestamine.js'></script>
-  <script src='js/Samas.js'></script>
-  <script src='js/SamatekstideOtsingTekstist.js'></script>
-  <script src='js/SamatekstiPrimitiivid.js'></script>
-  <script src='js/SeotudTekstid.js'></script>
-  <script src='js/Sonastik.js'></script>
-  <script src='js/Sonastikukasitlejad.js'></script>
-  <script src='js/Targifunktsioonid.js'></script>
-  <script src='js/Tekstikogu.js'></script>
-  <script src='js/TekstiKuvamineRedaktoris.js'></script>
-  <script src='js/TekstiredigeerimisePohi.js'></script>
+    <!-- Skriptid -->
+    <script src="js/GoogleAutentimine.js"></script>
+    <script src="js/base64Teisendused.js"></script>
+    <script src='js/FilterJaOtsing.js'></script>
+    <script src='js/ModaalsusJaNupukasitlejad.js'></script>
+    <script src='js/Oigekirjakontroll.js'></script>
+    <script src='js/OperatsioonidTekstiga.js'></script>
+    <script src='js/Salvestamine.js'></script>
+    <script src='js/Samas.js'></script>
+    <script src='js/SamatekstideOtsingTekstist.js'></script>
+    <script src='js/SamatekstiPrimitiivid.js'></script>
+    <script src='js/SeotudTekstid.js'></script>
+    <script src='js/Sonastik.js'></script>
+    <script src='js/Sonastikukasitlejad.js'></script>
+    <script src='js/Targifunktsioonid.js'></script>
+    <script src='js/Tekstikogu.js'></script>
+    <script src='js/TekstiKuvamineRedaktoris.js'></script>
+    <script src='js/TekstiredigeerimisePohi.js'></script>
+    <script src='js/Puhver.js'></script>
 
   </head>
 
@@ -71,7 +72,7 @@
 
           <!-- Infopaan -->
           <div id='Infopaan'
-            class='paan teabepaan d-flex align-items-start justify-content-between'>
+            class='paan teabepaan peidetud d-flex align-items-start justify-content-between'>
             <!-- Info -->
             <p id='Infotekst'>
               <span class='klahv'>&larr;</span>
@@ -97,6 +98,35 @@
             <!-- Sulgemisnupp -->
             <div id='TeatepaanSulge' class='sulgemisnupuke'>
               <span>&times;</span>
+            </div>
+          </div>
+
+          <!-- Puhvriala -->
+          <div id='Puhvridialoog' class='paan dialoog peidetud'>
+            <div class='d-flex'>
+              <div id='Puhvritekstid' class='p-3'>
+              </div>
+
+              <!-- Sulgemisnupp -->
+              <div id='SulgePuhverNupp' class='align-self-start ml-auto sulgemisnupuke'>
+                <span>&times;</span>
+              </div>
+
+            </div>
+
+            <div id='Puhvrinupud' class='d-flex justify-content-center'>
+              <span id='PuhverPuhastaNupp' class='nupp'
+                data-toggle='tooltip' title='Puhasta puhver'>
+                <i class="ikoon material-icons">clear</i>
+              </span>
+              <span id='PuhverPush' class='nupp'
+                data-toggle='tooltip' title='Pane tekst puhvrisse'>
+                <i class="ikoon material-icons">keyboard_arrow_up</i>
+              </span>
+              <span id='PuhverPop' class='nupp'
+                data-toggle='tooltip' title='Võta tekst puhvrist'>
+                <i class="ikoon material-icons">keyboard_arrow_down</i>
+              </span>
             </div>
           </div>
 
@@ -137,7 +167,7 @@
               <i class="ikoon material-icons">call_split</i>
             </span>
 
-            <span id='Info' class='nupp disabled'
+            <span id='Info' class='nupp'
               data-toggle='tooltip' title='Kuidas kasutada'>
               <i class="ikoon material-icons">info</i>
             </span>
@@ -145,6 +175,11 @@
             <span id='Sonastik' class='nupp'
               data-toggle='tooltip' title='Sonastik'>
               <i class="ikoon material-icons">search</i>
+            </span>
+
+            <span id='AvaPuhverNupp' class='nupp'
+              data-toggle='tooltip' title='Puhver'>
+              <i class="ikoon material-icons">cached</i>
             </span>
 
             <span id='Oigekirjakontroll' class='nupp'
