@@ -30,7 +30,8 @@ var tekstid; // Sisseloetud tekstid
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
 
 var autenditud = false; // Kas kasutaja on Google Sign-In teenuse abil autenditud
-var kasutajaProfiil; 
+var kasutaja; // Google Sign-In funktsioon, millega saab salvestamisel
+pärida ID token-i
 
 /* Puhver. Hoiab tekste, mida saab roteerida tekstisisestusalasse.
   Massiiv, mille elementideks on kirjed

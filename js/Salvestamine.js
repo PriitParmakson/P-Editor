@@ -41,12 +41,8 @@ function tekstSalvestuskujule(t) {
   // Kas on Draft?
   var draft = $('#draftNupp').prop('checked') ? true : false;
 
-  // Autori nimi ja e-post
-  var nimi = kasutajaProfiil.getName();
-  var ePost = kasutajaProfiil.getEmail();
-
   /* ID token on oluline võtta iga kord enne salvestamist, sest see aegub tunniga. */  
-  var id_token = googleUser.getAuthResponse().id_token;
+  var id_token = kasutaja.getAuthResponse().id_token;
 
   return { Tekst: c, Draft: draft, IDToken: id_token };
 }

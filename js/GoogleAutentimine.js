@@ -11,7 +11,8 @@ function onSignIn(googleUser) {
     ID tokeni audience-ks on CLIENT_ID '554561859935-1ojca8mj94fa41mebnjnhqvt83t4gdfj.apps.googleusercontent.com', see on seatud HTML-avalehel meta-päises 'google-signin-client_id'.
 
   */
-  kasutajaProfiil = googleUser.getBasicProfile();
+  kasutaja = googleUser;
+  var kasutajaProfiil = googleUser.getBasicProfile();
   autenditud = true;
   $('#Kasutaja').text(kasutajaProfiil.getGivenName());
   if (t.length > 1) {
