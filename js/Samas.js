@@ -30,6 +30,7 @@ var tekstid; // Sisseloetud tekstid
 var dialoogiseisund = 'N'; // 'S' - salvestusdialoogis
 
 var autenditud = false; // Kas kasutaja on Google Sign-In teenuse abil autenditud
+var kasutajaProfiil; 
 
 /* Puhver. Hoiab tekste, mida saab roteerida tekstisisestusalasse.
   Massiiv, mille elementideks on kirjed

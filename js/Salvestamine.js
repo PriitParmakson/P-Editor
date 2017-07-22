@@ -42,7 +42,6 @@ function tekstSalvestuskujule(t) {
   var draft = $('#draftNupp').prop('checked') ? true : false;
 
   // Autori nimi ja e-post
-  var kasutajaProfiil = googleUser.getBasicProfile();
   var nimi = kasutajaProfiil.getName();
   var ePost = kasutajaProfiil.getEmail();
 
