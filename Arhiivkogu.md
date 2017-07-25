@@ -52,6 +52,8 @@ Ajatu kekutaja.
 
 Ajataja-sajataja.
 
+Aja tillitaja.
+
 ## Ata! - jalaga lajata
 
 Soo, lajatad negatiivset takuga nagu kattes viitagendat ajaloos!
@@ -234,7 +236,7 @@ Sakas pori - ropsakas!<br>
 Sakas parm - rapsakas!<br>
 Sakas iive - viisakas!<br>
 Sakas, oo, roosakas!<br>
-Sakas pole lopsakas!<br>
+Sakas pole luule lopsakas.<br>
 Sakas tüma mütsakas!<br>
 Sakas räks - kärsakas!<br>
 Sakas tiik kiitsakas!<br>
@@ -243,6 +245,7 @@ Sakas pubi boss - sobib? - upsakas!<br>
 Sakas töö - köötsakas!<br>
 Sakas park, taat krapsakas.<br>
 Sakas paradoks - kodar apsakas.
+Sa kas Sakas?
 </p>
 
 ## Samasust susamas
