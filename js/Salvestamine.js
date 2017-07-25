@@ -12,7 +12,6 @@ function tekstSalvestuskujule(t) {
   var peegeltaheNr = tahti(t) / 2 + 1;
   var taheloendur = 0;
   var c = ''; // Puhas tekst
-  var d = ''; // Tekst duplikaadi kontrolliks
   for (var i = 0; i < t.length; i++) {
     if (kirjavm(t[i])) {
       c += t[i];
@@ -26,12 +25,10 @@ function tekstSalvestuskujule(t) {
       if (kuvaKesktahtYhekordselt) {
         if (taheloendur != peegeltaheNr) {
           c += t[i];
-          d += t[i];
         }
       }
       else {
         c += t[i];
-        d += t[i];
       }
     }
   }
@@ -65,7 +62,6 @@ function suleSalvestusdialoog() {
   */
   $('#Salvestusdialoog').addClass('peidetud');
   aktiveeriTekstinupud();
-  dialoogiseisund = 'N';
   $('#Tekst').focus();  
 }
 
@@ -76,18 +72,18 @@ function seaSalvestuseKasitlejad() {
 
   $('#Salvesta1').click(function() {
     // Salvestusdialoogi avamine
-    if (dialoogiseisund == 'N') {
+    if (!$('#Salvestusdialoog').is(':visible')) {
       $('#Salvestusdialoog').removeClass('peidetud');
       deaktiveeriTekstinupud();
-      dialoogiseisund = 'S';
+      var s = tekstSalvestuskujule(t);
       /* Duplikaadikontroll
       */
-      var s = tekstSalvestuskujule(t);
       var k1 = kanoonilineKuju(s.Tekst);
       // Sule teatepaan, kui see oli avatud
       $('#Teatetekst').html('');
       $('#Teatepaan').addClass('peidetud');
-      tekstid.some(function(t2) {
+      tekstid.some(function (t2) {
+        console.log(kanoonilineKuju(t2.Tekst));
         if (k1 == kanoonilineKuju(t2.Tekst)) {
           $('#Teatepaan').removeClass('peidetud');
           $('#Teatetekst').html('Duplikaattekst');

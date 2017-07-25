@@ -4,12 +4,12 @@ function deaktiveeriTekstinupud() {
     Nupud deaktiveeritakse kui:
     1) avatakse salvestusdialoog;
     2) asetatud tekst ei ole samatekst (edasiliikumiseks tuleb veateatepaan sulgeda);
+    Ei puutu Infonuppu.
   */
   $('#Uusnupp').addClass('disabled');
   $('#Poolednupp').addClass('disabled');
   $('#Salvesta1').addClass('disabled');
   $('#SeotudTekstid').addClass('disabled');
-  // Ei puutu Infonuppu
 }
 
 function aktiveeriTekstinupud() {
@@ -38,7 +38,7 @@ function seaTekstinupukasitlejad() {
   */
 
   $('#Uusnupp').click(function () {
-    if (dialoogiseisund == 'N') {
+    if (!$('#Salvestusdialoog').is(':visible')) {
       $('#Tekst').focus();
       t = "|";
       kuvaKesktahtYhekordselt = false;
@@ -47,7 +47,7 @@ function seaTekstinupukasitlejad() {
   });
 
   $('#Poolednupp').click(function () {
-    if (dialoogiseisund == 'N') {
+    if (!$('#Salvestusdialoog').is(':visible')) {
       $('#Tekst').focus();
       t = vahetaPooled(t);
       kuvaKesktahtYhekordselt = false;
@@ -69,7 +69,6 @@ function seaTeatepaaniKasitlejad() {
     $('#Teatepaan').addClass('peidetud');
     /* Kui salvestusdialoog on avatud, siis sulge see */
     $('#Salvestusdialoog').addClass('peidetud');
-    dialoogiseisund = 'N';
     kuvaTekst();
     aktiveeriTekstinupud();
     $('#Tekst').focus();
