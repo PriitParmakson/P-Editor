@@ -84,7 +84,6 @@ function seaSalvestuseKasitlejad() {
       $('#Teatetekst').html('');
       $('#Teatepaan').addClass('peidetud');
       tekstid.some(function (t2) {
-        console.log(kanoonilineKuju(t2.Tekst));
         if (k1 == kanoonilineKuju(t2.Tekst)) {
           $('#Teatepaan').removeClass('peidetud');
           $('#Teatetekst').html('Duplikaattekst');
