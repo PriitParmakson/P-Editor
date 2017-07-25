@@ -74,6 +74,7 @@ function seaSalvestuseKasitlejad() {
     // Salvestusdialoogi avamine
     if (!$('#Salvestusdialoog').is(':visible')) {
       $('#Salvestusdialoog').removeClass('peidetud');
+      $('#Salvesta2').removeClass('disabled');
       deaktiveeriTekstinupud();
       var s = tekstSalvestuskujule(t);
       /* Duplikaadikontroll
@@ -87,6 +88,7 @@ function seaSalvestuseKasitlejad() {
         if (k1 == kanoonilineKuju(t2.Tekst)) {
           $('#Teatepaan').removeClass('peidetud');
           $('#Teatetekst').html('Duplikaattekst');
+          $('#Salvesta2').addClass('disabled');
           return true;
         }
         else return false;
@@ -95,7 +97,10 @@ function seaSalvestuseKasitlejad() {
     }
   });
 
-  $('#Salvesta2').click(function() {
+  $('#Salvesta2').click(function () {
+    if ($(this).hasClass('disabled')) {
+      return;
+    }
     var s = tekstSalvestuskujule(t);
     /* Salvestamine
     */
