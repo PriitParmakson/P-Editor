@@ -60,11 +60,11 @@ function salvestaTekst(s) {
         kuvaTeade('Salvestamine ebaõnnestus. Staatus: ' + status);
         return
       }
-      // Töötle Samatekstid töölehe vastus
+      // Töötle töölehe vastus
       var vastus = JSON.parse(data);
       if (vastus.result == 'success') {
         kuvaTeade('Salvestatud');
-      } else {}  
+      } else { 
         kuvaTeade('Salvestamine ebaõnnestus. Viga: ' + vastus.error);
         return
       }
