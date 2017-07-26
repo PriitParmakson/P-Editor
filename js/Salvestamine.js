@@ -55,6 +55,19 @@ function salvestaTekst(s) {
     function (data, status) {
       console.log('salvestaTekst: POST vastus: data: ' + data);
       console.log('salvestaTekst: POST vastus: status: ' + status);
+      // Töötle jQuery vastus
+      if (status !== 'success') {
+        kuvaTeade('Salvestamine ebaõnnestus. Staatus: ' + status);
+        return
+      }
+      // 
+      var vastus = JSON.parse(data);
+      if (vastus.result == 'success') {
+        kuvaTeade('Salvestatud');
+      } else {}  
+        kuvaTeade('Salvestamine ebaõnnestus. Viga: ' + vastus.error);
+        return
+      }
     });
 }
 
