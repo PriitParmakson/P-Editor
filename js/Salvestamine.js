@@ -44,17 +44,16 @@ function salvestaTekst() {
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
   var postDeferred = $.post(url, s);
   postDeferred.done(function(data, status) {
-    console.log('salvestaTekst: POST vastus: data: ' + data.toString());
+    console.log('salvestaTekst: POST vastus: data (töölehe tulemus): ' + data.result);
     console.log('salvestaTekst: POST vastus: status: ' + status);
     // Töötle jQuery vastus
     if (status !== 'success') {
-      kuvaTeade('Salvestamine ebaõnnestus. Staatus: ' + status);
-      console.log('Salvestamine ebaõnnestus. Staatus: ' + status);
+      kuvaTeade('Salvestamine ebaõnnestus. JQuery POST päringu vastus:  staatus: ' + status);
+      console.log('Salvestamine ebaõnnestus. JQuery POST päringu vastus: staatus: ' + status);
       return
     }
     // Töötle töölehe vastus
-    var vastus = JSON.parse(data);
-    if (vastus.result == 'success') {
+    if (data.result == 'success') {
       kuvaTeade('Salvestatud');
       if (logimistase > 0) {
         console.log('salvestaTekst: salvestatud tekst: ' + s.Tekst);
