@@ -1,35 +1,30 @@
-function eelmineTaht(i, t) {
+function seaSamatekstidTekstistKasitlejad() {
   /*
-   Leiab tekstis t positsioonist i eelmise tähe.
-   Kui eelmist ei ole, siis tagastab false.
-   Positsioonid 0-põhised.
+    Ava ja sulge dialoog, otsi
   */
-  var j = i - 1;
-  while (j >= 0) {
-    var c = t.charCodeAt(j);
-    if (taht(c)) {
-      return j
-    }
-    j -= 1;
-  }
-  return false
-}
+  $('#SamatekstideOtsing').click(function() {
+    $('#SamatekstidTekstistDialoog').removeClass('peidetud');
+    $('#SamatekstideOtsing').addClass('disabled');
+    $('#SamatekstidTekstistTekst').focus();
+  });
 
-function jargmineTaht(i, t) {
-  /*
-    Leiab tekstis t positsioonist i järgmise tähe.
-    Kui järgmist ei ole, siis tagastab false.
-    Positsioonid 0-põhised.
-  */
-  var j = i + 1;
-  while (j < t.length) {
-    var c = t.charCodeAt(j);
-    if (taht(c)) {
-      return j
+  $('#SamatekstidTekstistSulge').click(function() {
+    $('#SamatekstidTekstistDialoog').addClass('peidetud');
+    $('#SamatekstideOtsing').removeClass('disabled');
+    $('#SamatekstidTekstistTekst').val('');
+    $('#SamatekstidTekstistTulemus').empty();
+  });
+
+  $('#SamatekstidTekstistOtsi').click(function() {
+    var t = $('#SamatekstidTekstistTekst').val();
+    var r = samatekstideOtsingTekstist(t);
+    var r2 = '<span> | ';
+    for (var i = 0; i < r.length; i++) {
+      r2 = r2 + r[i] + ' | ';
     }
-    j += 1;
-  }
-  return false
+    r2 += '</span>'; 
+    $('#SamatekstidTekstistTulemus').html(r2);
+  });
 }
 
 function samatekstideOtsingTekstist(t) {
@@ -105,32 +100,36 @@ function samatekstideOtsingTekstist(t) {
   return samatekstid;
 }
 
-function seaSamatekstidTekstistKasitlejad() {
+function eelmineTaht(i, t) {
   /*
-    Ava ja sulge dialoog, otsi
+   Leiab tekstis t positsioonist i eelmise tähe.
+   Kui eelmist ei ole, siis tagastab false.
+   Positsioonid 0-põhised.
   */
-  $('#SamatekstideOtsing').click(function() {
-    $('#SamatekstidTekstistDialoog').removeClass('peidetud');
-    $('#SamatekstideOtsing').addClass('disabled');
-    $('#SamatekstidTekstistTekst').focus();
-  });
-
-  $('#SamatekstidTekstistSulge').click(function() {
-    $('#SamatekstidTekstistDialoog').addClass('peidetud');
-    $('#SamatekstideOtsing').removeClass('disabled');
-    $('#SamatekstidTekstistTekst').val('');
-    $('#SamatekstidTekstistTulemus').empty();
-  });
-
-  $('#SamatekstidTekstistOtsi').click(function() {
-    var t = $('#SamatekstidTekstistTekst').val();
-    var r = samatekstideOtsingTekstist(t);
-    var r2 = '<span> | ';
-    for (var i = 0; i < r.length; i++) {
-      r2 = r2 + r[i] + ' | ';
+  var j = i - 1;
+  while (j >= 0) {
+    var c = t.charCodeAt(j);
+    if (taht(c)) {
+      return j
     }
-    r2 += '</span>'; 
-    $('#SamatekstidTekstistTulemus').html(r2);
-  });
+    j -= 1;
+  }
+  return false
 }
 
+function jargmineTaht(i, t) {
+  /*
+    Leiab tekstis t positsioonist i järgmise tähe.
+    Kui järgmist ei ole, siis tagastab false.
+    Positsioonid 0-põhised.
+  */
+  var j = i + 1;
+  while (j < t.length) {
+    var c = t.charCodeAt(j);
+    if (taht(c)) {
+      return j
+    }
+    j += 1;
+  }
+  return false
+}

@@ -23,15 +23,10 @@ function seaTekstikoguKasitlejad() {
 
   /* Muutus filtritekstis. Vt HTML5 input event 
     http://www.geedew.com/the-html5-input-event/ */
-  $('#Filtritekst').on('input', function(e){
-    filtreeriJaKuvaTekstid();
-    // filtreeriJaKuvaTekstid($(this).attr('id'));
-  });
+  $('#Filtritekst').on('input', (e) => filtreeriJaKuvaTekstid());
 
   /* Muutus piirajates */  
-  $('.filtrivalik').on('click', function(e){
-    filtreeriJaKuvaTekstid();
-  });
+  $('.filtrivalik').on('click', (e) => filtreeriJaKuvaTekstid());
 
 }
 

@@ -1,7 +1,6 @@
 
 /* Teksti redigeerimisega seotud funktsioonid
 */
-
 function seaRedaktoriKasitlejad() {
   /*
     Teksti muutvaid klahvivajutusi käsitletakse sündmuste 'keydown', 'keypress' ja 'paste' kaudu.
@@ -11,137 +10,139 @@ function seaRedaktoriKasitlejad() {
     paremale) otseselt ei töötle, välja arvatud see, et nende toime blokeeritakse veateaterežiimis.
     Caret positsioon selgitatakse välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
   */
+  $('#Tekst').on('keydown', () => keydownKasitleja(e));
+  $('#Tekst').on('keypress', () => keypressKasitleja(e));
+  $('#Tekst').on('paste', () => pasteKasitleja(e));
+}
 
-  $('#Tekst').on('keydown', function (e) {
-    /* 
-    Sündmuse KEYDOWN käsitleja. Püüame kinni eriklahvide 
-     vajutused, mida tahame töödelda: 8 (Backspace), 46 (Delete), 
-     33 (PgUp), 34 (PgDn), 38 (Up), 40 (Down). Nende vaikimisi 
-     toiming tühistatakse ja vajutusi käsitletakse spetsiifiliselt.
+function keydownKasitleja(e) {
+  /* 
+  Sündmuse KEYDOWN käsitleja. Püüame kinni eriklahvide 
+   vajutused, mida tahame töödelda: 8 (Backspace), 46 (Delete), 
+   33 (PgUp), 34 (PgDn), 38 (Up), 40 (Down). Nende vaikimisi 
+   toiming tühistatakse ja vajutusi käsitletakse spetsiifiliselt.
 
-     Märkus. Ctrl + klahv vajutustest tekib kaks KEYDOWN sündmust - esimene keyCode = 17 (Ctrl), seejärel keyCode = klahvi kood (tõeväärtus ctrlDown on mõlemal juhul tõene).
-    */
-    var keyCode = e.keyCode;
-    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+   Märkus. Ctrl + klahv vajutustest tekib kaks KEYDOWN sündmust - esimene keyCode = 17 (Ctrl), seejärel keyCode = klahvi kood (tõeväärtus ctrlDown on mõlemal juhul tõene).
+  */
+  var keyCode = e.keyCode;
+  var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
 
-    /*
-    Kui veateade on kuvatud (kasutaja ei ole seda sulgenud), siis klahvivajutused väljas #Tekst ei oma mõju.
-    */
-    if (!$('#Teatepaan').hasClass('peidetud')) {
-      e.preventDefault();
-      return
+  /*
+  Kui veateade on kuvatud (kasutaja ei ole seda sulgenud), siis klahvivajutused väljas #Tekst ei oma mõju.
+  */
+  if (!$('#Teatepaan').hasClass('peidetud')) {
+    e.preventDefault();
+    return
+  }
+
+  // Logimine
+  if (logimistase > 1) {
+    console.log('keydown käsitleja: püüdsin kasutaja klahvivajutuse: ' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
+  }
+
+  // Kui Ctrl+c (keyCode 67) või Ctrl+v (keyCode 86), siis lase seda käsitleda vastavatel süsteemsetel sündmusekäsitlejatel
+  if (ctrlDown && [67, 86].includes(keyCode)) { return }
+
+  if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
+    e.preventDefault();
+    tootleEriklahv(keyCode);
+  }
+}
+
+function keypressKasitleja(e) {
+  /* 
+    Sündmuse KEYPRESS käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
+
+    Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel.
+  
+    Kui Teatepaan on avatud (asetamise viga), siis ignoreeritakse.
+  */
+  var charCode = e.charCode;
+  var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
+
+  if (!$('#Teatepaan').hasClass('peidetud')) {
+    // Asetamise veateade tuleb enne sulgeda
+    e.preventDefault();
+    return
+  }
+
+  // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
+  if (e.keyCode == 13) {
+    charCode = 13;
+  }
+
+  // Logimine
+  if (logimistase > 1) {
+    if (ctrlDown) {
+      console.log('keypress käsitleja: püüdsin kasutaja klahvivajutuse Ctrl'); 
     }
-
-    // Logimine
-    if (logimistase > 1) {
-      console.log('keydown käsitleja: püüdsin kasutaja klahvivajutuse: ' + (ctrlDown ? ' Ctrl + ' : ' ') + keyCodeToHumanReadable(keyCode) + '(' + keyCode + ')');
+    else {
+      console.log('keypress käsitleja: püüdsin kasutaja klahvivajutuse ' + String.fromCharCode(charCode) + ' (tärgikood: ' + charCode + ')');
     }
+  }
 
-    // Kui Ctrl+c (keyCode 67) või Ctrl+v (keyCode 86), siis lase seda käsitleda vastavatel süsteemsetel sündmusekäsitlejatel
-    if (ctrlDown && [67, 86].includes(keyCode)) { return }
+  // Ctrl-kombinatsioone tähesisestuseks ei loe
+  if (!ctrlDown && charCode != null && charCode != 0) {
+    e.preventDefault();
+    lisaTahtVoiPunktuatsioon(charCode);
+  }
+}
 
-    if ([8, 46, 33, 34, 38, 40].includes(keyCode)) {
-      e.preventDefault();
-      tootleEriklahv(keyCode);
+function pasteKasitleja(e) {
+  /* Ctrl-V (Paste) töötleja
+     Tavaline sirvija -> e.originalEvent.clipboardData
+     Ebatavaline sirvija -> window.clipboardData
+  */
+
+  if (!$('#Teatepaan').hasClass('peidetud')) {
+    // Asetamise veateade tuleb enne sulgeda
+    e.preventDefault();
+    return
+  }    
+
+  var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
+  var LisatavTekst = clipboardData.getData('text');
+  /* Lasta vaikereaktsioonil toimuda. 
+     Selleks:
+     1) seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
+     2) puhastada sisend kõrvalistest tärkidest. Eriti on vaja kõrvaldada &#8203; (Zero-Width Space)
+     3) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
+     4) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
+     5) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
+     Taastada siseesituse põhjal toimingueelne tekst.
+     Mittesamateksti puhul kuvada rõhutatult otstest vaadates esimene tähepaar, mis rikub peegeldust.
+  */
+  setTimeout(function() {
+    var asetatudTekst = $('#Tekst').text();
+    console.log('paste käsitleja: asetatud tekst: ' + asetatudTekst);
+    var puhastatudTekst = puhastaTekst(asetatudTekst);
+    var samasuseKontrolliTulemus = samatekst(puhastatudTekst);
+    if (samasuseKontrolliTulemus.on) {
+      /* Moodusta siseesitus.  samuti lisa sisekursor (algusesse)
+      */
+      var siseEsituses = tekstistSiseesitusse(puhastatudTekst);
+      t = siseEsituses.tekst;
+      kuvaKesktahtYhekordselt = siseEsituses.kuvaKesktahtYhekordselt;
+      kuvaTekst();
+      aktiveeriTekstinupud();
     }
-  });
-
-  $('#Tekst').on('keypress', function (e) {
-    /* 
-      Sündmuse KEYPRESS käsitleja. Kui klahvivajutusest tekkis tärgikood, siis suunatakse tähe või punktuatsioonimärgi töötlusele. Kontroll, kas märgikood on lubatute hulgas, tehakse lisaTahtVoiPunktuatsioon-is. Vaikimisi toiming tõkestatakse.
-
-      Sündmus KEYPRESS tekib ka Ctrl-kombinatsioonide vajutamisel.
-    
-      Kui Teatepaan on avatud (asetamise viga), siis ignoreeritakse.
-    */
-    var charCode = e.charCode;
-    var ctrlDown = e.ctrlKey||e.metaKey // Mac-i tugi
-
-    if (!$('#Teatepaan').hasClass('peidetud')) {
-      // Asetamise veateade tuleb enne sulgeda
-      e.preventDefault();
-      return
+    else {
+      var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
+      var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
+      var teatetekst = 'Asetatud tekst ei ole samatekst.<br><br>';
+      teatetekst = teatetekst + 
+        puhastatudTekst.substring(0, p1) +
+        '<span class="kesk">' + 
+        puhastatudTekst.substring(p1, p1 + 1) +
+        '</span>' +
+        puhastatudTekst.substring(p1 + 1, p2) +
+        '<span class="kesk">' + 
+        puhastatudTekst.substring(p2, p2 + 1) +
+        '</span>' + 
+        puhastatudTekst.substring(p2 + 1);
+      kuvaTeade(teatetekst);
     }
-
-    // Võte reavahetuse (enter, keyCode 13) kinnipüüdmiseks ja töötlemiseks
-    if (e.keyCode == 13) {
-      charCode = 13;
-    }
-
-    // Logimine
-    if (logimistase > 1) {
-      if (ctrlDown) {
-        console.log('keypress käsitleja: püüdsin kasutaja klahvivajutuse Ctrl'); 
-      }
-      else {
-        console.log('keypress käsitleja: püüdsin kasutaja klahvivajutuse ' + String.fromCharCode(charCode) + ' (tärgikood: ' + charCode + ')');
-      }
-    }
-
-    // Ctrl-kombinatsioone tähesisestuseks ei loe
-    if (!ctrlDown && charCode != null && charCode != 0) {
-      e.preventDefault();
-      lisaTahtVoiPunktuatsioon(charCode);
-    }
-  });
-
-  $('#Tekst').on('paste', function (e) {
-    /* Ctrl-V (Paste) töötleja
-       Tavaline sirvija -> e.originalEvent.clipboardData
-       Ebatavaline sirvija -> window.clipboardData
-    */
-
-    if (!$('#Teatepaan').hasClass('peidetud')) {
-      // Asetamise veateade tuleb enne sulgeda
-      e.preventDefault();
-      return
-    }    
-
-    var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
-    var LisatavTekst = clipboardData.getData('text');
-    /* Lasta vaikereaktsioonil toimuda. 
-       Selleks:
-       1) seada taimer, vt          https://stackoverflow.com/questions/4532473/is-there-an-event-that-occurs-after-paste.
-       2) puhastada sisend kõrvalistest tärkidest. Eriti on vaja kõrvaldada &#8203; (Zero-Width Space)
-       3) Kontrollida, kas asetamise tulemusena tekkinud tekst on samatekst.
-       4) Kui ei ole, siis anda veateade ja sisendit mitte aktsepteerida.
-       5) Oodata, kuni kasutaja vajutab veateatepaani sulgemisnupule.
-       Taastada siseesituse põhjal toimingueelne tekst.
-       Mittesamateksti puhul kuvada rõhutatult otstest vaadates esimene tähepaar, mis rikub peegeldust.
-    */
-    setTimeout(function() {
-      var asetatudTekst = $('#Tekst').text();
-      console.log('paste käsitleja: asetatud tekst: ' + asetatudTekst);
-      var puhastatudTekst = puhastaTekst(asetatudTekst);
-      var samasuseKontrolliTulemus = samatekst(puhastatudTekst);
-      if (samasuseKontrolliTulemus.on) {
-        /* Moodusta siseesitus.  samuti lisa sisekursor (algusesse)
-        */
-        var siseEsituses = tekstistSiseesitusse(puhastatudTekst);
-        t = siseEsituses.tekst;
-        kuvaKesktahtYhekordselt = siseEsituses.kuvaKesktahtYhekordselt;
-        kuvaTekst();
-        aktiveeriTekstinupud();
-      }
-      else {
-        var p1 = samasuseKontrolliTulemus.mittepeegelpaar[0];
-        var p2 = samasuseKontrolliTulemus.mittepeegelpaar[1];
-        var teatetekst = 'Asetatud tekst ei ole samatekst.<br><br>';
-        teatetekst = teatetekst + 
-          puhastatudTekst.substring(0, p1) +
-          '<span class="kesk">' + 
-          puhastatudTekst.substring(p1, p1 + 1) +
-          '</span>' +
-          puhastatudTekst.substring(p1 + 1, p2) +
-          '<span class="kesk">' + 
-          puhastatudTekst.substring(p2, p2 + 1) +
-          '</span>' + 
-          puhastatudTekst.substring(p2 + 1);
-        kuvaTeade(teatetekst);
-      }
-    }, 50);
-  });
-
+  }, 50);
 }
 
 function tootleEriklahv(keyCode) {

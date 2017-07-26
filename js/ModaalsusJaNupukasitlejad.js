@@ -62,7 +62,9 @@ function seaTekstinupukasitlejad() {
 
 function kuvaTeade(teade) {
   /*
-    Avab teatepaani ja kuvab teate.
+    Avab teatepaani ja kuvab teate, HTML-na.
+    Oluline: sisend peab olema murdskriptimise seisukohalt
+    kontrollitud ja vajadusel puhastatud.
     Deaktiveerib tekstitöötlusnupud.
   */
   $('#Teatepaan').removeClass('peidetud');
