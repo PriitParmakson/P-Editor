@@ -137,10 +137,7 @@ function seaRedaktoriKasitlejad() {
           puhastatudTekst.substring(p2, p2 + 1) +
           '</span>' + 
           puhastatudTekst.substring(p2 + 1);
-        $('#Teatetekst').html(teatetekst);
-        $('#Teatepaan')
-          .removeClass('peidetud');
-        deaktiveeriTekstinupud();
+        kuvaTeade(teatetekst);
       }
     }, 50);
   });

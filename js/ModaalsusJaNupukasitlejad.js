@@ -60,11 +60,20 @@ function seaTekstinupukasitlejad() {
   aktiveeriTekstinupud();
 }
 
+function kuvaTeade(teade) {
+  /*
+    Avab teatepaani ja kuvab teate.
+    Deaktiveerib tekstitöötlusnupud.
+  */
+  $('#Teatepaan').removeClass('peidetud');
+  $('#Teatetekst').html(teade);
+  deaktiveeriTekstinupud();  
+}
+
 function seaTeatepaaniKasitlejad() {
   /*
-    Teatepaani avamine ja sulgemine
+    Teatepaani sulgemine
   */
-  // Teatepaani sulgemine
   $('#TeatepaanSulge').click(function() {
     $('#Teatepaan').addClass('peidetud');
     /* Kui salvestusdialoog on avatud, siis sulge see */

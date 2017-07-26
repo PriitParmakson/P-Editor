@@ -52,7 +52,9 @@ function salvestaTekst(s) {
 
   // Tagastame jQuery deferred objekti
   return $.post(url, s,
-    function() {
+    function (data, status) {
+      console.log('salvestaTekst: POST vastus: data: ' + data);
+      console.log('salvestaTekst: POST vastus: status: ' + status);
     });
 }
 
@@ -80,13 +82,9 @@ function seaSalvestuseKasitlejad() {
       /* Duplikaadikontroll
       */
       var k1 = kanoonilineKuju(s.Tekst);
-      // Sule teatepaan, kui see oli avatud
-      $('#Teatetekst').html('');
-      $('#Teatepaan').addClass('peidetud');
       tekstid.some(function (t2) {
         if (k1 == kanoonilineKuju(t2.Tekst)) {
-          $('#Teatepaan').removeClass('peidetud');
-          $('#Teatetekst').html('Duplikaattekst');
+          kuvaTeade('Duplikaattekst');
           $('#Salvesta2').addClass('disabled');
           return true;
         }
