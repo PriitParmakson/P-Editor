@@ -1,3 +1,5 @@
+'use strict';
+
 /* Teksti kuvamise funktsioonid:
   kuvaTekst()
   markeeriTekst()

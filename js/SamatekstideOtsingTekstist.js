@@ -1,3 +1,5 @@
+'use strict';
+
 function seaSamatekstidTekstistKasitlejad() {
   /*
     Ava ja sulge dialoog, otsi

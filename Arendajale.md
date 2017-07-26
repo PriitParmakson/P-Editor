@@ -10,6 +10,7 @@ layout: Tekstid
 Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
 ## Kiirelt leitav
+{: .no_toc}
   - Repo: [https://priitparmakson.github.io/Samatekst/](https://priitparmakson.github.io/Samatekst/)
   - [Funktsioonikataloog](https://priitparmakson.github.io/Samatekst/Funktsioonikataloog.html)
   - [Koodimeetrikad](https://priitparmakson.github.io/Samatekst/Meetrikad.html)
@@ -37,8 +38,8 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
   <a target href='resource/ARHITEKTUUR.png'>Arhitektuurijoonis</a>
 
-## Funktsionaalsed omadused (Mida tarkvara teeb?)
-  - 1 Samatekstide mõiste ja terminite tutvustus, koos näidetega ("Mis on samatekst?"
+## Funktsionaalsed omadused
+  - 1 Samatekstide mõiste ja terminite tutvustus, koos näidetega ("Mis on samatekst?")
   - 2 Samatekstiredaktor
     - 2.1 Samateksti sisestamisel programm hoiab teksti kogu aeg samatekstina
       - 2.1.1 Lisab või kustutab ise peegeltähe
@@ -77,7 +78,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
     - salvestatakse autori nimi ja e-posti aadress  
 
 ## Teksti esitusvormingud
-  ### Ülevaade
+  - Ülevaade
     - Suur osa funktsionaalsusest on seotud samatekstide teisendamisega ühest esitusest (kujust) teise. Samatekst võib olla mitmes erinevas esituses:
 
       1. kasutajale nähtav esitus tekstisisestusalal (`#Tekst`)
@@ -90,7 +91,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
     - Tähtsamad teisendused:
 
-      ```
+```
               Esitus teksti-     (1)
               sisestusalal   +------->  Siseesitus
                   ^                         +
@@ -108,7 +109,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
               Tekstikogu
               esitus
 
-      ```
+```
 
     (1) kasutaja sisestab tekstisisestusalal; klahvivajutused püütakse sündmuste `keydown` ja `keypress` abil kinni, filtreeritakse (lubatud tähed ja kirjavahemärgid), tehakse kindlaks kursori (ingl _caret_) asukoht. Sisestatavat teksti hoitakse sisekujul.
 
@@ -118,7 +119,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
     (4) Salvestatud tekste saab sirvida ja otsida. Salvestatud tekstid esitatakse kuval HTML abil.
 
-  ### Siseesitus  
+  -  Siseesitus  
     * Sisemiselt hoitakse kesktähte alati kahekordselt. Teavet kesktähe kordsuse kohta hoiab globaalne muutuja `kuvaKeskelementYhekordselt`.
     * Samuti hoitakse siseesituses kursori positsiooni (sümbol `|`).
     * Reavahetus hoitakse sümboliga `/`.
@@ -127,7 +128,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
     `Samma|s` tähendab `Samas`, kui `kuvaKeskelementYhekordselt` = `true`
 
-    ### Esitus tekstisisestusalal 
+    -  Esitus tekstisisestusalal 
 
     Nähtav:
 
@@ -147,15 +148,15 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
     `<span id='A'>&#8203;</span><span id='K1'></span><span id='Kt'></span><span id='K2'></span><span id='B'></span>` - tühiteksti esitamine 0-pikkusega tühiku abil
 
-  ### Esitus tekstikogus
+  -  Esitus tekstikogus
 
     Näide:
 
-    ```
+```
     IT
 
     Säh, hästi!
-    ```
+```
 
     * Kuval esitatakse kesktäht (või -tähed) rõhutatult.
     * Reavahetus teostatakse, `<br>`-elemendi abil.
@@ -163,7 +164,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
     `<span id='A'>IT<br><br>Sä</span><span id='K1' class='kesk'>h</span><span id='Kt' class='kesk'>, </span><span id='K2'>h</span><span id='B'>ästi!</span>`
 
-  ### Esitus pilvemälus
+  -  Esitus pilvemälus
     * Ühekordne kesktäht esitatakse ühekordselt
     * Reavahetus hoitakse sümboliga `/`. Näide:
 
@@ -207,10 +208,10 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
   * Funktsioonitestimise automatiseerimiseks on leht `SamasTest.html`; testid pannakse kirja failis `SamasTest.js`.
 
 ## Redaktori tööpõhimõte
-  ### Kasutaja sisendi kinnipüüdmine
+  -  Kasutaja sisendi kinnipüüdmine
     * Kasutaja tegevused tekstisisestusväljas (elemendis `Tekst`) püütakse kinni sündmuste `keydown`,  `keypress` ja `paste` jälgimisega ja töötlemisega.
 
-    ```
+```
                               #Tekst
                         (tekstisisestusväli)  
                                   ↓
@@ -227,7 +228,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
         vaiketaheks()
               ↓                    ↓                
         kuvaTekst()
-    ```
+```
 
     Sündmuse `keydown` käsitleja püüab kinni eriklahvivajutused, mida redaktoris tavapärasest eriliselt töödeldakse: `8` (`Backspace`), `46` (`Delete`), `33` (`PgUp`), `34` (`PgDn`), `38` (`Up`), `40` (`Down`). Nende vaikimisi toiming tühistatakse ja vajutusi käsitletakse tavapärasest erinevalt. Suunab eriklahvivajutuste töötlemiseks funktsiooni `tootleEriklahv`.
 
@@ -237,7 +238,7 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
     Kasutaja sisendi töötlemiseks on vaja tuvastada ka kursori (_caret_) positsioon. Seda teeb funktsioon `tuvastaCaretJaSeaSisekursor`.
 
-  ### Teksti kuvamine
+  -  Teksti kuvamine
     * HTML kujule teisendavad `markeeriTekst` ja `markeeriTekstikoguTekst`.
     * Tekstisisestusala _caret_ positsiooni seab funktsioon `seaCaret`.
     * Kuvatakse ka tähtede arv tekstis.
@@ -248,38 +249,38 @@ Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
   * HTML validaator: [https://validator.w3.org/nu/#file](https://validator.w3.org/nu/#file) (Firefox-i kontekstimenüüst )
 
 ## Lahendused
-  ### Teave
+  -  Teave
     * Kõigi HTML veebi-API-de nimekiri: [https://developer.mozilla.org/en-US/docs/Web/](https://developer.mozilla.org/en-US/docs/Web/)
     * HTML sündmuste kohta: [https://www.w3schools.com/tags/ref_eventattributes.asp](https://www.w3schools.com/tags/ref_eventattributes.asp)
     * JQuery sündmusekäsitlejate seadmine: [https://www.w3schools.com/jquery/jquery_events.asp](https://www.w3schools.com/jquery/jquery_events.asp)
     * DOM `Node` objekt: [https://www.w3schools.com/xml/dom_node.asp](https://www.w3schools.com/xml/dom_node.asp)
     * jQuery-ga tippudele ligipääsemine: [https://api.jquery.com/get/](https://api.jquery.com/get/)
 
-  ### Sündmused
+  -  Sündmused
     * Tähesisestuse töötlemiseks on `keypress` parem kui `keydown`, sest `keypress` näitab, milline tärk sisestati (eristab suur- ja väiketähti). `keydown` näitab millist klahvi vajutati.
     * Väga hea seletus: [http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net](http://stackoverflow.com/questions/1367700/whats-the-difference-between-keydown-and-keypress-in-net)
 
-  ### Nuppude töötlus
+  -  Nuppude töötlus
     * Kasutajaliidese alade peitmine klassiga `peidetud` (`style='display: none;'`); parem kui JQuery `show`, `hide` ja `toggle`.
     * Nuppude mitteaktiivseks tegemine klassiga `disabled`.
 
-  ### Miks ei kasuta input elementi
+  -  Miks ei kasuta input elementi
     * `Input` elemendis vt: setSelectionRange() HTML veebi-APIs HTMLInputElement - https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
     * JQuery-s ei ole `oninput` võimalust, vt
       http://stackoverflow.com/questions/11189136/fire-oninput-event-with-jquery 
     * Vt ka http://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event 
 
-  ### Mitmesugust
+  -  Mitmesugust
     * Arvesta ka Mac-i `metakey`-ga: http://stackoverflow.com/questions/2903991/how-to-detect-ctrlv-ctrlc-using-javascript
     * `break` lause ei tööta Javascript `forEach`-ga.
     * Tärgi asetamine stringi - vt http://stackoverflow.com/questions/4313841/javascript-how-can-i-insert-a-string-at-a-specific-index
 
-    ### Ctrl+V (Paste) käsitlemine
+    -  Ctrl+V (Paste) käsitlemine
       * Vt https://www.w3.org/TR/clipboard-apis/
       * Vt `onpaste` sündmus https://www.w3schools.com/jsref/event_onpaste.asp
       * Kasutatud on: http://stackoverflow.com/questions/6902455/how-do-i-capture-the-input-value-on-a-paste-event
 
-  ### Caret (kursori) paigutamine contenteditable div elemendis
+  -  Caret (kursori) paigutamine contenteditable div elemendis
     * `Range` - The Range interface represents a fragment of a document that can contain nodes and parts of text nodes. Vt https://developer.mozilla.org/en-US/docs/Web/API/Range
     * Vt: http://stackoverflow.com/questions/6249095/how-to-set-caretcursor-position-in-contenteditable-element-div
     * `document.createRange()` vt: https://developer.mozilla.org/en-US/docs/Web/API/Document/createRange

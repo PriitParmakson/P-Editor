@@ -1,3 +1,5 @@
+'use strict';
+
 /*
   Samatekstiredaktor (Editor for Palindromic Texts), Priit Parmakson, 2017. MIT Licence
 */

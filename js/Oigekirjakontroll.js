@@ -1,3 +1,5 @@
+'use strict';
+
 function seaOigekirjakasitlejad() {
 /*
   Õigekirjakontroll: ava dialoog, kontrolli, sulge dialoog
@@ -13,7 +15,7 @@ function seaOigekirjakasitlejad() {
     $('#Oigekirjakontroll').removeClass('disabled');
   });
 
-  $('#OigekiriKontrolli').click(function () {
+  $('#OigekiriKontrolli').click(() => {
     var t;
     var k = $('#KontrollitavTekst').val();
     if (samatekst(k).on) {

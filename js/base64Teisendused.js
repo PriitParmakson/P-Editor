@@ -1,3 +1,5 @@
+'use strict';
+
 function b64EncodeUnicode(str) {
   /*
     UTF-8 -> base64

@@ -1,3 +1,5 @@
+'use strict';
+
 function deaktiveeriTekstinupud() {
   /*
     Tekstiga tehtavate eritoimingute (uue teksti alustamine, poolte vahetamine, salvestusdialoogi avamine, seotud tekstide kuvamine) nuppude deaktiveerimine.
@@ -37,7 +39,7 @@ function seaTekstinupukasitlejad() {
     Sea sisestatava teksti käsitlejad ('Uus', 'Vaheta pooled')
   */
 
-  $('#Uusnupp').click(function () {
+  $('#Uusnupp').click(() => {
     if (!$('#Salvestusdialoog').is(':visible')) {
       $('#Tekst').focus();
       t = "|";
@@ -46,7 +48,7 @@ function seaTekstinupukasitlejad() {
     }
   });
 
-  $('#Poolednupp').click(function () {
+  $('#Poolednupp').click(() => {
     if (!$('#Salvestusdialoog').is(':visible')) {
       $('#Tekst').focus();
       t = vahetaPooled(t);
@@ -76,7 +78,7 @@ function seaTeatepaaniKasitlejad() {
   /*
     Teatepaani sulgemine
   */
-  $('#TeatepaanSulge').click(function() {
+  $('#TeatepaanSulge').click(() => {
     $('#Teatepaan').addClass('peidetud');
     /* Kui salvestusdialoog on avatud, siis sulge see */
     $('#Salvestusdialoog').addClass('peidetud');
@@ -90,12 +92,12 @@ function seaInfopaaniKasitlejad() {
   /*
     Infopaani käsitlejad: avamine, sulgemine
   */  
-  $('#Info').click(function () {
+  $('#Info').click(() => {
     $('#Infopaan').removeClass('peidetud');
     $('#Info').addClass('disabled');
   });
 
-  $('#InfopaanSulge').click(function () {
+  $('#InfopaanSulge').click(() => {
     $('#Infopaan').addClass('peidetud');
     $('#Info').removeClass('disabled');
   });

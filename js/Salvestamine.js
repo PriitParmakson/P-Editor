@@ -1,3 +1,5 @@
+'use strict';
+
 function seaSalvestuseKasitlejad() {
   /*
    Salvestusdialoogi avamine, salvestamine, dialoogi sulgemine

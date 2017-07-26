@@ -1,3 +1,5 @@
+'use strict';
+
 /*
   Programmi eesmärgiks on läbi testida Google Sign-In ID token-i valideerimine.
 

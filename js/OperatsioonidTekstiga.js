@@ -1,3 +1,5 @@
+'use strict';
+
 function markeeriTekstikoguTekst(t) {
   /*
    Tagastab markeeritud keskkohaga teksti

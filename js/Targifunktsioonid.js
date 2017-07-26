@@ -1,3 +1,5 @@
+'use strict';
+
 function ladinaTaht(charCode) {
   /*
     Kontrollib, kas charCode on vahemikus 97..122 (a..z) või 65..90 (A..Z).

@@ -1,16 +1,18 @@
+'use strict';
+
 function seaSonastikuKasitlejad() {
   /*
     Sõnastikudialoogi avamine ja sulgemine, otsing
   */
 
-  $('#Sonastik').click(function () {
+  $('#Sonastik').click(() => {
     $('#Sonastikudialoog').removeClass('peidetud');
     $('#Sonastik').addClass('disabled');
     $('#SonuSonastikus').text(sonastik.length.toString());
     $('#Otsistring').focus();
   });
 
-  $('#SonastikSulge').click(function () {
+  $('#SonastikSulge').click(() => {
     $('#Sonastikudialoog').addClass('peidetud');
     $('#Sonastik').removeClass('disabled');
     $('#OtsinguTulemus').text('');
@@ -23,7 +25,7 @@ function seaSonastikuKasitlejad() {
     }
   });
 
-  $('#OtsiSonastikust').click(function () {
+  $('#OtsiSonastikust').click(() => {
     otsiSonastikust();
   });
 

@@ -1,10 +1,11 @@
+'use strict';
 
 function seaTekstikoguKasitlejad() {
   /*
     Tekstikogu funktsioonid: ava, sule, filtreeri
   */  
 
-  $('#AvaTekstikogu').click(function () {
+  $('#AvaTekstikogu').click(() => {
     if (!$('#AvaTekstikogu').hasClass('disabled')) {
       $('#Tekstikogu').removeClass('peidetud');
       $('#AvaTekstikogu').addClass('disabled');
@@ -14,7 +15,7 @@ function seaTekstikoguKasitlejad() {
   });
 
   /* Sule tekstikogu */  
-  $('#FilterTyhista').click(function() {
+  $('#FilterTyhista').click(() => {
     $('#Tekstikogu').addClass('peidetud');
     $('#AvaTekstikogu').removeClass('disabled');
     puhastaFilter();

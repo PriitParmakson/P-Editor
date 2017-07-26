@@ -1,3 +1,5 @@
+'use strict';
+
 function onSignIn(googleUser) {
   /*
     Google Sign-In

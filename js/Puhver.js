@@ -1,15 +1,17 @@
+'use strict';
+
 function seaPuhvriKasitlejad() {
   /*
     Puhvridialoogi avamine ja sulgemine, rotatsioon tekstisisestusala ja puhvri vahel, puhvri tühjendamine
   */
 
-  $('#AvaPuhverNupp').click(function () {
+  $('#AvaPuhverNupp').click(() => {
     $('#Puhvridialoog').removeClass('peidetud');
     $('#AvaPuhverNupp').addClass('disabled');
     LisaTekstPuhvrisse();
   });
 
-  $('#SulgePuhverNupp').click(function () {
+  $('#SulgePuhverNupp').click(() => {
     $('#Puhvridialoog').addClass('peidetud');
     $('#AvaPuhverNupp').removeClass('disabled');
   });
@@ -33,11 +35,11 @@ function seaPuhvriKasitlejad() {
     }
   }
 
-  $('#PuhverPush').click(function () {
+  $('#PuhverPush').click(() => {
     LisaTekstPuhvrisse();
   });
 
-  $('#PuhverPop').click(function () {
+  $('#PuhverPop').click(() => {
     /*
       Kui puhver ei ole tühi, siis
         kanna viimati puhvrisse lisatud tekst tekstisisestusalasse 
@@ -52,7 +54,7 @@ function seaPuhvriKasitlejad() {
     }
   });
 
-  $('#PuhverPuhastaNupp').click(function () {
+  $('#PuhverPuhastaNupp').click(() => {
     puhver = [];
     $('#Puhvritekstid').empty();
   });

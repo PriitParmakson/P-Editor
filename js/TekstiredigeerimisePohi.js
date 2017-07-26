@@ -1,3 +1,4 @@
+'use strict';
 
 /* Teksti redigeerimisega seotud funktsioonid
 */
@@ -10,9 +11,9 @@ function seaRedaktoriKasitlejad() {
     paremale) otseselt ei töötle, välja arvatud see, et nende toime blokeeritakse veateaterežiimis.
     Caret positsioon selgitatakse välja siis, kui kasutaja vajutab klahvi, mida töödeldakse.
   */
-  $('#Tekst').on('keydown', () => keydownKasitleja(e));
-  $('#Tekst').on('keypress', () => keypressKasitleja(e));
-  $('#Tekst').on('paste', () => pasteKasitleja(e));
+  $('#Tekst').on('keydown', (e) => keydownKasitleja(e));
+  $('#Tekst').on('keypress', (e) => keypressKasitleja(e));
+  $('#Tekst').on('paste', (e) => pasteKasitleja(e));
 }
 
 function keydownKasitleja(e) {

@@ -1,3 +1,5 @@
+'use strict';
+
 function leiaTaht(str, index) {
   /*
    Tagastab objekti, mille struktuur on:
