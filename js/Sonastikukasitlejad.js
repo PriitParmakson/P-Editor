@@ -29,7 +29,7 @@ function seaSonastikuKasitlejad() {
     otsiSonastikust();
   });
 
-}  
+}
 
 function otsiSonastikust() {
   /*
@@ -44,9 +44,7 @@ function otsiSonastikust() {
   /*
     Sõnastik, kust otsida (ÕS või kohanimeregister). Kopeerimine pole efektiivne, perspektiivis leida parem lahendus.
   */
-  var kustOtsida = otsiKohanimedest ? sonastik : kohanimed;
-
-  }
+  var kustOtsida = (otsiKohanimedest) ? sonastik : kohanimed;
 
   if (otsiRegexiga) {
     var otsivRegex = $('#Otsistring').val();
@@ -106,5 +104,6 @@ function otsiSonastikust() {
       }
     }
   }
+
   $('#OtsinguTulemus').html(v);
 }
