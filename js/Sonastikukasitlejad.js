@@ -8,7 +8,12 @@ function seaSonastikuKasitlejad() {
   $('#Sonastik').click(() => {
     $('#Sonastikudialoog').removeClass('peidetud');
     $('#Sonastik').addClass('disabled');
-    $('#SonuSonastikus').text(sonastik.length.toString());
+    $('#SonuSonastikus').html(
+      '<span class="Loendur">' + 
+      sonastik.length.toString() +
+      '</span> sõna, <span class="Loendur">' +
+      kohanimed.length.toString() +
+      '</span> kohanime');
     $('#Otsistring').focus();
   });
 
