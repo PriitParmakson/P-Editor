@@ -315,7 +315,7 @@ function tootleBackspace(t) {
   // Teksti alguses mõju ei ole
   if (t[0] == '|') {
     uusTekst = t;
-    return
+    return uusTekst;
   }
 
   // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole
@@ -365,7 +365,7 @@ function tootleDelete(t) {
   // Teksti lopus mõju ei ole
   if (t.indexOf('|') == t.length) {
     uusTekst = t;
-    return
+    return uusTekst;
   }
 
   // Kui eemaldatav tärk on kirjavahemärk, siis peegeltähe eemaldamist pole

@@ -41,13 +41,14 @@
     <script src='js/SamatekstideOtsingTekstist.js'></script>
     <script src='js/SamatekstiPrimitiivid.js'></script>
     <script src='js/SeotudTekstid.js'></script>
-    <script src='js/Sonastik.js'></script>
     <script src='js/Sonastikukasitlejad.js'></script>
     <script src='js/Targifunktsioonid.js'></script>
     <script src='js/Tekstikogu.js'></script>
     <script src='js/TekstiKuvamineRedaktoris.js'></script>
     <script src='js/TekstiredigeerimisePohi.js'></script>
     <script src='js/Puhver.js'></script>
+    <script src='keeleressursid/Sonastik.js'></script>
+    <script src='keeleressursid/Kohanimed.js'></script>
 
   </head>
 
@@ -259,6 +260,15 @@
                   <input type='checkbox' class='form-check-input'
                     id='Regulaaravaldis'>
                   Regex
+                </label>
+              </span>
+              <!-- Kohanimi -->  
+              <span class='form-check form-check-inline'>
+                <label class='form-check-label'
+                  data-toggle='tooltip' title='Kohanimi' data-animation='false'>
+                  <input type='checkbox' class='form-check-input'
+                    id='OtsiKohanimedest'>
+                  Kohanimi
                 </label>
               </span>
               <div id='OtsiSonastikust' class='nupp ml-auto' data-toggle='tooltip' title='Soorita otsing' data-animation='false'>

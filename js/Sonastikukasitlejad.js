@@ -35,14 +35,23 @@ function otsiSonastikust() {
   /*
     Otsib sõnastikust, kas lihtsa otsistringi (lubatud kujud: <string>, <string>*, *<string>) või Regex-i alusel.
     Otsimise käivitamiseks on kaks moodust: vajutada Enter otsistringi väljas või vajutada nuppu 'OtsiSonastikust'.
+    Sõnastik koosneb kahest osast: 1) ÕS-ipõhine ja 2) kohanimeregistri põhine.
   */
   var v = ''; // Vastuste koguja
   var otsiRegexiga = $('#Regulaaravaldis').prop('checked');
+  var otsiKohanimedest = $('#OtsiKohanimedest').prop('checked');
+
+  /*
+    Sõnastik, kust otsida (ÕS või kohanimeregister). Kopeerimine pole efektiivne, perspektiivis leida parem lahendus.
+  */
+  var kustOtsida = otsiKohanimedest ? sonastik : kohanimed;
+
+  }
 
   if (otsiRegexiga) {
     var otsivRegex = $('#Otsistring').val();
-    for (var i = 0; i < sonastik.length; i++) {
-      var s = sonastik[i];
+    for (var i = 0; i < kustOtsida.length; i++) {
+      var s = kustOtsida[i];
       if (s.match(otsivRegex) != null) {
         v += s + ' ';
       }
@@ -62,8 +71,8 @@ function otsiSonastikust() {
     else {
       otsireziim = 3;
     }
-    for (var i = 0; i < sonastik.length; i++) {
-      var s = sonastik[i];
+    for (var i = 0; i < kustOtsida.length; i++) {
+      var s = kustOtsida[i];
       switch (otsireziim) {
         case 1:
           if (s.endsWith(otsistring)) {

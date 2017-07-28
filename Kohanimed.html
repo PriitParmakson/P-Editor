@@ -23,27 +23,35 @@
   <link rel='stylesheet' href='css/Samas.css'>
   <style></style>
 
-  <script src='keeleressursid/KohanimedTest.js'></script>
+  <script src='keeleressursid/Kohanimed.js'></script>
   <script src='js/SamatekstiPrimitiivid.js'></script>
 
   <script>
-    function alusta() {
-      var v = ''; // Pöördsõnade koguja
-      kohanimed.forEach(function(knimi) {
-        v += '<span>' + knimi + '</span> <span class="poord">' + 
-          pooraYmber(knimi) + '</span> ';  
+    function eemaldaDublikaadid() {
+      var sonakogu = new Set();
+      kohanimed.forEach((kNimi) => {
+        sonakogu.add(kNimi);
       });
-      $('#Tulemus').html(v);
+      sonakogu.forEach((kN2) => {
+        $('<p></p>')
+          .text(kN2)
+          .appendTo('#Tulemus');
+      });
     }
+
   </script>
 
 </head>
 
-<body onload="alusta()">
+<body onload='eemaldaDublikaadid()'>
   <div class='container-fluid'>
     <div class='row'>
       <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
-
+        <div class='paan dialoog'>
+          <label class='active'>Fail, kuhu salvestada:
+            <input type="file" id="fNimi"  onchange="handleFiles(this.files[0])">
+          </label>
+        </div>
         <div id='Tulemus'></div>
 
       </div>
