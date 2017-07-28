@@ -49,7 +49,7 @@ function otsiSonastikust() {
   /*
     Sõnastik, kust otsida (ÕS või kohanimeregister). Kopeerimine pole efektiivne, perspektiivis leida parem lahendus.
   */
-  var kustOtsida = (otsiKohanimedest) ? sonastik : kohanimed;
+  var kustOtsida = (otsiKohanimedest) ? kohanimed : sonastik;
 
   if (otsiRegexiga) {
     var otsivRegex = $('#Otsistring').val();
