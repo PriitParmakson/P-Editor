@@ -12,37 +12,37 @@ Roboto, Arial, sans-serif 10pt, Gainsboro - tooltips, vihjed
 
 Värviskeem
 ----------
-* DarkBlue
-            - keskelemendi rõhutus
-* #757575 (keskmiselt hall)
-            - võimaldatud nupp
-* Gainsboro (helehall)
-            - mittevõimalik nupp, tooltip, vihje  
-* #464a4c (tumehall)
-            - sisestatav tekst 
-* Azure (pastellroheline)
-            - informatsioonilise paani (Infopaan, Kool) taust
-* Aqua (ereroheline)
-            - informatsioonilise paani ääris
-* Tomato
-            - pöördtekst
-* Coral
-            - veateatepaani ääris,
-              veateate tekst
-* Lavenderblush
-            - veateatepaani taust
-* Gray
-            - paani sulgur
-* #C5E1A5 (nõrk roheline)
-            - normaaltoimingu nupp (Salvesta)
-            - dialoogikasti ääris, märgendi ääris
-* #F48FB1 (punane)
-            - tühistava toimingu nupp 
-* 292B2C (Bootstrap4 vaikimisi tekstivärv)
-  - DarkBlue - allpunktiir
-            - link
+  * DarkBlue
+              - keskelemendi rõhutus
+  * #757575 (keskmiselt hall)
+              - võimaldatud nupp
+  * Gainsboro (helehall)
+              - mittevõimalik nupp, tooltip, vihje  
+  * #464a4c (tumehall)
+              - sisestatav tekst 
+  * Azure (pastellroheline)
+              - informatsioonilise paani (Infopaan, Kool) taust
+  * Aqua (ereroheline)
+              - informatsioonilise paani ääris
+  * Tomato
+              - pöördtekst
+  * Coral
+              - veateatepaani ääris,
+                veateate tekst
+  * Lavenderblush
+              - veateatepaani taust
+  * Gray
+              - paani sulgur
+  * #C5E1A5 (nõrk roheline)
+              - normaaltoimingu nupp (Salvesta)
+              - dialoogikasti ääris, märgendi ääris
+  * #F48FB1 (punane)
+              - tühistava toimingu nupp 
+  * 292B2C (Bootstrap4 vaikimisi tekstivärv)
+    - DarkBlue - allpunktiir
+              - link
 
-(värvimääranguid on ka HTML-is)
+  (värvimääranguid on ka HTML-is)
 
 */
 
@@ -235,7 +235,6 @@ Värviskeem
     color: #292B2C !important;
     text-decoration: underline;
     text-decoration-style: dashed;
-    text-decoration-color: DarkBlue;
   }
 
   .Loendur {
