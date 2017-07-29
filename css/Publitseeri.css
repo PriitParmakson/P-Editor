@@ -1,13 +1,12 @@
 /* 
+  Minimalistlik kujundus samatekstide valikkogule
+  * vasaktaane 8rem
+  * ei sisalda tabeleid
+  * ainult h1 ja h2
+  * Bootstrap 4 alusel.
 
-Minimalistlik kujundus samatekstide valikkogule
-* vasaktaane 8rem
-* ei sisalda tabeleid
-* ainult h1 ja h2
-* Bootstrap 4 alusel.
-
-#464a4c (tume hall) - tekst
-#607D8B (muted blue) - lingid
+  #464a4c (tume hall) - tekst (EI KASUTA)
+  #607D8B (muted blue) - lingid (EI KASUTA)
 
 */
 
@@ -16,8 +15,8 @@ body {
   padding: 2rem 2rem 8rem 2rem;
   line-height: 1.25 !important;
   font-family: 'Times New Roman', serif; 
-  font-size: 14pt !important; 
-  color: #464a4c !important;
+  font-size: 14pt !important;
+  color: black !important;
   }
 
 /* ---- Paigutus ---- */
@@ -56,7 +55,7 @@ li { display: inline; margin-right: 1.5rem; }
 pre, code {
   font-family: 'Times New Roman', Times, serif !important;
   font-size: 14pt !important;
-  color: #464a4c !important;
+  color: black !important;
   background-color: white !important;
   padding: 0 !important;
 }
@@ -64,7 +63,7 @@ pre { margin: 1rem 0 1rem 6rem; }
 
 /* Määra üle Bootstrapi lingivärv */
 a, a:hover, a:active, a:visited {
-  color: #607D8B !important;
+  color: black !important;
   text-decoration: underline;
   text-decoration-style: dashed;
   text-decoration-color: #607D8B;

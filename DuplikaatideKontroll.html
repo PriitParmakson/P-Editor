@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duplikaatide kontroll</title>
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+
+  <!-- Material Design icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    crossorigin="anonymous">
+  <!-- Tether on vaja tooltip-de jaoks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+  <!-- Stiilid -->
+  <link rel='stylesheet' href='css/Samas.css'>
+  <style></style>
+
+  <script src='js/Targifunktsioonid.js'></script>
+  <script src='js/SamatekstiPrimitiivid.js'></script>  
+  <!-- script src=''></script -->
+
+  <script>
+    function alusta() {
+    /*
+      Laeb Google töölehelt "Samatekstid" kõik tekstid, leiab ja kuvab tekstid, mille kanoonilised kujud ühtivad.
+    */
+      var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+      $.get(url,
+        function(data, status, xhr) {
+          var tekstid = data.Tekstid;
+          var kkHulk = new Set(); // Tekstide kanoonilised kujud
+          var duplikaatkujud = [];
+          var tekstideKKd = []; // Tekstide kanoonilised kujud massiivina
+          tekstid.forEach((t, i) => {
+            var kk = kanoonilineKuju(t.Tekst);
+            tekstideKKd[i] = kk;
+            if (kkHulk.has(kk)) {
+              duplikaatkujud.push(kk);
+            } else {
+              kkHulk.add(kk);  
+            }
+          });
+          // Kuva sama kanoonilise kujuga tekstid
+          duplikaatkujud.forEach((d) => {
+            $('<p></p>')
+              .text(d)
+              .appendTo('#Tulemus');
+            // Leia ja kuva kanoonilise kujuga d tekstid  
+            tekstid.forEach((t, i) => {
+              if (tekstideKKd[i] == d) {
+                $('<li></li>')
+                  .text(t.Tekst)
+                  .appendTo('#Tulemus');
+              }
+            });
+          });
+          $('<p></p>')
+            .text('Töödeldud ' + tekstid.length + ' teksti.')
+        }
+      ); 
+    }
+  
+
+</script>
+
+</head>
+
+<body onload="alusta()">
+  <div class='container-fluid'>
+    <div class='row'>
+      <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+        <div id='Tulemus'>
+          <h1>Duplikaadid</h1>
+
+        </div>
+
+      </div>
+    </div>
+</body>
+
+</html>

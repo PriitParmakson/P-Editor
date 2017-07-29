@@ -48,7 +48,7 @@ function puhastaFilter() {
 
 function laeTekstid() {
   /*
-    Laeb Google töölehelt "Samatekstid" kõik tekstid ja suunab kuvamisele.
+    Laeb Google töölehelt "Samatekstid" kõik tekstid.
   */
   var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
   $.get(url,
@@ -56,8 +56,6 @@ function laeTekstid() {
       tekstid = data.Tekstid;
       // Kuva tekstide arv
       $('#TeksteTekstikogus').text(tekstid.length.toString());
-      // Kuva saadud tekstid
-      filtreeriJaKuvaTekstid();
       // Samatekstilisuse kontroll
       for (var i = 0; i < tekstid.length; i++) {
         if (!samatekst(tekstid[i].Tekst).on) {
