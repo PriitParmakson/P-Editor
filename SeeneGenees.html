@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seene genees</title>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Material Design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      crossorigin="anonymous">
+    <!-- Tether on vaja tooltip-de jaoks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Stiilid -->
+    <link rel='stylesheet' href='css/Samas.css'>
+    <style></style>
+
+    <script src='js/Targifunktsioonid.js'></script>
+    <script src='js/SamatekstiPrimitiivid.js'></script>
+    <!-- script src=''></script -->
+
+    <script>
+      function alusta() {
+        /*
+          Laeb Google töölehelt "Samatekstid" kõik tekstid, leiab ja kuvab tekstid, mille kanoonilised kujud ühtivad, s.t tekstid, mis langevad täht-tähelt kokku või erinevad ainult kirjavahemärkide poolest. 
+        */
+        var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+        $.get(url,
+          function (data, status, xhr) {
+            var tekstid = data.Tekstid;
+            var ta = tekstid.length;
+
+            // Leia kanoonilised kujud, pikkuse järgi sorteeritud massiivina
+            var kM = []; // Kanoonilised kujud massiivina
+            tekstid.forEach((t, i) => {
+              var k = kanoonilineKuju(t.Tekst);
+              var p = k.substr(0, Math.floor(k.length / 2))
+              kM[i] = {
+                Tekst: t.Tekst,
+                Poolkuju: p
+              };
+            });
+            kM.sort((a, b) => {
+              // ASC  -> a.length - b.length
+              // DESC -> b.length - a.length
+              return a.Poolkuju.length - b.Poolkuju.length;
+            });
+
+            kM.forEach((k, i) => {
+              var jarglased = [];
+              for (var j = i + 1; j < ta; j++) {
+                if (kM[j].Poolkuju.includes(k.Poolkuju)) {
+                  jarglased.push(j);
+                }
+              }
+              if (jarglased.length > 0) {
+                var jT = '';
+                jarglased.forEach((j) => {
+                  jT += kM[j].Tekst.toString() + '<br>' ;
+                });
+                $('<p></p>')
+                  .html(i.toString() + ': ' + kM[i].Tekst.toString() + '<br>' + jT)
+                  .appendTo('#Tulemus');
+              }
+            });
+
+            $('<p></p>')
+              .text('Töödeldud ' + tekstid.length + ' teksti.')
+              .appendTo('#Tulemus');
+          }
+        );
+      }
+    </script>
+
+  </head>
+
+  <body onload="alusta()">
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <div id='Tulemus'>
+            <h1>Seene genees</h1>
+
+          </div>
+
+        </div>
+      </div>
+  </body>
+
+</html>

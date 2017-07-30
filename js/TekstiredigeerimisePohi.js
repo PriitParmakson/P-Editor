@@ -141,7 +141,7 @@ function pasteKasitleja(e) {
         puhastatudTekst.substring(p2, p2 + 1) +
         '</span>' + 
         puhastatudTekst.substring(p2 + 1);
-      kuvaTeade(teatetekst);
+      kuvaTeade(teatetekst, 'NOK');
     }
   }, 50);
 }

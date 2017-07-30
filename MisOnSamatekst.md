@@ -45,11 +45,13 @@ Lubatud kirjavahemärgid on: reavahetus, tühik, koma, punkt, miinus, hüüu- ja
 
 `viskel eksiv` (vasakpoolse kesktähega tekst)
 
+***Duplikaadid*** on samatekstid, mis langevad tärk-tärgilt kokku.
+
 ***Kanooniline kuju*** &mdash; on samatekst, millest on kõrvaldatud kirjavahemärgid ja tähed on teisendatud väiketähtedeks.
 
 `sukisesikus` (kanoonilisel kujul samatekst)
 
-***Samaväärsed samatekstid***. Samatekstid on samaväärsed, kui nende kanooniline kuju on sama.
+***Samaväärsed samatekstid***. Samatekstid on samaväärsed, kui nende kanooniline kuju on sama, s.t mis erinevad ainult kirjavahemärkide kasutuse poolest.
 
 `Elav elu, tule elutule - vale?` (samaväärne)
 
@@ -59,11 +61,11 @@ Lubatud kirjavahemärgid on: reavahetus, tühik, koma, punkt, miinus, hüüu- ja
 
 `sukis` (pooltekst)
 
-***Eellane*** ja ***järglane***. `s1` ja `s2` on suhtes eeltekst-järeltekst siis ja ainult siis, kui `s1` pooltekst (ilma kesktäheta) sisaldub `s2`-s. Seda suhet tähistame `s1 < s2`.
+***Eellastekst*** ja ***järglastekst***. `s1` ja `s2` on suhtes eeltekst-järeltekst siis ja ainult siis, kui `s1` pooltekst (ilma kesktäheta) sisaldub `s2`-s. Seda suhet tähistame `s1 < s2`.
 
-`Uks usku.` (eellane)
+`Uks usku.` (eellastekst)
 
-`Uks uude eduusku.` (järglane)
+`Uks uude eduusku.` (järglastekst)
 
 ***Pöördsõna***. Sõnad `s1` ja `s2` moodustavad pöördsõnapaari kui sõna `s1` pahupidi lugedes saame sõna `s2` (ja vastupidi). Samasõna on vaadeldav iseenda pöördsõnana.
 
@@ -95,3 +97,6 @@ Parempoolse kesktähega tekst on ühendatav teise parempoolse kesktähega teksti
 
 `Ooh, otse kere! Tere, vaga Tagavere! Terekest, ohoo!` + `Eakas teema. Tere, tere, vana kere! Tere, Kanavere! Teretame, etsa kae!` = `Eakas teema. Tere, tere, vana kere! Tagavere! Terekest, ohoo! Ooh, otse kere! Tere, vaga! Tere, Kanavere! Teretame, etsa kae!`
 
+Moodus 4
+
+Kui `A` ja `B` on samatekstid, siis ka `ABBA` on samatekst.

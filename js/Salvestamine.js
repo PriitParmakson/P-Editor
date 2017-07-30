@@ -22,7 +22,7 @@ function avaSalvestusdialoog() {
     */
     tekstid.some(function (t2) {
       if (s.Tekst == t2.Tekst) {
-        kuvaTeade('Duplikaattekst');
+        kuvaTeade('Duplikaattekst', 'NOK');
         $('#Salvesta2').addClass('disabled');
         return true;
       }
@@ -47,18 +47,18 @@ function salvestaTekst() {
     console.log('salvestaTekst: POST vastus: status: ' + status);
     // Töötle jQuery vastus
     if (status !== 'success') {
-      kuvaTeade('Salvestamine ebaõnnestus. JQuery POST päringu vastus:  staatus: ' + status);
+      kuvaTeade('Salvestamine ebaõnnestus. JQuery POST päringu vastus:  staatus: ' + status, 'NOK');
       console.log('Salvestamine ebaõnnestus. JQuery POST päringu vastus: staatus: ' + status);
       return
     }
     // Töötle töölehe vastus
     if (data.result == 'success') {
-      kuvaTeade('Salvestatud');
+      kuvaTeade('Salvestatud', 'OK');
       if (logimistase > 0) {
         console.log('salvestaTekst: salvestatud tekst: ' + s.Tekst);
       }
     } else { 
-      kuvaTeade('Salvestamine ebaõnnestus. Viga: ' + vastus.error);
+      kuvaTeade('Salvestamine ebaõnnestus. Viga: ' + vastus.error, 'NOK');
       console.log('Salvestamine ebaõnnestus. Viga: ' + vastus.error);
       return
     }

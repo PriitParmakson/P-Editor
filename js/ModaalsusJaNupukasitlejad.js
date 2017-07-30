@@ -62,13 +62,26 @@ function seaTekstinupukasitlejad() {
   aktiveeriTekstinupud();
 }
 
-function kuvaTeade(teade) {
+function kuvaTeade(teade, teateTyyp) {
   /*
     Avab teatepaani ja kuvab teate, HTML-na.
     Oluline: sisend peab olema murdskriptimise seisukohalt
     kontrollitud ja vajadusel puhastatud.
-    Deaktiveerib tekstitöötlusnupud.
+    Deaktiveerib tekstitöötlusnupud. See tähendab, et kasutaja
+    peab teate sulgema, enne kui edasi saab minna.
+    Teate tüüp p.o kas 'OK' või 'NOK'. Vastavalt seatakse
+    teate taustavärv (roheline või punane). Kui teatetüüp ei ole
+    määratud, siis kuvatakse teade neutraalse taustavärviga.
   */
+  $('#Teatepaan').removeClass('OKteade NOKteade');
+  if (teateTyyp) {
+    if (teateTyyp == 'OK') {
+      $('#Teatepaan').addClass('OKteade');
+    } else if (teateTyyp == 'NOK') {
+      $('#Teatepaan').addClass('NOKteade');
+    } 
+  }
+  
   $('#Teatepaan').removeClass('peidetud');
   $('#Teatetekst').html(teade);
   deaktiveeriTekstinupud();  

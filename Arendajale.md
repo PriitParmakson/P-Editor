@@ -7,7 +7,7 @@ layout: Tekstid
 # Arendajale 
 {: .no_toc}
 
-Samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
+[Samatekst](https://github.com/PriitParmakson/Samatekst) - samatekstide (palindroomide) veebiredaktor ja pilves hoitav tekstikogu
 
 [Koodirepo](https://priitparmakson.github.io/Samatekst/) - [Funktsioonikataloog](https://priitparmakson.github.io/Samatekst/Funktsioonikataloog.html) - [Koodimeetrikad](https://priitparmakson.github.io/Samatekst/Meetrikad.html) -  [Näppimisest, konfimisest ja tööriistade isetegemisest](docs/Nappimisest)
 

@@ -326,7 +326,7 @@ Su tere. Terevada - Adavere! Tere, valaskala laks Alavere! Tere, villa Allivere!
 
 Тарту дорог как город утрат.
 
-## Tutulutut
+## Su kulu tulukus
 
 Su kulukus.
 
