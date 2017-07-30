@@ -62,7 +62,7 @@ Ata - jalaga aga lajata!
 
 Aga vanade juustu kutsu ujedana "Vaga".
 
-## Eakas teema
+## Eakas teema...
 
 ```
 Tere, tere, vana kere!
@@ -95,7 +95,7 @@ Te vaete teavet?
 
 Ajav iba - teade: segi Ruunavere ja Jerevan. Uurige seda. Et abi vaja?
 
-Enimat iva - etteavitamine.
+Enimat iva? Etteavitamine!
 
 Enimat, sibavat, ulatavat - tavatalutav abistamine.
 
@@ -274,7 +274,7 @@ Niisama saama? Nii, Hiinamaa? Sama siin.
 
 See selles, selle sees.
 
-## Stilistilist
+## Stilistilist...
 
 Stilistilist: otsi litsi, lits!
 
