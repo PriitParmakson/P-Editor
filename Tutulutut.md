@@ -1,6 +1,6 @@
 ---
 title: Valik samatekste
-permalink: Arhiivkogu
+permalink: Tutulutut
 layout: Publitseeri
 ---
 
