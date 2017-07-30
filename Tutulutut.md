@@ -171,6 +171,10 @@ Elavalt lavale!
 
 Kipute lavale? Tupik!
 
+Aga ta valge aeg - lava taga.
+
+Nii, seni lavatagune "manna" - anname nuga. Tavaline siin.
+
 ## Loo kool
 
 Loo kool, lahe! Halloo, kool!
