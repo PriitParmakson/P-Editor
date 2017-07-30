@@ -20,9 +20,8 @@ function avaSalvestusdialoog() {
     var s = tekstSalvestuskujule(t);
     /* Duplikaadikontroll
     */
-    var k1 = kanoonilineKuju(s.Tekst);
     tekstid.some(function (t2) {
-      if (k1 == kanoonilineKuju(t2.Tekst)) {
+      if (s.Tekst == t2.Tekst) {
         kuvaTeade('Duplikaattekst');
         $('#Salvesta2').addClass('disabled');
         return true;
