@@ -4,11 +4,10 @@ permalink: Tutulutut
 layout: Publitseeri
 ---
 
+<p class='tsitaat'>Дар напрасный, дар случайный ... - А.С. Пушкин</p>
+
 # Tutulutut
 {: .no_toc}
-
-- TOC
-{:toc}
 
 ## Ajatöötaja
 
@@ -99,7 +98,7 @@ Enimat iva? Etteavitamine!
 
 Enimat, sibavat, ulatavat - tavatalutav abistamine.
 
-## Iisaku...
+## On Iisakul elu kasiino ...
 
 Tere, Pirita, Iisaku, Puka! Siia tiri peret!
 
@@ -399,10 +398,16 @@ Usu avatavat tava - tava usu!
 
 Öösiti söö!
 
+Öösitigi, sigitis, öö!
+
 Öötöö.
 
 Ööbib. Öö.
 
+<p style='margin-top: 4rem;'>Sisukord</p>
+
+- TOC
+{:toc}
 
 
 
