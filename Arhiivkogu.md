@@ -321,6 +321,30 @@ Su tere. Terevada - Adavere! Tere, valaskala laks Alavere! Tere, villa Allivere!
 
 Тарту дорог как город утрат.
 
+## Tutulutut
+
+Su kulukus.
+
+Su tulutus.
+
+Su tulu tulutus.
+
+Su tulu kulutus.
+
+Su kulu kulukus.
+
+Su kulu tulukus.
+
+Su kulu-tulu kus?
+
+Su kulu - tulu! - kus?
+
+Su kulu - ulu! - kus?
+
+Su tulu - kulu kulutus. 
+
+Su kulutatu - lukus!
+
 ## Uju
 
 Upu?
@@ -330,6 +354,10 @@ Uju!
 Ujuks ees eeskuju.
 
 Uju, kivikuju!
+
+## Ulu
+
+Uluk, ulu!
 
 ## Unis kes eksinu
 
