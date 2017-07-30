@@ -59,7 +59,7 @@ pre, code {
   background-color: white !important;
   padding: 0 !important;
 }
-pre { margin: 1rem 0 1rem 6rem; }
+pre { margin: 1rem 0 1rem 0; }
 
 /* Määra üle Bootstrapi lingivärv */
 a, a:hover, a:active, a:visited {
