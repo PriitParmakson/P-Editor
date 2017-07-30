@@ -175,6 +175,8 @@ Kipute lavale? Tupik!
 
 Loo kool, lahe! Halloo, kool!
 
+Loo kool - ajalookool.
+
 ## Luul
 
 Ajate luulu, luuletaja!
@@ -234,7 +236,7 @@ Sakas rott - torsakas!<br>
 Sakas säng - nässakas!<br>
 Sakas pori - ropsakas!<br>
 Sakas parm - rapsakas!<br>
-Sakas iive - viisakas!<br>
+Sakas iive - mis ime? - viisakas.<br>
 Sakas, oo, roosakas!<br>
 Sakas pole luule lopsakas.<br>
 Sakas tüma mütsakas!<br>
@@ -244,7 +246,7 @@ Sakas pekk - kepsakas!<br>
 Sakas pubi boss - sobib? - upsakas!<br>
 Sakas töö - köötsakas!<br>
 Sakas park, taat krapsakas.<br>
-Sakas paradoks - kodar apsakas.
+Sakas paradoks - kodar apsakas.<br>
 Sa kas Sakas?
 </p>
 
