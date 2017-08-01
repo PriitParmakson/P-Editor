@@ -24,7 +24,7 @@
   <!-- Skriptid -->
   <script src='../js/Targifunktsioonid.js'></script>
   <script src='../js/SamatekstiPrimitiivid.js'></script>
-  <script src='../js/Sonastik.js'></script>
+  <script src='../keeleressursid/Sonastik.js'></script>
   <script>
     var fr;
 
@@ -71,13 +71,13 @@
         .appendTo('#Tulemus');
       var m = new Map();
       for (var i = 0; i < sonastik.length; i++) {
-        m.set(sonastik[i], sonastik[i]);
+        m.set(sonastik[i].substr(1), sonastik[i]);
       }
       for (var i = 0; i < sonastik.length; i++) {
         var p = pooraYmber(sonastik[i]);
-        if (sonastik[i] != p && m.get(p)) {
+        if (m.get(p)) {
           $('<p></p>')
-            .text(sonastik[i] + ' ' + p + ' | ')
+            .text(sonastik[i] + ' ' + m.get(p) + ' | ')
             .appendTo('#Tulemus');
         };
       }

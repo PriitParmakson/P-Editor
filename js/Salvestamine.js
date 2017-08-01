@@ -58,8 +58,8 @@ function salvestaTekst() {
         console.log('salvestaTekst: salvestatud tekst: ' + s.Tekst);
       }
     } else { 
-      kuvaTeade('Salvestamine ebaõnnestus. Viga: ' + vastus.error, 'NOK');
-      console.log('Salvestamine ebaõnnestus. Viga: ' + vastus.error);
+      kuvaTeade('Salvestamine ebaõnnestus. Viga: ' + data.error, 'NOK');
+      console.log('Salvestamine ebaõnnestus. Viga: ' + data.error);
       return
     }
     suleSalvestusdialoog();
