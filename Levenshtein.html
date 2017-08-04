@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levenshtein distance</title>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Material Design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      crossorigin="anonymous">
+    <!-- Tether on vaja tooltip-de jaoks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Stiilid -->
+    <link rel='stylesheet' href='css/Samas.css'>
+    <style></style>
+
+    <!-- script src=''></script -->
+    <script src='js/SamatekstiPrimitiivid.js'></script>
+    <script src='js/Targifunktsioonid.js'></script>
+
+    <script>
+      function levenshtein(a, b) {
+        /*
+          By kgiri, see https://gist.github.com/andrei-m/982927 
+          MIT licence
+        */
+        if (a.length === 0) return b.length
+        if (b.length === 0) return a.length
+        let tmp, i, j, prev, val
+        // swap to save some memory O(min(a,b)) instead of O(a)
+        if (a.length > b.length) {
+          tmp = a
+          a = b
+          b = tmp
+        }
+
+        row = Array(a.length + 1)
+        // init the row
+        for (i = 0; i <= a.length; i++) {
+          row[i] = i
+        }
+
+        // fill in the rest
+        for (i = 1; i <= b.length; i++) {
+          prev = i
+          for (j = 1; j <= a.length; j++) {
+            if (b[i - 1] === a[j - 1]) {
+              val = row[j - 1] // match
+            } else {
+              val = Math.min(row[j - 1] + 1, // substitution
+                Math.min(prev + 1,     // insertion
+                  row[j] + 1))  // deletion
+            }
+            row[j - 1] = prev
+            prev = val
+          }
+          row[a.length] = prev
+        }
+        return row[a.length]
+      }
+
+      function kuvaTeade(teade, teateTyyp) {
+        /*
+          Avab teatepaani ja kuvab teate, HTML-na.
+          Oluline: sisend peab olema murdskriptimise seisukohalt
+          kontrollitud ja vajadusel puhastatud.
+          Deaktiveerib tekstitöötlusnupud. See tähendab, et kasutaja
+          peab teate sulgema, enne kui edasi saab minna.
+          Teate tüüp p.o kas 'OK' või 'NOK'. Vastavalt seatakse
+          teate taustavärv (roheline või punane). Kui teatetüüp ei ole
+          määratud, siis kuvatakse teade neutraalse taustavärviga.
+        */
+        $('#Teatepaan').removeClass('OKteade NOKteade');
+        if (teateTyyp) {
+          if (teateTyyp == 'OK') {
+            $('#Teatepaan').addClass('OKteade');
+          } else if (teateTyyp == 'NOK') {
+            $('#Teatepaan').addClass('NOKteade');
+          }
+        }
+
+        $('#Teatepaan').removeClass('peidetud');
+        $('#Teatetekst').html(teade);
+      }
+
+      function alusta() {
+        $('#ArvutaVahemaaNupp').click(() => {
+          var t1 = $('#Tekst1').val();
+          if (!samatekst(t1).on) {
+            kuvaTeade('Текст 1 не палиндром.', 'NOK');
+            return
+          }
+          var t2 = $('#Tekst2').val();
+          if (!samatekst(t2).on) {
+            kuvaTeade('Текст 2 не палиндром.', 'NOK');
+            return
+          }
+          var d = levenshtein(kanoonilineKuju(t1), kanoonilineKuju(t2));
+          $('#Tulemus').text(d.toString());
+        });
+
+        $('#TeatepaanSulge').click(() => {
+          $('#Teatepaan').addClass('peidetud');
+          $('#Tekst1').focus();
+        });
+
+      }
+    </script>
+
+  </head>
+
+  <body onload="alusta()">
+
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <!-- Teatepaan -->
+          <div id='Teatepaan' class='paan peidetud d-flex align-items-start justify-content-between'>
+            <!-- Teade -->
+            <p id='Teatetekst'>
+            </p>
+            <!-- Sulgemisnupp -->
+            <div id='TeatepaanSulge' class='sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
+          </div>
+
+          <div id='VahemaaDialoog' class='paan dialoog p-3'>
+            <p>
+              Вычислитель <a href='https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B5_%D0%9B%D0%B5%D0%B2%D0%B5%D0%BD%D1%88%D1%82%D0%B5%D0%B9%D0%BD%D0%B0'
+                target='_new'>дистанцию редактирования (расстояния Левенштейна)</a> между палиндромами
+            </p>
+            <p class='form-group'>
+              <label for='Tekst1' class="active">
+                  Палиндром 1:
+              </label>
+              <input id='Tekst1' type="text" class='form-control' autocomplete='off'>
+            </p>
+            <p class='form-group'>
+              <label for='Tekst2' class="active">
+                  Палиндром 2:
+              </label>
+              <input id='Tekst2' type="text" class='form-control' autocomplete='off'>
+            </p>
+            <div id='ArvutaVahemaaNupp' class='nupp' data-toggle='tooltip' title='Вычисляй дистанцию редактирования'
+              data-animation='false'>
+              <i class='ikoon material-icons'>
+              play_circle_outline
+            </i>
+            </div>
+            <div>Дистанция редактирования: <span id='Tulemus' class='kesk'></span></div>
+          </div>
+
+
+        </div>
+      </div>
+  </body>
+
+</html>

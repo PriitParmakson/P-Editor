@@ -60,7 +60,7 @@ function otsiSonastikust() {
       }
     }
   } else {
-    var otsireziim;
+    let otsireziim; /* 1, 2 või 3 vastavalt kas otsistring algab või lõpeb tärniga või on tärnita */
     var otsistring = $('#Otsistring').val();
     var kuvaPoordkuju = $('#KuvaPoordkuju').prop('checked');
     if (otsistring.startsWith('*')) {

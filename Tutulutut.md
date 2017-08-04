@@ -6,7 +6,7 @@ layout: Publitseeri
 
 <p class='tsitaat'>Дар напрасный, дар случайный ... - А.С. Пушкин</p>
 
-# Tutulutut
+# Tutulutut tulutut
 {: .no_toc}
 
 ## Ajatöötaja
@@ -239,6 +239,7 @@ Sakas rott - torsakas!<br>
 Sakas säng - nässakas!<br>
 Sakas pori - ropsakas!<br>
 Sakas parm - rapsakas!<br>
+Saka - eakas.<br>
 Sakas iive - mis ime? - viisakas.<br>
 Sakas, oo, roosakas!<br>
 Sakas pole luule lopsakas.<br>
