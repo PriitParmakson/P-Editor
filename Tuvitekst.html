@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tüvitekst</title>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Material Design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      crossorigin="anonymous">
+    <!-- Tether on vaja tooltip-de jaoks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Stiilid -->
+    <link rel='stylesheet' href='css/Samas.css'>
+    <style>
+      .roheline {
+        color: blue;
+        background-color: azure;
+        font-weight: bold;
+      }
+
+      .punane {
+        color: red;
+        background-color: bisque;
+        font-weight: bold;
+      }
+    </style>
+
+    <script src='js/Targifunktsioonid.js'></script>
+    <script src='js/SamatekstiPrimitiivid.js'></script>
+    <script src='js/Seosed.js'></script>
+    <!-- script src=''></script -->
+
+    <script>
+      function kuvaMarkeeritud(yhised, s, stiil) {
+        var t = '';
+        var ycounter = 0;
+        for (var i = 0; i < s.length; i++) {
+          if (taht(s.charCodeAt(i))) {
+            if (yhised[ycounter]) {
+              t += s[i];
+            } else {
+              t += '<span class="' + stiil + '">' + s[i] + '</span>';
+            }
+            ycounter++;
+          } else {
+            t += s[i];
+          }
+        }
+        $('<p></p>')
+          .html(t)
+          .appendTo('#Markeeritud');
+        koguHTML += '<p>' + t + '</p>';  
+      }
+
+      var koguHTML = '';
+
+      function alusta() {
+        // Lae Google töölehelt "Samatekstid" kõik tekstid.
+        var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+        $.get(url,
+          function (data, status, xhr) {
+            var tekstid = data.Tekstid;
+            var ta = tekstid.length;
+
+            // Leia kanoonilised kujud, pikkuse järgi sorteeritud massiivina
+            var kM = []; // Kanoonilised kujud massiivina
+            tekstid.forEach((t, i) => {
+              kM[i] = {
+                tekst: t.Tekst,
+                kkuju: kanoonilineKuju(t.Tekst)
+              };
+            });
+            kM.sort((a, b) => {
+              // ASC  -> a.length - b.length
+              // DESC -> b.length - a.length
+              return a.kkuju.length - b.kkuju.length;
+            });
+
+            // Tüvitekst
+            var tt = 'See mees';
+            var ktt = kanoonilineKuju(tt);
+
+            // Leia lähedased
+            kM.forEach((e, i) => {
+              if (e.tekst.includes('See') && e.tekst.includes('mees')) {
+                var v = pikimYhineTahejada(ktt, e.kkuju);
+                if (v.pikimyhinetahejada.length >= 7) {
+                  kuvaMarkeeritud(v.yhised2, kM[i].tekst, 'roheline');
+                }
+              }
+            });
+            $('#kogutudHTML').text(koguHTML);
+          }
+        );
+      }
+    </script>
+
+  </head>
+
+  <body onload="alusta()">
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <div id='Markeeritud'>
+            <h1>See mees</h1>
+
+          </div>
+          <div id='kogutudHTML'>
+            
+          </div>
+        </div>
+      </div>
+  </body>
+
+</html>

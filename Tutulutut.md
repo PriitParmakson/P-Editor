@@ -274,6 +274,40 @@ Niisama saama? Nii, Hiinamaa? Sama siin.
 
 See selles, selle sees.
 
+## See mees
+
+See mage megamees.
+
+See megamage mees.
+
+See muhumees.
+
+See muhe mehumees.
+
+See memmemees.
+
+See mamma mees.
+
+See moepetis-kebaab. Eksite, peomees!
+
+See meremees.
+
+See moetu teomees.
+
+See missimees.
+
+See malakaga kalamees.
+
+See masinaga pagan - isamees!
+
+See meie mees.
+
+See meie-teie mees.
+
+See magav vagamees.
+
+See meta-aatemees.
+
 ## Stilistilist...
 
 Stilistilist: otsi litsi, lits!

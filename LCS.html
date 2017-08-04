@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikim ühine jada</title>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Material Design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      crossorigin="anonymous">
+    <!-- Tether on vaja tooltip-de jaoks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Stiilid -->
+    <link rel='stylesheet' href='css/Samas.css'>
+    <style>
+      .roheline {
+        color: blue;
+        background-color: azure;
+        font-weight: bold;
+      }
+
+      .punane {
+        color: red;
+        background-color: bisque;
+        font-weight: bold;
+      }
+    </style>
+
+    <!-- script src=''></script -->
+    <script src='js/SamatekstiPrimitiivid.js'></script>
+    <script src='js/Targifunktsioonid.js'></script>
+
+    <script>
+      function kuvaMaatriks(m, s1, s2) {
+        // Moodusta veerupäised (s2)
+        var veerupaised = '    ';
+        for (var j = 0; j < s2.length; j++) {
+          veerupaised += '  ' + s2[j];
+        }
+        $('<pre></pre>')
+          .text(veerupaised)
+          .appendTo('#Maatriks');
+
+        m.forEach((rida, i) => {
+          if (i > 0) {
+            var reaTekst = s1[i - 1] + ' : ';
+            rida.forEach((element, j) => {
+              if (j > 0) {
+                reaTekst += element.toString().padStart(3);
+              }
+            });
+            $('<pre></pre>')
+              .text(reaTekst)
+              .appendTo('#Maatriks');
+          }
+        });
+      }
+
+      function kuvaMarkeeritud(yhised, s, stiil) {
+        var t = '';
+        var ycounter = 0;
+        for (var i = 0; i < s.length; i++) {
+          if (taht(s.charCodeAt(i))) {
+            if (yhised[ycounter]) {
+              t += s[i];
+            } else {
+              t += '<span class="' + stiil + '">' + s[i] + '</span>';
+            }
+            ycounter++;
+          } else {
+            t += s[i];
+          }
+        }
+        $('<p></p>')
+          .html(t)
+          .appendTo('#Markeeritud');
+      }
+
+      function pikimYhineTahejada(s1, s2, yhised1, yhised2) {
+        /*
+          Alexis Lagante
+          https://gist.github.com/alexishacks/725df6db4432cd29cd43 
+        */
+        var result = [];
+        for (var i = 0; i <= s1.length; i++) {
+          result.push([]);
+          for (var j = 0; j <= s2.length; j++) {
+            var currValue = 0;
+            if (i == 0 || j == 0) {
+              currValue = 0;
+            } else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+              currValue = result[i - 1][j - 1] + 1;
+            } else {
+              currValue = Math.max(result[i][j - 1], result[i - 1][j]);
+            }
+            result[i].push(currValue);
+          }
+        }
+
+        // kuvaMaatriks(result, s1, s2);
+
+        var i = s1.length;
+        var j = s2.length;
+
+        var yhised1 = [];
+        var yhised2 = [];
+
+        var s3 = '';
+        while (result[i][j] > 0) {
+          if (s1.charAt(i - 1) == s2.charAt(j - 1) &&
+            (result[i - 1][j - 1] + 1 == result[i][j])) {
+            s3 = s1.charAt(i - 1) + s3;
+            i = i - 1;
+            j = j - 1;
+            yhised1.push(true);
+            yhised2.push(true);
+          } else if (result[i - 1][j] > result[i][j - 1]) {
+            i = i - 1;
+            yhised1.push(false);
+          }
+          else {
+            j = j - 1;
+            yhised2.push(false);
+          }
+        }
+
+        return {
+          pikimyhinetahejada: s3,
+          yhised1: yhised1,
+          yhised2: yhised2
+        };
+      }
+
+      function kuvaTeade(teade, teateTyyp) {
+        /*
+          Avab teatepaani ja kuvab teate, HTML-na.
+          Teate tüüp p.o kas 'OK' või 'NOK'. Vastavalt seatakse
+          teate taustavärv (roheline või punane). Kui teatetüüp ei ole
+          määratud, siis kuvatakse teade neutraalse taustavärviga.
+        */
+        $('#Teatepaan').removeClass('OKteade NOKteade');
+        if (teateTyyp) {
+          if (teateTyyp == 'OK') {
+            $('#Teatepaan').addClass('OKteade');
+          } else if (teateTyyp == 'NOK') {
+            $('#Teatepaan').addClass('NOKteade');
+          }
+        }
+
+        $('#Teatepaan').removeClass('peidetud');
+        $('#Teatetekst').html(teade);
+      }
+
+      function alusta() {
+        $('#LeiaLCSNupp').click(() => {
+          // Võta kuvalt analüüsitavad tekstid ja kontrolli kas need on samatekstid.
+          var t1 = $('#Tekst1').val();
+          if (!samatekst(t1).on) {
+            kuvaTeade('Tekst 1 ei ole samatekst.', 'NOK');
+            return
+          }
+          var t2 = $('#Tekst2').val();
+          if (!samatekst(t2).on) {
+            kuvaTeade('Tekst 2 ei ole samatekst.', 'NOK');
+            return
+          }
+          var pyt = pikimYhineTahejada(kanoonilineKuju(t1), kanoonilineKuju(t2));
+
+          $('#Tulemus').text(pyt.pikimyhinetahejada.toString());
+
+          kuvaMarkeeritud(pyt.yhised1, t1, 'roheline');
+          kuvaMarkeeritud(pyt.yhised2, t2, 'punane');
+
+        });
+
+        $('#TeatepaanSulge').click(() => {
+          $('#Teatepaan').addClass('peidetud');
+          $('#Tekst1').focus();
+        });
+
+      }
+    </script>
+
+  </head>
+
+  <body onload="alusta()">
+
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <!-- Teatepaan -->
+          <div id='Teatepaan' class='paan peidetud d-flex align-items-start justify-content-between'>
+            <!-- Teade -->
+            <p id='Teatetekst'>
+            </p>
+            <!-- Sulgemisnupp -->
+            <div id='TeatepaanSulge' class='sulgemisnupuke'>
+              <span>&times;</span>
+            </div>
+          </div>
+
+          <div id='LCSDialoog' class='paan dialoog p-3'>
+            <p>
+              Leia kahe samateksti <a href='http://algorithms.tutorialhorizon.com/dynamic-programming-longest-common-subsequence/'
+                target='_new'>pikim ühine tähejada</a>.
+            </p>
+            <p class='form-group'>
+              <label for='Tekst1' class="active">
+                  Samatekst 1:
+              </label>
+              <input id='Tekst1' type="text" class='form-control' autocomplete='off'>
+            </p>
+            <p class='form-group'>
+              <label for='Tekst2' class="active">
+                  Samatekst 2:
+              </label>
+              <input id='Tekst2' type="text" class='form-control' autocomplete='off'>
+            </p>
+            <div id='LeiaLCSNupp' class='nupp' data-toggle='tooltip' title='Leia pikim ühine tähejada' data-animation='false'>
+              <i class='ikoon material-icons'>
+              play_circle_outline
+            </i>
+            </div>
+            <div>Pikim ühine tähejada: <span id='Tulemus' class='kesk'></span></div>
+            <div id='Maatriks' class='mt-3'>
+            </div>
+            <div id='Markeeritud'>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+  </body>
+
+</html>
