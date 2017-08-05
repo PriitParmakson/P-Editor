@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tüvitekst</title>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Material Design icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      crossorigin="anonymous">
+    <!-- Tether on vaja tooltip-de jaoks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Stiilid -->
+    <link rel='stylesheet' href='css/Samas.css'>
+    <style>
+      .roheline {
+        color: tomato;
+        background-color: ghostwhite;
+        font-weight: normal;
+      }
+
+      .punane {
+        color: red;
+        background-color: bisque;
+        font-weight: bold;
+      }
+    </style>
+
+    <script src='js/Targifunktsioonid.js'></script>
+    <script src='js/SamatekstiPrimitiivid.js'></script>
+    <script src='js/Seosed.js'></script>
+    <!-- script src=''></script -->
+
+    <script>
+      var koguHtml;
+
+      function kuvaMarkeeritud(yhised, s, stiil) {
+        var t = '';
+        var ycounter = 0;
+        for (var i = 0; i < s.length; i++) {
+          if (taht(s.charCodeAt(i))) {
+            if (yhised[ycounter]) {
+              t += s[i];
+            } else {
+              t += '<span class="' + stiil + '">' + s[i] + '</span>';
+            }
+            ycounter++;
+          } else {
+            t += s[i];
+          }
+        }
+        koguHtml += t + '<br>';
+      }
+
+      function alusta() {
+        // Lae Google töölehelt "Samatekstid" kõik tekstid.
+        var url = 'https://script.google.com/macros/s/AKfycbzjP4j2ZDOl4MQmcZxqDSimA59pg9yGNkpt2mQKRxUfN3GzuaU/exec';
+        $.get(url,
+          function (data, status, xhr) {
+            var tekstid = data.Tekstid;
+            var ta = tekstid.length;
+
+            // Leia kanoonilised kujud, pikkuse järgi sorteeritud massiivina
+            var kM = []; // Kanoonilised kujud massiivina
+            tekstid.forEach((t, i) => {
+              kM[i] = {
+                tekst: t.Tekst,
+                kkuju: kanoonilineKuju(t.Tekst)
+              };
+            });
+            kM.sort((a, b) => {
+              // ASC  -> a.length - b.length
+              // DESC -> b.length - a.length
+              return a.kkuju.length - b.kkuju.length;
+            });
+
+            // Leia seosed
+            var seosed = [];
+            for (var i = 0; i < kM.length - 1; i++) {
+              var k1 = kM[i].kkuju;
+              var jarglased = [];
+              for (var j = i + 1; j < kM.length; j++) {
+                var k2 = kM[j].kkuju;
+                // Sisalduvuse kontroll
+                // Sisalduvus keskel
+                if (k1.length == k2.length) continue;
+                var si = k2.indexOf(k1);
+                if (si == Math.floor((k2.length - k1.length) / 2)) {
+                  jarglased.push(j);
+                }
+              }
+              if (jarglased.length > 0) {
+                seosed.push({
+                  eellane: i,
+                  jarglased: jarglased
+                });
+              }
+            }
+
+            // Kuva seosed
+            seosed.forEach((seos) => {
+              koguHtml = kM[seos.eellane].tekst + '<br>';
+              seos.jarglased.forEach((j) => {
+                var p = pikimYhineTahejada(
+                  kanoonilineKuju(kM[seos.eellane].tekst), kanoonilineKuju(kM[j].tekst));
+                kuvaMarkeeritud(p.yhised2, kM[j].tekst, 'roheline');
+              });
+              var seos = $('<p></p>')
+                .html(koguHtml)
+                .appendTo('#Seosed');
+            });
+
+            $('<p></p>')
+              .text('Leitud ' + seosed.length.toString() + ' seost.')
+              .appendTo('#Seosed');
+          }
+        );
+      }
+    </script>
+
+  </head>
+
+  <body onload="alusta()">
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-xs-12 col-sm-10 col-md-8 col-lg-8 col-xl-6'>
+
+          <h1>Seosed</h1>
+          <div id='Seosed'>
+
+          </div>
+        </div>
+      </div>
+  </body>
+
+</html>

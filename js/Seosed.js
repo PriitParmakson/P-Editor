@@ -1,4 +1,4 @@
-function pikimYhineTahejada(s1, s2, yhised1, yhised2) {
+function pikimYhineTahejada(s1, s2) {
   /*
     Sisendiks on kaks kanoonilisel kujul samateksti.
     Leiab ja tagastab objektina: {
