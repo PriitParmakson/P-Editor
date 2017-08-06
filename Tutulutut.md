@@ -72,7 +72,11 @@ Tere, Kanavere!
 Teretame, etsakae!
 ```
 
-## Elu, tule!
+## Elule
+
+Elu, tule!
+
+Elutu, tule!
 
 Elu, tule elutule!
 
