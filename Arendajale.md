@@ -59,14 +59,15 @@ layout: Tekstid
     - 6.1 Sõnastikust saab otsida
       - 6.1.1 Otsistringi ja *-i abil
       - 6.1.2 Regex-ga
-      - 6.1.3 Võimalus kuvada otsitulemused ka pöördkujul
+      - 6.1.3 Võimalus kuvada otsitulemused pöördkujul
+  - Kohanimekogu üle 74 000 kohanimega    
   - 7 Seotud tekstide kuvamine
     - 7.1 Samaväärsed tekstid (`=`)
     - 7.2 Eellased (`>`) ja järglased (`<`)
     - 7.3 Ühise alamsõne järgi (pikkusega vähemalt 4) 
   - 8 Teksti samatekstilisuse kontroll
     - 8.1 Saab asetada või sisestada teksti ja kontrollida selle vastavust samateksti reeglitele
-  - 9 nn Arhiivkogu - valik samatekste
+  - 9 Valik samatekste
   - 10 Google kontoga sisselogimine
     - salvestamisõigus ainult autenditud kasutajal
     - salvestatakse autori nimi ja e-posti aadress  
