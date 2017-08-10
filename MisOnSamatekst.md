@@ -21,7 +21,7 @@ Lubatud kirjavahemärgid on: reavahetus, tühik, koma, punkt, miinus, hüüu- ja
 
 `samas` (samasõna)
 
-***Peegeltäht*** on tähele vastav, sama täht, mis asub samateksti teisest otsast lugedes samas positsioonis. Samatekstis vastab igale tähele täpselt üks peegeltäht. Ühekordne kesktäh (vt allpool) on ise enda peegeltäht.
+***Peegeltäht*** on tähele vastav, sama täht, mis asub samateksti teisest otsast lugedes samas positsioonis. Samatekstis vastab igale tähele täpselt üks peegeltäht. Ühekordne kesktäht (vt allpool) on ise enda peegeltäht.
 
 `rOtaatOr` (peegeltähed)
 
