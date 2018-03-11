@@ -37,17 +37,22 @@
 
 */
 
-/*#region  Üldine font ja fondisuurus */
+/*#region  Lehe formaat */
 
   body {
     max-width: 40em;
     margin: 0 0; 
     padding: 0.6em 1.5em 6em 2em; 
+  }
+
+/*#region  Üldine font ja fondisuurus */
+
+  body, input {
     font-family: 'Times New Roman', 'Times', serif;
     font-size: 14pt; 
     color: #24292E !important;
     line-height: 1.5 !important;
-    }
+  }  
 
 /*#region Mitmesugused korduvkasutatavad stiilid */
 
@@ -79,7 +84,7 @@
 
   input {
     height: 2.5rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0 0.5rem;
     line-height: 1.25;
     color: #464a4c;
     border: 1px solid rgba(0, 0, 0, 0.15);
@@ -123,7 +128,7 @@
   }
   .sulgemisnupuke {
     /* Sulgemisnupuke */
-    align-self: flex-start;
+    align-self: flex-end;
     padding: 0 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
     font-family: Arial, sans-serif;
@@ -148,11 +153,9 @@
     border: 1px solid #C5E1A5;
   }
 
-  #Infotekst,
-  #LeitudSeosed,
-  #Teatetekst {
-    margin: 1rem;
-  }   
+  .aarisega {
+    margin: 0.8rem;
+  }
 
   .OKteade {
     color: darkslategray;
