@@ -38,6 +38,7 @@
 */
 
 /*#region  Üldine font ja fondisuurus */
+
   body {
     max-width: 40em;
     margin: 0 0; 
@@ -48,9 +49,8 @@
     line-height: 1.5 !important;
     }
 
-/*#region flexbox */
-
 /*#region Mitmesugused korduvkasutatavad stiilid */
+
   .tooltip-inner, .vihje {
     background-color: White;
     font-family: 'Roboto', 'Arial', sans-serif !important;
@@ -58,11 +58,12 @@
     color: Gray;
   }
 
-/*#region Tekstisisestusala
+/*#region Sisestuselemendid */
+
+  /* Tekstisisestusala
   Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
   #Tekst { 
     display: block;
-    width: 100%;
     height: auto; /* 2.5rem; */
     padding: 0.5rem 0.75rem;
     line-height: 1.25;
@@ -70,6 +71,20 @@
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     margin-bottom: 1rem; }
+  #Tekst:focus {
+    border-color: LightGray;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.055) inset, 0 0 8px rgba(220, 180, 220, 0.6);
+    outline: 0 none;
+  }
+
+  input {
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.25;
+    color: #464a4c;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
   #Tekst:focus {
     border-color: LightGray;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.055) inset, 0 0 8px rgba(220, 180, 220, 0.6);
@@ -90,10 +105,12 @@
     margin-top: 1rem;
   }
 
-/*#region Paanid - Ühised omadused */
-  /* Paanid on: 1) Infopaan; 2) Teatepaan; 3) Koolitekst; 4) Salvestusdialoog; 5) Oigekirjadialoog; 6) Filtridialoog. 
+/*#region Paanid */
+
+  /* Paanid:
+     1) Infopaan; 2) Teatepaan; 3) Koolitekst; 4) Salvestusdialoog; 5) Oigekirjadialoog; 6) Filtridialoog. 
   */
-    .paan {
+  .paan {
     display: flex;
     border-radius: 4px; 
     padding: 0 0 0.5rem;
@@ -118,17 +135,25 @@
     /* Avatav/suletav dialoogivorm */
     border: 1px solid #C5E1A5;
   }
-/* Teabepaan */
+
+  /* Teabepaan */
   .teabepaan {
     /* Teavet esitav paan */
     border: 1px solid Aqua;
     background-color: Azure;
   }
 
-/* Teatepaan */
+  /* Teatepaan */
   #Teatepaan { 
     border: 1px solid #C5E1A5;
   }
+
+  #Infotekst,
+  #LeitudSeosed,
+  #Teatetekst {
+    margin: 1rem;
+  }   
+
   .OKteade {
     color: darkslategray;
     border: 1px solid Aqua;
@@ -146,20 +171,6 @@
     color: #757575;
   }
   .disabled { color: Gainsboro !important; cursor: auto; }
-
-/*#region Paanide spetsiifilised elemendid */
-  #Infotekst,
-  /* #KoolitekstSisemine, */
-  #LeitudSeosed,
-  #Teatetekst {
-    margin: 1rem;
-  }   
-  .klahv {
-    border-radius: 3px;
-    padding-left: 1px; padding-right: 1px;
-    border: 1px solid #757575;
-    font-family: 'Courier New', monospace;
-  }
 
 /*#region Jaotisepealkirjad */
   h1 {
@@ -241,11 +252,17 @@
   }
 
 /*#region Muud */  
-.Loendur {
-  border: 1px dotted Tomato;
-  color: Tomato;
-  border-radius: 2px;
-  padding: 2px;
-  font-family: 'Courier New', monospace;
-  font-size: 12pt;
-}
+  .Loendur {
+    border: 1px dotted Tomato;
+    color: Tomato;
+    border-radius: 2px;
+    padding: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: 12pt;
+  }
+  .klahv {
+    border-radius: 3px;
+    padding-left: 1px; padding-right: 1px;
+    border: 1px solid #757575;
+    font-family: 'Courier New', monospace;
+  }
