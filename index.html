@@ -205,31 +205,30 @@
     <!-- Sõnastiku dialoog -->
     <div id='Sonastikudialoog' class='paan dialoog peidetud' style='flex-direction: column;'>
       <div id='OtsinguJuhtimiseRida' class='aarisega' style='align-items: center;  justify-content: space-between;'>
-        <div id='Otsistringiblokk' class='m-3'>
+        <div id='Otsistringiblokk'>
           <label class='active'>
-            <span id='SonuSonastikus'></span>
-            <input id='Otsistring' type='text' class='form-control' autocomplete='off'>
+              Otsistring (võib alata või lõppeda *-ga)<br>
+            <input id='Otsistring' type='text' style='margin: 0 0.5rem;' autocomplete='off'>
           </label>
-          <div class='vihje'>Otsistring võib alata või lõppeda *-ga</div>
+          <!-- Kuva pöördkuju -->
+          <span class='form-check form-check-inline'>
+            <label class='form-check-label' title='Kuva pöördkuju'>
+              <input type='checkbox' class='form-check-input' id='KuvaPoordkuju'> pöördkuju
+            </label>
+          </span>
+          <!-- Regex -->
+          <span class='form-check form-check-inline'>
+            <label class='form-check-label' title='Regulaaravaldis'>
+              <input type='checkbox' class='form-check-input' id='Regulaaravaldis'> Regex
+            </label>
+          </span>
+          <!-- Kohanimi -->
+          <span class='form-check form-check-inline'>
+            <label class='form-check-label' title='Kohanimi'>
+              <input type='checkbox' class='form-check-input' id='OtsiKohanimedest'> Kohanimi
+            </label>
+          </span>
         </div>
-        <!-- Kuva pöördkuju -->
-        <span class='form-check form-check-inline'>
-          <label class='form-check-label' title='Kuva pöördkuju'>
-            <input type='checkbox' class='form-check-input' id='KuvaPoordkuju'> pöördkuju
-          </label>
-        </span>
-        <!-- Regex -->
-        <span class='form-check form-check-inline'>
-          <label class='form-check-label' title='Regulaaravaldis'>
-            <input type='checkbox' class='form-check-input' id='Regulaaravaldis'> Regex
-          </label>
-        </span>
-        <!-- Kohanimi -->
-        <span class='form-check form-check-inline'>
-          <label class='form-check-label' title='Kohanimi'>
-            <input type='checkbox' class='form-check-input' id='OtsiKohanimedest'> Kohanimi
-          </label>
-        </span>
         <div id='OtsiSonastikust' class='nupp ml-auto' title='Soorita otsing'>
           <i class='ikoon material-icons' style='color: #C5E1A5;'>search</i>
         </div>
