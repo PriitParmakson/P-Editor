@@ -245,23 +245,26 @@
     </div>
 
     <!-- Õigekirjakontrolli dialoog -->
-    <div id='Oigekirjadialoog' class='paan dialoog peidetud' style=' align-items: center; justify-content: flex-start;'>
-      <div id='KontrTekstiblokk'>
-        <label class='active'>
-          Kontrollitav tekst:
-          <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
-        </label>
+    <div id='Oigekirjadialoog' class='paan dialoog peidetud' style='flex-direction: column;'>
+      <div style='display: flex;'><!-- Ülarida -->
+        <div id='KontrTekstiblokk'>
+          <label class='active'>
+            Kontrollitav tekst:<br>
+            <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
+          </label>
+          <div id='OigekiriKontrolli' class='nupp' title='Kontrolli'>
+            <i class='ikoon material-icons'>spellcheck</i>
+          </div>
+        </div>
+        <!-- Sulgemisnupp -->
+        <div id='OigekiriSulge' class='sulgemisnupuke'>
+          <span>&times;</span>
+        </div>
       </div>
-      <div id='OigekiriKontrolli' class='nupp' title='Kontrolli'>
-        <i class='ikoon material-icons' style='color: #C5E1A5;'>spellcheck</i>
-      </div>
-      <div id='KontrolliTulemus'>
+      <div id='KontrolliTulemus'><!-- Alarida -->
         &nbsp;
       </div>
-      <!-- Sulgemisnupp -->
-      <div id='OigekiriSulge' class='sulgemisnupuke'>
-        <span>&times;</span>
-      </div>
+
     </div>
 
     <!-- Samatekstide tekstist otsimise dialoog -->
