@@ -39,14 +39,16 @@
 
 /*#region  Üldine font ja fondisuurus */
   body {
-    max-width: 60em;
+    max-width: 40em;
     margin: 0 0; 
     padding: 0.6em 1.5em 6em 2em; 
-    font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+    font-family: 'Times New Roman', 'Times', serif;
     font-size: 15px; 
     color: #24292E !important;
     line-height: 1.5 !important;
     }
+
+/*#region flexbox */
 
 /*#region Mitmesugused korduvkasutatavad stiilid */
   .tooltip-inner, .vihje {
@@ -92,6 +94,7 @@
   /* Paanid on: 1) Infopaan; 2) Teatepaan; 3) Koolitekst; 4) Salvestusdialoog; 5) Oigekirjadialoog; 6) Filtridialoog. 
   */
     .paan {
+    display: flex;
     border-radius: 4px; 
     padding: 0 0 0.5rem;
     margin-top: 0.5rem;
@@ -103,6 +106,7 @@
   }
   .sulgemisnupuke {
     /* Sulgemisnupuke */
+    align-self: flex-end
     padding: 0 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
     font-family: Arial, sans-serif;
