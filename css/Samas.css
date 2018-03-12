@@ -191,7 +191,7 @@
 /*#region Tekstikogu */
   .kirje { 
     margin: 0;
-    border-bottom: 1px solid tomato;
+    border-bottom: 1px solid lightgrey;
   }
   .margend { 
     border: 1px dotted Aqua;
