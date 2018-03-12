@@ -22,6 +22,7 @@ function seaSonastikuKasitlejad() {
     $('#Sonastik').removeClass('disabled');
     $('#OtsinguTulemus').text('');
     $('#Otsistring').val('');
+    $('#EelmineOtsing').addClass('disabled');
   });
 
   $('#Otsistring').on('keypress', function (e) {
@@ -46,9 +47,6 @@ function seaSonastikuKasitlejad() {
       $('#OtsiKohanimedest').prop('checked', eO.otsiKohanimedest);
       // Soorita eelmine otsing
       otsiSonastikust();
-      if (otsiajalugu.length == 0) {
-        $('#EelmineOtsing').addClass('disabled');
-      }
     }
   });
 
@@ -73,7 +71,10 @@ function otsiSonastikust() {
     otsiRegexiga: otsiRegexiga,
     otsiKohanimedest: otsiKohanimedest
   });
-  if (otsiajalugu.length > 1) {
+  if (otsiajalugu.length == 1) {
+    $('#EelmineOtsing').addClass('disabled');
+  }
+  else {
     $('#EelmineOtsing').removeClass('disabled');
   }
 
