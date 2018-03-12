@@ -203,38 +203,41 @@
     </div>
 
     <!-- Sõnastiku dialoog -->
-    <div id='Sonastikudialoog' class='paan dialoog peidetud' style='flex-wrap: wrap;'>
-      <div id='OtsinguJuhtimiseRida' class='aarisega' style='align-items: center;  justify-content: space-between;'>
+    <div id='Sonastikudialoog' class='paan dialoog peidetud' style='flex-direction: column;'>
+      <div id='OtsinguJuhtimiseRida' class='aarisega' style='display: flex; align-items: center;  justify-content: flex-start;'>
         <div id='Otsistringiblokk'>
           <label class='active'>
               Otsistring (võib alata või lõppeda *-ga)<br>
             <input id='Otsistring' type='text' style='margin: 0 0.5rem;' autocomplete='off'>
           </label>
           <!-- Kuva pöördkuju -->
-          <span class='form-check form-check-inline'>
-            <label class='form-check-label' title='Kuva pöördkuju'>
-              <input type='checkbox' class='form-check-input' id='KuvaPoordkuju'> pöördkuju
+          <span>
+            <label title='Kuva pöördkuju'>
+              <input type='checkbox' id='KuvaPoordkuju'> pöördkuju
             </label>
           </span>
           <!-- Regex -->
-          <span class='form-check form-check-inline'>
-            <label class='form-check-label' title='Regulaaravaldis'>
-              <input type='checkbox' class='form-check-input' id='Regulaaravaldis'> Regex
+          <span>
+            <label title='Regulaaravaldis'>
+              <input type='checkbox' id='Regulaaravaldis'> Regex
             </label>
           </span>
           <!-- Kohanimi -->
-          <span class='form-check form-check-inline'>
-            <label class='form-check-label' title='Kohanimi'>
-              <input type='checkbox' class='form-check-input' id='OtsiKohanimedest'> Kohanimi
+          <span>
+            <label title='Kohanimi'>
+              <input type='checkbox' id='OtsiKohanimedest'> Kohanimi
             </label>
           </span>
-          <div id='OtsiSonastikust' class='nupp ml-auto' title='Soorita otsing'>
+          <div id='OtsiSonastikust' class='nupp' title='Soorita otsing'>
             <i class='ikoon material-icons'>search</i>
           </div>
-          <!-- Sulgemisnupp -->
-          <div id='SonastikSulge' class='sulgemisnupuke'>
-            <span>&times;</span>
+          <div id='EelmineOtsing' class='nupp disabled' title='Eelmine otsing'>
+            <i class='ikoon material-icons'>keyboard_arrow_left</i>
           </div>
+        </div>
+        <!-- Sulgemisnupp -->
+        <div id='SonastikSulge' class='sulgemisnupuke'>
+          <span>&times;</span>
         </div>
       </div>
 

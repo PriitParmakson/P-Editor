@@ -1,9 +1,15 @@
 'use strict';
 
+var otsiajalugu = [];
+
 function seaSonastikuKasitlejad() {
   /*
     Sõnastikudialoogi avamine ja sulgemine, otsing
   */
+
+  $('#KuvaPoordkuju').prop('checked', true);
+  $('#Regulaaravaldis').prop('checked', false);
+  $('#OtsiKohanimedest').prop('checked', false);
 
   $('#Sonastik').click(() => {
     $('#Sonastikudialoog').removeClass('peidetud');
@@ -28,6 +34,22 @@ function seaSonastikuKasitlejad() {
     otsiSonastikust();
   });
 
+  $('#EelmineOtsing').click(() => {
+    if (otsiajalugu.length > 0) {
+      // Võta eelmine otsing
+      var eO = otsiajalugu.pop(); 
+      $('#Otsistring').val(eO.otsistring);
+      $('#KuvaPoordkuju').prop('checked', eO.kuvaPoordkuju);
+      $('#Regulaaravaldis').prop('checked', eO.otsiRegexiga);
+      $('#OtsiKohanimedest').prop('checked', eO.otsiKohanimedest);
+      // Soorita eelmine otsing
+      otsiSonastikust();
+      if (otsiajalugu.length == 0) {
+        $('#EelmineOtsing').addClass('disabled');
+      }
+    }
+  });
+
 }
 
 function otsiSonastikust() {
@@ -36,9 +58,20 @@ function otsiSonastikust() {
     Otsimise käivitamiseks on kaks moodust: vajutada Enter otsistringi väljas või vajutada nuppu 'OtsiSonastikust'.
     Sõnastik koosneb kahest osast: 1) ÕS-ipõhine ja 2) kohanimeregistri põhine.
   */
-  var v = ''; // Vastuste koguja
-  var otsiRegexiga = $('#Regulaaravaldis').prop('checked');
-  var otsiKohanimedest = $('#OtsiKohanimedest').prop('checked');
+ var otsistring = $('#Otsistring').val();
+ var kuvaPoordkuju = $('#KuvaPoordkuju').prop('checked');
+ var otsiRegexiga = $('#Regulaaravaldis').prop('checked');
+ var otsiKohanimedest = $('#OtsiKohanimedest').prop('checked');
+ var v = ''; // Vastuste koguja
+
+  // lisa otsing otsiajalukku
+  otsiajalugu.push({
+    otsistring: otsistring,
+    kuvaPoordkuju: kuvaPoordkuju,
+    otsiRegexiga: otsiRegexiga,
+    otsiKohanimedest: otsiKohanimedest
+  });
+  $('#EelmineOtsing').removeClass('disabled');
 
   /*
     Sõnastik, kust otsida (ÕS või kohanimeregister). Kopeerimine pole efektiivne, perspektiivis leida parem lahendus.
@@ -46,17 +79,14 @@ function otsiSonastikust() {
   var kustOtsida = (otsiKohanimedest) ? kohanimed : sonastik;
 
   if (otsiRegexiga) {
-    var otsivRegex = $('#Otsistring').val();
     for (var i = 0; i < kustOtsida.length; i++) {
       var s = kustOtsida[i];
-      if (s.match(otsivRegex) != null) {
+      if (s.match(otsistring) != null) {
         v += s + ' ';
       }
     }
   } else {
     let otsireziim; /* 1, 2 või 3 vastavalt kas otsistring algab või lõpeb tärniga või on tärnita */
-    var otsistring = $('#Otsistring').val();
-    var kuvaPoordkuju = $('#KuvaPoordkuju').prop('checked');
     if (otsistring.startsWith('*')) {
       otsireziim = 1;
       otsistring = otsistring.substr(1);
