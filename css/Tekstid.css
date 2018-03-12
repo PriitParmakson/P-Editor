@@ -7,8 +7,8 @@ body {
   max-width: 60em;
   margin: 0 0; 
   padding: 0.6em 1.5em 2em 2em; 
-  font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif;
-  font-size: 15px; 
+  font-family: 'Times New Roman', 'Times', serif;
+  font-size: 14pt; 
   color: #24292E !important;
   line-height: 1.5 !important;
   }
@@ -60,14 +60,14 @@ p { margin: 0 0 1em 0; }
 /*#endregion */
 
 /*#region Loetelud */
-#Tekst > ul {
-  list-style-type: '-  ';
-  margin: 0 0 1em 0;
-  padding-left: 1em;
-}  
-#Tekst > ol {
-  padding-left: 1em;
-}  
+  #Tekst > ul {
+    list-style-type: '-  ';
+    margin: 0 0 1em 0;
+    padding-left: 1em;
+  }  
+  #Tekst > ol {
+    padding-left: 1em;
+  }  
 /*#endregion */
 
 /*#region TOC genereeritud === */
@@ -106,23 +106,10 @@ pre { margin-top: 1em; margin-bottom: 1em; }
 /*#endregion */
 
 /*#region Lingid */
-a[href] {
-  color: #607D8B;
-  text-decoration: none;
-  border-bottom: 1px dotted #607D8B;
-  padding: 0 1px 0;
-  margin: 0 -1px 0;
-}
-a:visited {
-  border-bottom-color: #607D8B;
-}
-
-a[href]:focus,
-a[href]:hover {
-  background: #607D8B;
-  background: rgba(75%, 75%, 75%, .25);
-  border-bottom-width: 3px;
-  margin-bottom: -2px;
+a, a:hover, a:active, a:visited {
+  color: #292B2C !important;
+  text-decoration: underline;
+  text-decoration-style: dashed;
 }
 /*#endregion */
 
