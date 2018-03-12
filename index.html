@@ -64,7 +64,7 @@
     </div>
 
     <!-- Infopaan -->
-    <div id='Infopaan' class='paan teabepaan peidetud' style=' align-items:start; justify-content: space-between;'>
+    <div id='Infopaan' class='paan teabepaan peidetud flex' style=' align-items:start; justify-content: space-between;'>
       <!-- Info -->
       <p id='Infotekst' class='aarisega'>
         <span class='klahv'>&larr;</span>
@@ -83,7 +83,7 @@
     </div>
 
     <!-- Teatepaan -->
-    <div id='Teatepaan' class='paan peidetud' style='align-items: flex-start; justify-content: space-between;'>
+    <div id='Teatepaan' class='paan peidetud flex' style='align-items: flex-start; justify-content: space-between;'>
       <!-- Teade -->
       <p id='Teatetekst' class='aarisega'>
       </p>
@@ -177,7 +177,7 @@
     </p>
 
     <!-- Salvestusdialoog -->
-    <div id='Salvestusdialoog' class='paan dialoog peidetud' style=' align-items: center; justify-content: center;'>
+    <div id='Salvestusdialoog' class='paan dialoog peidetud flex' style=' align-items: center; justify-content: center;'>
       <span class='form-check form-check-inline'>
         <label class='form-check-label active'>
           <input type='checkbox' class='form-check-input' id='draftNupp'> Kavand
@@ -192,7 +192,7 @@
     </div>
 
     <!-- Seotud tekstide dialoog -->
-    <div id='SeotudTekstideDialoog' class='paan dialoog peidetud' style='align-items: center; justify-content: start;'>
+    <div id='SeotudTekstideDialoog' class='paan dialoog peidetud flex' style='align-items: center; justify-content: start;'>
       <div id='LeitudSeosed' class='aarisega'>
         &nbsp;
       </div>
@@ -203,9 +203,9 @@
     </div>
 
     <!-- Sõnastiku dialoog -->
-    <div id='Sonastikudialoog' class='paan dialoog peidetud' style='flex-direction: column;'>
-      <div id='OtsinguJuhtimiseRida' class='aarisega' style='display: flex; align-items: center;  justify-content: flex-start;'>
-        <div id='Otsistringiblokk'>
+    <div id='Sonastikudialoog' class='paan dialoog peidetud'>
+      <div id='OtsinguJuhtimiseRida' class='aarisega' style='display: flex;'>
+        <div id='Otsistringiblokk' style='display: flex; align-items: center;'>
           <label class='active'>
               Otsistring (võib alata või lõppeda *-ga)<br>
             <input id='Otsistring' type='text' style='margin: 0 0.5rem;' autocomplete='off'>
@@ -247,7 +247,7 @@
     </div>
 
     <!-- Õigekirjakontrolli dialoog -->
-    <div id='Oigekirjadialoog' class='paan dialoog peidetud' style='flex-direction: column;'>
+    <div id='Oigekirjadialoog' class='paan dialoog peidetud flex' style='flex-direction: column;'>
       <div style='display: flex;'><!-- Ülarida -->
         <div id='KontrTekstiblokk'>
           <label class='active'>
@@ -302,7 +302,7 @@
     <div id='Tekstikogu' class='peidetud'>
 
       <!-- Filtridialoog -->
-      <div id='Filtridialoog' class='paan dialoog' style='align-items: center; justify-content: space-between;'>
+      <div id='Filtridialoog' class='paan dialoog flex' style='align-items: center; justify-content: space-between;'>
 
         <!-- Filtritekst -->
         <span>

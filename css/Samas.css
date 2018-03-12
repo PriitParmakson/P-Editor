@@ -116,11 +116,13 @@
      1) Infopaan; 2) Teatepaan; 3) Koolitekst; 4) Salvestusdialoog; 5) Oigekirjadialoog; 6) Filtridialoog. 
   */
   .paan {
-    display: flex;
     border-radius: 4px; 
     padding: 0 0 0.5rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem; 
+  }
+  .flex {
+    display: flex;
   }
   .peidetud { 
     /* display: flex; ülekirjutamiseks */

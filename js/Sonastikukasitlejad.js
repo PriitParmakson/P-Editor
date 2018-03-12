@@ -35,7 +35,9 @@ function seaSonastikuKasitlejad() {
   });
 
   $('#EelmineOtsing').click(() => {
-    if (otsiajalugu.length > 0) {
+    if (otsiajalugu.length > 1) {
+      // Viska viimane (jooksev) otsing välja
+      otsiajalugu.pop();
       // Võta eelmine otsing
       var eO = otsiajalugu.pop(); 
       $('#Otsistring').val(eO.otsistring);
@@ -71,7 +73,9 @@ function otsiSonastikust() {
     otsiRegexiga: otsiRegexiga,
     otsiKohanimedest: otsiKohanimedest
   });
-  $('#EelmineOtsing').removeClass('disabled');
+  if (otsiajalugu.length > 1) {
+    $('#EelmineOtsing').removeClass('disabled');
+  }
 
   /*
     Sõnastik, kust otsida (ÕS või kohanimeregister). Kopeerimine pole efektiivne, perspektiivis leida parem lahendus.
