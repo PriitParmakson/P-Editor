@@ -249,15 +249,15 @@
     <!-- Õigekirjakontrolli dialoog -->
     <div id='Oigekirjadialoog' class='paan dialoog peidetud'>
       <!-- Ülarida -->
-      <div style='display: flex;'>
+      <div style='display: flex; justify-content: space-between;'>
         <div id='KontrTekstiblokk' class='aarisega'>
           <label class='active'>
             Kontrollitav tekst:<br>
             <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
           </label>
-          <div id='OigekiriKontrolli' class='nupp' title='Kontrolli'>
+          <span id='OigekiriKontrolli' class='nupp' title='Kontrolli'>
             <i class='ikoon material-icons'>spellcheck</i>
-          </div>
+          </span>
         </div>
         <!-- Sulgemisnupp -->
         <div id='OigekiriSulge' class='sulgemisnupuke'>
