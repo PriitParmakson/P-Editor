@@ -190,9 +190,8 @@
 
 /*#region Tekstikogu */
   .kirje { 
-    text-indent: -3rem;
-    padding-left: 3rem;
     margin: 0;
+    border-bottom: 1px solid tomato;
   }
   .margend { 
     border: 1px dotted Aqua;

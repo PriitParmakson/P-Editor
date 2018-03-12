@@ -207,7 +207,7 @@
       <div id='OtsinguJuhtimiseRida' style='display: flex;'>
         <div id='Otsistringiblokk' class='aarisega' style='display: flex; align-items: center;'>
           <label class='active'>
-              Otsistring (võib alata või lõppeda *-ga)<br>
+              Otsistring (v alata või lõppeda *-ga):<br>
             <input id='Otsistring' type='text' style='margin: 0 0.5rem;' autocomplete='off'>
           </label>
           <!-- Kuva pöördkuju -->
@@ -247,9 +247,10 @@
     </div>
 
     <!-- Õigekirjakontrolli dialoog -->
-    <div id='Oigekirjadialoog' class='paan dialoog peidetud flex' style='flex-direction: column;'>
-      <div style='display: flex;'><!-- Ülarida -->
-        <div id='KontrTekstiblokk'>
+    <div id='Oigekirjadialoog' class='paan dialoog peidetud'>
+      <!-- Ülarida -->
+      <div style='display: flex;'>
+        <div id='KontrTekstiblokk' class='aarisega'>
           <label class='active'>
             Kontrollitav tekst:<br>
             <input id='KontrollitavTekst' type='text' class='form-control' autocomplete='off'>
@@ -263,7 +264,8 @@
           <span>&times;</span>
         </div>
       </div>
-      <div id='KontrolliTulemus'><!-- Alarida -->
+      <!-- Alarida -->
+      <div id='KontrolliTulemus' class='aarisega'>
         &nbsp;
       </div>
 
