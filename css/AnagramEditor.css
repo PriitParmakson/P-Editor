@@ -17,11 +17,6 @@ body, input {
 
 /*#region Sisestuselemendid */
 
-h1 {
-  font-size: 14pt;
-  font-weight: normal;
-}
-
 .tekstiala, .erinevusteala {
   font-family: 'Courier New', Courier, monospace;
   display: block;
