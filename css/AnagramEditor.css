@@ -3,7 +3,7 @@
 body {
   max-width: 40em;
   margin: 0 0; 
-  padding: 0.6em 1.5em 6em 2em; 
+  padding: 2em 1.5em 6em 2em; 
 }
 
 /*#region  Üldine font ja fondisuurus */
@@ -17,23 +17,37 @@ body, input {
 
 /*#region Sisestuselemendid */
 
-/* Tekstisisestusala
-Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
-.tekstiala { 
+h1 {
+  font-size: 14pt;
+  font-weight: normal;
+}
+
+.tekstiala, .erinevusteala {
   font-family: 'Courier New', Courier, monospace;
   display: block;
   min-height: 2.5rem;
   height: auto; /* 2.5rem; */
+  width: 20em;
   padding: 0.5rem 0.75rem;
   line-height: 1.25;
+}
+
+/* Tekstisisestusala
+Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
+.tekstiala { 
   color: #464a4c;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
-  margin-bottom: 1rem; }
+}
 .tekstiala:focus {
   border-color: LightGray;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.055) inset, 0 0 8px rgba(220, 180, 220, 0.6);
   outline: 0 none;
+}  
+
+/* Erinevusteala */
+.erinevusteala {
+  color: tomato;
 }
 
 /*#region Lingid */
