@@ -1,8 +1,5 @@
 'use strict';
 
-/* Kuvab klahvivajutuste koodid
-*/
-
 function alusta() {
 
   const matriits = document.getElementById('Matriits');
@@ -14,11 +11,6 @@ function alusta() {
     var erinevused = leiaErinevused(m, t);
     kuvaErinevused(erinevused);
   }
-
-  /* matriits.addEventListener("focus",
-    () => { alert('Fookus matriitsil') });
-  tekst.addEventListener("focus",
-    () => { alert('Fookus tekstil') }); */
 
   matriits.addEventListener("keyup",
     (e) => {
