@@ -9,7 +9,7 @@ function alusta() {
   const tekst = document.getElementById('Tekst');
 
   function uuendaErinevusi() {
-    var m = matriits.textContent.toUpperCase();
+    var m = matriits.textContent.toLowerCase();
     var t = tekst.textContent.toLowerCase();
     var erinevused = leiaErinevused(m, t);
     kuvaErinevused(erinevused);
