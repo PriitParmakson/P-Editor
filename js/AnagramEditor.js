@@ -1,16 +1,9 @@
 'use strict';
 
+const matriits = document.getElementById('Matriits');
+const tekst = document.getElementById('Tekst');
+
 function alusta() {
-
-  const matriits = document.getElementById('Matriits');
-  const tekst = document.getElementById('Tekst');
-
-  function uuendaErinevusi() {
-    var m = matriits.textContent.toLowerCase();
-    var t = tekst.textContent.toLowerCase();
-    var erinevused = leiaErinevused(m, t);
-    kuvaErinevused(erinevused);
-  }
 
   matriits.addEventListener("keyup",
     (e) => {
@@ -18,6 +11,12 @@ function alusta() {
       // Ignoreeri Left arrow (37), Right arrow (39)
       if ([37, 39].includes(charCode)) {
         // NO OP
+      } else if (e.keyCode == 33) { // PgUp
+        e.preventDefault();
+        muudaSuurust(matriits, 'suureks');
+      } else if (e.keyCode == 34) { // PgDown
+        e.preventDefault();
+        muudaSuurust(matriits, 'väikseks');
       } else {
         uuendaErinevusi();
       }
@@ -29,11 +28,44 @@ function alusta() {
       // Ignoreeri Left arrow (37), Right arrow (39)
       if ([37, 39].includes(charCode)) {
         // NO OP
+      } else if (e.keyCode == 33) { // PgUp
+        e.preventDefault();
+        muudaSuurust(tekst, 'suureks');
+      } else if (e.keyCode == 34) { // PgDown
+        e.preventDefault();
+        muudaSuurust(tekst, 'väikseks');
       } else {
         uuendaErinevusi();
       }
     });
 
+}
+
+function muudaSuurust(ala, suund) {
+  if (document.getSelection().isCollapsed) {
+    var r = document.getSelection().getRangeAt(0).startOffset;
+    var t = ala.textContent;
+    if (r < t.length) {
+      let uusTekst =
+        t.slice(0, r) +
+        (suund == 'suureks' ?
+          t.charAt(r).toUpperCase() :
+          t.charAt(r).toLowerCase()
+        ) +
+        t.slice(r + 1);
+      ala.textContent = uusTekst;
+    }
+    seaCaret(ala, r);
+  }
+}
+
+function seaCaret(ala, pos) {
+  var range = document.createRange();
+  range.setStart(ala.childNodes[0], pos);
+  range.collapse(true); // Lõpp ühtib algusega
+  var valik = document.getSelection();
+  valik.removeAllRanges();
+  valik.addRange(range);
 }
 
 function massiivStringiks(m) {
@@ -94,5 +126,12 @@ function leiaErinevused(m, t) {
     }
   }
   return { m0, t0 } // Property value shorthand
+}
+
+function uuendaErinevusi() {
+  var m = matriits.textContent.toLowerCase();
+  var t = tekst.textContent.toLowerCase();
+  var erinevused = leiaErinevused(m, t);
+  kuvaErinevused(erinevused);
 }
 
