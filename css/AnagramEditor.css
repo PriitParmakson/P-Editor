@@ -12,23 +12,19 @@ body, input {
   font-family: 'Times New Roman', 'Times', serif;
   font-size: 14pt; 
   color: #24292E !important;
-  line-height: 1.5 !important;
 }  
 
-/*#region Sisestuselemendid */
-
-.tekstiala, .erinevusteala {
+/*#region  Alad */
+.tekstiala, .erinevusteala, #Puhasala {
   font-family: 'Courier New', Courier, monospace;
   display: block;
   min-height: 2.5rem;
   height: auto; /* 2.5rem; */
   width: 20em;
   padding: 0.5rem 0.75rem;
-  line-height: 1.25;
 }
 
-/* Tekstisisestusala
-Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
+/* Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
 .tekstiala { 
   color: #464a4c;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -40,9 +36,12 @@ Content-editable div, kujundus imiteeritud Bootstrap input elemendi järele */
   outline: 0 none;
 }  
 
-/* Erinevusteala */
 .erinevusteala {
   color: tomato;
+}
+
+#Puhasala {
+  white-space: pre-line;
 }
 
 /*#region Lingid */
@@ -52,3 +51,13 @@ a, a:hover, a:active, a:visited {
   text-decoration-style: dashed;
 }
 
+/*#region Nupud */
+.nupp { margin: 0.5rem 0.5rem;
+  cursor: pointer;
+  color: #757575;
+}
+.disabled { color: Gainsboro !important; cursor: auto; }
+
+.ikoon { font-family: 'Material Icons';
+  font-size: 48px;
+}

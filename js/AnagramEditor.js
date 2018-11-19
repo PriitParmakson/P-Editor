@@ -2,8 +2,39 @@
 
 const matriits = document.getElementById('Matriits');
 const tekst = document.getElementById('Tekst');
+const mE = document.getElementById('MatriitsiErinevused');
+const tE = document.getElementById('TekstiErinevused');
 
 function alusta() {
+
+  $('#Uus').click(() => {
+    matriits.textContent = '';
+    tekst.textContent = '';
+    mE.textContent = '';
+    tE.textContent = '';
+  });
+
+  $('#Vaheta').click(() => {
+    [
+      matriits.textContent,
+      tekst.textContent,
+      mE.textContent,
+      tE.textContent
+    ] =
+      [
+        tekst.textContent,
+        matriits.textContent,
+        tE.textContent,
+        mE.textContent
+      ];
+  });
+
+  $('#Salvesta').click(() => {
+    document.getElementById('Puhasala').textContent =
+      matriits.textContent +
+      '\r\n' +
+      tekst.textContent;
+  });
 
   matriits.addEventListener("keyup",
     (e) => {
@@ -77,10 +108,8 @@ function massiivStringiks(m) {
 }
 
 function kuvaErinevused(erinevused) {
-  var matriitsiErinevused = document.getElementById('MatriitsiErinevused');
-  var tekstiErinevused = document.getElementById('TekstiErinevused');
-  matriitsiErinevused.textContent = massiivStringiks(erinevused.m0);
-  tekstiErinevused.textContent = massiivStringiks(erinevused.t0);
+  mE.textContent = massiivStringiks(erinevused.m0);
+  tE.textContent = massiivStringiks(erinevused.t0);
 }
 
 function leiaErinevused(m, t) {
