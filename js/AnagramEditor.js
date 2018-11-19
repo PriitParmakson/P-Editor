@@ -12,6 +12,7 @@ function alusta() {
     tekst.textContent = '';
     mE.textContent = '';
     tE.textContent = '';
+    matriits.focus();
   });
 
   $('#Vaheta').click(() => {
@@ -27,6 +28,7 @@ function alusta() {
         tE.textContent,
         mE.textContent
       ];
+    matriits.focus();
   });
 
   $('#Salvesta').click(() => {
@@ -36,7 +38,7 @@ function alusta() {
       tekst.textContent;
   });
 
-  matriits.addEventListener("keyup",
+  matriits.addEventListener("keydown",
     (e) => {
       let charCode = e.charCode;
       // Ignoreeri Left arrow (37), Right arrow (39)
@@ -53,7 +55,7 @@ function alusta() {
       }
     });
 
-  tekst.addEventListener("keyup",
+  tekst.addEventListener("keydown",
     (e) => {
       let charCode = e.charCode;
       // Ignoreeri Left arrow (37), Right arrow (39)
@@ -70,6 +72,7 @@ function alusta() {
       }
     });
 
+  matriits.focus();
 }
 
 function muudaSuurust(ala, suund) {
