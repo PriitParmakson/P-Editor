@@ -40,16 +40,20 @@ function alusta() {
 
   matriits.addEventListener("keydown",
     (e) => {
-      let charCode = e.charCode;
-      // Ignoreeri Left arrow (37), Right arrow (39)
-      if ([37, 39].includes(charCode)) {
-        // NO OP
-      } else if (e.keyCode == 33) { // PgUp
+      if (e.keyCode == 33) { // PgUp
         e.preventDefault();
         muudaSuurust(matriits, 'suureks');
       } else if (e.keyCode == 34) { // PgDown
         e.preventDefault();
         muudaSuurust(matriits, 'väikseks');
+      }
+    });
+  matriits.addEventListener("keyup",
+    (e) => {
+      let charCode = e.charCode;
+      // Ignoreeri Left arrow (37), Right arrow (39)
+      if ([37, 39].includes(charCode)) {
+        // NO OP
       } else {
         uuendaErinevusi();
       }
@@ -57,16 +61,20 @@ function alusta() {
 
   tekst.addEventListener("keydown",
     (e) => {
-      let charCode = e.charCode;
-      // Ignoreeri Left arrow (37), Right arrow (39)
-      if ([37, 39].includes(charCode)) {
-        // NO OP
-      } else if (e.keyCode == 33) { // PgUp
+      if (e.keyCode == 33) { // PgUp
         e.preventDefault();
         muudaSuurust(tekst, 'suureks');
       } else if (e.keyCode == 34) { // PgDown
         e.preventDefault();
         muudaSuurust(tekst, 'väikseks');
+      }
+    });
+  tekst.addEventListener("keyup",
+    (e) => {
+      let charCode = e.charCode;
+      // Ignoreeri Left arrow (37), Right arrow (39)
+      if ([37, 39].includes(charCode)) {
+        // NO OP
       } else {
         uuendaErinevusi();
       }
