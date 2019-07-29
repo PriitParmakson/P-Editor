@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+  Tähele panna, et argument p.o. tärgikood, mitte tärk. Tärgiga kutsu välja charCodeAt() abi: taht(string.charCodeAt(j))
+*/
+
 function ladinaTaht(charCode) {
   /*
     Kontrollib, kas charCode on vahemikus 97..122 (a..z) või 65..90 (A..Z).
